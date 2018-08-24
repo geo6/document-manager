@@ -12,16 +12,25 @@ Authentication
 </div>
 {% endif %}
 
-<form action="{{ path('login') }}" method="POST">
-    <div class="form-group">
-        <label for="login-username">Username</label>
-        <input type="text" name="username" class="form-control" id="login-username">
+<div class="row justify-content-md-center">
+    <div class="col-md-4">
+        <h1>Authentication</h1>
+        <hr>
+        <form action="{{ path('login') }}" method="POST">
+            <div class="form-group">
+                <label for="login-username">Username</label>
+                <input type="text" name="username" class="form-control" id="login-username">
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <input type="password" name="password" class="form-control" id="login-password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+                <i class="fas fa-sign-in-alt"></i>
+                Login
+            </button>
+        </form>
     </div>
-    <div class="form-group">
-        <label for="login-password">Password</label>
-        <input type="password" name="password" class="form-control" id="login-password">
-    </div>
-    <button type="submit" class="mx-auto btn btn-primary">Login</button>
-</form>
+</div>
 
 {% endblock %}

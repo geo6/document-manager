@@ -19,6 +19,7 @@ import {
     faCloud,
     faFolder,
     faHome,
+    faSignInAlt,
     faSignOutAlt,
     faUser,
     faUsers
@@ -38,6 +39,7 @@ library.add(
     faFileWord,
     faFolder,
     faHome,
+    faSignInAlt,
     faSignOutAlt,
     faUser,
     faUserCircle,
