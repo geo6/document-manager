@@ -2,6 +2,7 @@
     "name": "geo6/document-manager",
     "description": "",
     "type": "project",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Jonathan Beliën",
