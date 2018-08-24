@@ -1,0 +1,61 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+{{ include("@app/breadcrumb.html.twig") }}
+
+<table class="table table-hover table-sm">
+    <tbody>
+        {% if not directories.public is null %}
+        <tr>
+            <td class="text-center">
+                <i class="fas fa-cloud"></i>
+            </td>
+            <td>
+                <a href="{{ path('scan', {'path': directories.public.getRelativePath()}) }}">
+                    {{ directories.public.getFilename() }}
+                </a>
+            </td>
+            <td class="text-info">
+                This directory is accessible to everyone.
+            </td>
+        </tr>
+        {% endif %}
+        {% for d in directories.roles %}
+        <tr>
+            <td class="text-center">
+                <i class="fas fa-users"></i>
+            </td>
+            <td>
+                <a href="{{ path('scan', {'path': d.getRelativePath()}) }}">
+                    {{ d.getFilename() }}
+                </a>
+            </td>
+            <td class="text-info">
+                This directory is accessible to every member of this role.
+            </td>
+        </tr>
+        {% endfor %}
+        {% if not directories.user is null %}
+        <tr>
+            <td class="text-center">
+                <i class="fas fa-user"></i>
+            </td>
+            <td>
+                <a href="{{ path('scan', {'path': directories.user.getRelativePath()}) }}">
+                    {{ directories.user.getFilename() }}
+                </a>
+            </td>
+            <td class="text-info">
+                This directory is only accessible to you.
+            </td>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}
+Authentication
+{% endblock %}
+
+{% block content %}
+
+{% if error %}
+<div class="alert alert-warning">
+    {{ error }}
+</div>
+{% endif %}
+
+<form action="{{ path('login') }}" method="POST">
+    <div class="form-group">
+        <label for="login-username">Username</label>
+        <input type="text" name="username" class="form-control" id="login-username">
+    </div>
+    <div class="form-group">
+        <label for="login-password">Password</label>
+        <input type="password" name="password" class="form-control" id="login-password">
+    </div>
+    <button type="submit" class="mx-auto btn btn-primary">Login</button>
+</form>
+
+{% endblock %}

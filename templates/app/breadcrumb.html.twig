@@ -1,0 +1,24 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ path('home') }}">
+                <i class="fas fa-home"></i>
+            </a>
+        </li>
+        {% if breadcrumb is defined %}
+        {% for path in breadcrumb %}
+            {% if path != breadcrumb|last %}
+            <li class="breadcrumb-item" aria-current="page">
+                <a href="{{ path('scan', {'path': path.path}) }}">
+                    {{ path.name }}
+                </a>
+            </li>
+            {% else %}
+            <li class="breadcrumb-item active" aria-current="page">
+                {{ path.name }}
+            </li>
+            {% endif %}
+        {% endfor %}
+        {% endif %}
+    </ol>
+</nav>

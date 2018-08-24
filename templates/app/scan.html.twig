@@ -1,0 +1,86 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}
+{{ path }}
+{% endblock %}
+
+{% block content %}
+
+{{ include("@app/breadcrumb.html.twig") }}
+
+<table class="table table-hover table-sm">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Last modified</th>
+            <th class="text-right">Size</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for d in content.directories %}
+        <tr>
+            <td class="text-center">
+                <i class="fas fa-folder"></i>
+            </td>
+            <td>
+                <a href="{{ path('scan', {'path': d.getRelativePath()}) }}">
+                    {{ d.getFilename() }}
+                </a>
+            </td>
+            <td>
+                <span title="{{ d.getReadableMTime() }}">
+                    {{ d.getReadableMTime('%e %B %Y') }}
+                </span>
+            </td>
+            <td></td>
+        </tr>
+        {% endfor %}
+        {% for f in content.files %}
+        <tr>
+            <td class="text-center">
+                <i class="far {{ f.getFontAwesomeIcon() }}" title="{{ f.getMimeType() }}"></i>
+            </td>
+            <td>
+                {% if f.isImage() %}
+                <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal" data-toggle="modal" class="float-right text-muted" style="text-decoration: none;">
+                    <i class="far fa-eye"></i>
+                    View
+                </a>
+                {% endif %}
+                <a href="{{ path('download', {'path': f.getRelativePath()}) }}">
+                    {{ f.getFilename() }}
+                </a>
+                {% set exif = f.getEXIF() %}
+                {% if exif and exif.DateTime is defined %}
+                <p class="mb-0 text-info small">
+                    {{ exif.Make|default('?') }} &bull; {{ exif.Model|default('?') }} &bull; {{ exif.DateTime }}
+                </p>
+                {% endif %}
+                {% if f.getInfo() %}
+                <p class="mb-0 text-info small">
+                    {{ f.getInfo() }}
+                </p>
+                {% endif %}
+            </td>
+            <td>
+                <span title="{{ f.getReadableMTime('%c') }}">
+                    {{ f.getReadableMTime('%e %B %Y') }}
+                </span>
+            </td>
+            <td class="text-right">{{ f.getReadableSize(0) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<hr>
+
+<p class="small text-muted">
+    {{ content.directories|length }} directorie(s) and
+    {{ content.files|length }} file(s)
+</p>
+
+{{ include("@app/modal.html.twig") }}
+
+{% endblock %}

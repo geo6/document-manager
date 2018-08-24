@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.2",
+    "@fortawesome/free-regular-svg-icons": "^5.2.0",
+    "@fortawesome/free-solid-svg-icons": "^5.2.0"
+  },
+  "devDependencies": {
+    "babel-minify-webpack-plugin": "^0.3.1",
+    "css-loader": "^1.0.0",
+    "eslint": "^5.3.0",
+    "node-sass": "^4.9.2",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0"
+  },
+  "scripts": {
+    "build": "npm run build:css & npm run build:js",
+    "build:css": "node-sass --output-style compressed --output public/css resources/sass/style.scss",
+    "build:js": "webpack --config webpack.config.js --mode production --progress",
+    "test": "eslint resources/javascript/",
+    "fix": "eslint resources/javascript/ --fix",
+    "watch": "npm run watch:css & npm run watch:js",
+    "watch:css": "node-sass --watch --output-style compressed --output public/css resources/sass/style.scss",
+    "watch:js": "webpack --watch --config webpack.config.js --mode development --progress"
+  }
+}
