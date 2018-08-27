@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace App\Handler;
 
@@ -11,13 +11,12 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 class DownloadHandlerFactory
 {
-    public function __invoke(ContainerInterface $container) : RequestHandlerInterface
+    public function __invoke(ContainerInterface $container): RequestHandlerInterface
     {
-        $router   = $container->get(RouterInterface::class);
-        $template = $container->has(TemplateRendererInterface::class)
-            ? $container->get(TemplateRendererInterface::class)
-            : null;
+        $router = $container->get(RouterInterface::class);
+        $template = $container->get(TemplateRendererInterface::class);
+        $authentication = isset($container->get('config')['authentication']['pdo']);
 
-        return new DownloadHandler($router, $template, get_class($container));
+        return new DownloadHandler($router, $template, get_class($container), $authentication);
     }
 }

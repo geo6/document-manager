@@ -18,6 +18,8 @@ use Zend\Expressive\Template;
 
 class ScanHandler implements RequestHandlerInterface
 {
+    private $authentication;
+
     private $containerName;
 
     private $router;
@@ -27,21 +29,26 @@ class ScanHandler implements RequestHandlerInterface
     public function __construct(
         Router\RouterInterface $router,
         Template\TemplateRendererInterface $template = null,
-        string $containerName
+        string $containerName,
+        bool $authentication
     ) {
         $this->router = $router;
         $this->template = $template;
         $this->containerName = $containerName;
+        $this->authentication = $authentication;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
-        if (!$session->has(UserInterface::class)) {
-            return new RedirectResponse($this->router->generateUri('login'));
+        if ($this->authentication !== false) {
+            $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
+            if (!$session->has(UserInterface::class)) {
+                return new RedirectResponse($this->router->generateUri('login'));
+            }
+
+            $user = $session->get(UserInterface::class);
         }
 
-        $user = $session->get(UserInterface::class);
         $path = $request->getAttribute('path');
 
         $breadcrumb = [];
@@ -61,13 +68,17 @@ class ScanHandler implements RequestHandlerInterface
             ];
         }
 
-        if ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && !in_array($pathExploded[1], $user['roles'])) {
+        if ($pathExploded[0] === 'roles' &&
+            (!isset($user) || (isset($pathExploded[1]) && !in_array($pathExploded[1], $user['roles'])))
+        ) {
             return (new HtmlResponse($this->template->render('error::error', [
                 'status' => 403,
                 'reason' => 'Forbidden',
             ])))->withStatus(403);
         }
-        if ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $pathExploded[1] !== $user['username']) {
+        if ($pathExploded[0] === 'users' &&
+            (!isset($user) || (isset($pathExploded[1]) && $pathExploded[1] !== $user['username']))
+        ) {
             return (new HtmlResponse($this->template->render('error::error', [
                 'status' => 403,
                 'reason' => 'Forbidden',

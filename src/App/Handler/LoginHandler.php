@@ -18,6 +18,8 @@ use Zend\Expressive\Template;
 
 class LoginHandler implements MiddlewareInterface
 {
+    private $authentication;
+
     private $containerName;
 
     private $router;
@@ -27,18 +29,24 @@ class LoginHandler implements MiddlewareInterface
     public function __construct(
         Router\RouterInterface $router,
         Template\TemplateRendererInterface $template = null,
-        string $containerName
+        string $containerName,
+        bool $authentication
     ) {
         $this->router = $router;
         $this->template = $template;
         $this->containerName = $containerName;
+        $this->authentication = $authentication;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
-
         $route = $request->getAttribute(RouteResult::class);
+
+        if ($this->authentication === false) {
+            return new RedirectResponse($this->router->generateUri('home'));
+        }
+
+        $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
 
         if ($session->has(UserInterface::class)) {
             if ($route->getMatchedRouteName() === 'logout') {
