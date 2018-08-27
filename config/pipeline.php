@@ -2,6 +2,7 @@
 
 declare (strict_types = 1);
 
+use App\Middleware\AuthMiddleware;
 use App\Middleware\UIMiddleware;
 use Psr\Container\ContainerInterface;
 use Zend\Expressive\Application;
@@ -44,6 +45,9 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // - $app->pipe('/docs', $apiDocMiddleware);
     // - $app->pipe('/files', $filesMiddleware);
     $app->pipe(SessionMiddleware::class);
+    if (isset($container->get('config')['authentication']['pdo'])) {
+        $app->pipe(AuthMiddleware::class);
+    }
     $app->pipe(UIMiddleware::class);
 
     // Register the routing middleware in the middleware pipeline.
