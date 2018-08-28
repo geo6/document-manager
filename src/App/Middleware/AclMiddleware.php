@@ -10,10 +10,24 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Expressive\Authentication\UserInterface;
 use Zend\Expressive\Session\SessionMiddleware;
+use Zend\Permissions\Acl\Acl;
+use Zend\Permissions\Acl\Role\GenericRole as Role;
+use Zend\Permissions\Acl\Resource\GenericResource as Resource;
 
-class AuthMiddleware implements MiddlewareInterface
+class AclMiddleware implements MiddlewareInterface
 {
-    public const AUTH_ATTRIBUTE = 'auth';
+    public const ACL_ATTRIBUTE = 'acl';
+
+    public const PERM_READ = 'read';
+    public const PERM_WRITE = 'write';
+    public const PERM_DELETE = 'delete';
+
+    private $acl;
+
+    public function __construct(Acl $acl)
+    {
+        $this->acl = $acl;
+    }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -28,6 +42,6 @@ class AuthMiddleware implements MiddlewareInterface
             );
         }
 
-        return $handler->handle($request/*->withAttribute(self::AUTH_ATTRIBUTE, [])*/);
+        return $handler->handle($request->withAttribute(self::ACL_ATTRIBUTE, $this->acl));
     }
 }

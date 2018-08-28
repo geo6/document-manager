@@ -15,6 +15,9 @@
             <th>Name</th>
             <th>Last modified</th>
             <th class="text-right">Size</th>
+            {% if permissions.delete %}
+            <th></th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
@@ -34,6 +37,9 @@
                 </span>
             </td>
             <td></td>
+            {% if permissions.delete %}
+            <td></td>
+            {% endif %}
         </tr>
         {% endfor %}
         {% for f in content.files %}
@@ -69,6 +75,14 @@
                 </span>
             </td>
             <td class="text-right">{{ f.getReadableSize(0) }}</td>
+            {% if permissions.delete %}
+            <td class="text-center">
+                <a href="#" class="text-danger" style="text-decoration: none;">
+                    <i class="far fa-trash-alt"></i>
+                    Delete
+                </a>
+            </td>
+            {% endif %}
         </tr>
         {% endfor %}
     </tbody>

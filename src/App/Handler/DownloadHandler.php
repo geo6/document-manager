@@ -4,6 +4,7 @@ declare (strict_types = 1);
 
 namespace App\Handler;
 
+use App\Middleware\AclMiddleware;
 use App\Model\Document;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -49,6 +50,7 @@ class DownloadHandler implements RequestHandlerInterface
             }
 
             $user = $session->get(UserInterface::class);
+            $acl = $request->getAttribute(AclMiddleware::ACL_ATTRIBUTE);
         }
 
         $route = $request->getAttribute(RouteResult::class);
@@ -59,17 +61,18 @@ class DownloadHandler implements RequestHandlerInterface
         $file = 'data/' . $path;
 
         $pathExploded = explode('/', $path);
-        if ($pathExploded[0] === 'roles' &&
-            (!isset($user) || (isset($pathExploded[1]) && !in_array($pathExploded[1], $user['roles'])))
-        ) {
-            return (new HtmlResponse($this->template->render('error::error', [
-                'status' => 403,
-                'reason' => 'Forbidden',
-            ])))->withStatus(403);
+
+        $access = true;
+        if (isset($user, $acl)) {
+            if ($pathExploded[0] === 'public' && $acl->hasResource('directory.public')) {
+                $access = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_READ);
+            } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.' . $pathExploded[1])) {
+                $access = $acl->isAllowed($user['username'], 'directory.roles.' . $pathExploded[1], AclMiddleware::PERM_READ);
+            } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.' . $pathExploded[1])) {
+                $access = $acl->isAllowed($user['username'], 'directory.users.' . $pathExploded[1], AclMiddleware::PERM_READ);
+            }
         }
-        if ($pathExploded[0] === 'users' &&
-            (!isset($user) || (isset($pathExploded[1]) && $pathExploded[1] !== $user['username']))
-        ) {
+        if ($access !== true) {
             return (new HtmlResponse($this->template->render('error::error', [
                 'status' => 403,
                 'reason' => 'Forbidden',

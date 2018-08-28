@@ -44,6 +44,7 @@
         "zendframework/zend-expressive-session": "^1.0",
         "zendframework/zend-expressive-session-ext": "^1.1",
         "zendframework/zend-expressive-twigrenderer": "^2.0",
+        "zendframework/zend-permissions-acl": "^2.7",
         "zendframework/zend-servicemanager": "^3.3",
         "zendframework/zend-stdlib": "^3.1"
     },

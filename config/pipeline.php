@@ -2,7 +2,7 @@
 
 declare (strict_types = 1);
 
-use App\Middleware\AuthMiddleware;
+use App\Middleware\AclMiddleware;
 use App\Middleware\UIMiddleware;
 use Psr\Container\ContainerInterface;
 use Zend\Expressive\Application;
@@ -46,7 +46,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // - $app->pipe('/files', $filesMiddleware);
     $app->pipe(SessionMiddleware::class);
     if (isset($container->get('config')['authentication']['pdo'])) {
-        $app->pipe(AuthMiddleware::class);
+        $app->pipe(AclMiddleware::class);
     }
     $app->pipe(UIMiddleware::class);
 

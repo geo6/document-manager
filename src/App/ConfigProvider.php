@@ -36,6 +36,7 @@ class ConfigProvider
                 //Handler\PingHandler::class => Handler\PingHandler::class,
             ],
             'factories'  => [
+                Middleware\AclMiddleware::class => Middleware\AclMiddlewareFactory::class,
                 Middleware\UIMiddleware::class => Middleware\UIMiddlewareFactory::class,
 
                 Handler\HomePageHandler::class => Handler\HomePageHandlerFactory::class,
