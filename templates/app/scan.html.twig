@@ -1,7 +1,7 @@
 {% extends '@layout/default.html.twig' %}
 
 {% block title %}
-{{ path }}
+{{ path | split('/') | last }}
 {% endblock %}
 
 {% block content %}
