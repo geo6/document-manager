@@ -16,6 +16,7 @@ $aggregator = new ConfigAggregator([
     // Include cache configuration
     new ArrayProvider($cacheConfig),
 
+    \Blast\BaseUrl\ConfigProvider::class,
     \Zend\Expressive\ConfigProvider::class,
     \Zend\Expressive\Authentication\ConfigProvider::class,
     \Zend\Expressive\Authentication\Session\ConfigProvider::class,

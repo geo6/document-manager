@@ -30,6 +30,7 @@
         "php": "^7.1",
         "ext-exif": "*",
         "ext-fileinfo": "*",
+        "mtymek/blast-base-url": "^1.0",
         "ralouphie/mimey": "^2.0",
         "symfony/finder": "^4.1",
         "vistag/human-readable": "dev-master",

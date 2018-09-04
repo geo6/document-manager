@@ -6,6 +6,7 @@ namespace App\Handler;
 
 use App\Middleware\AclMiddleware;
 use App\Model\Document;
+use Blast\BaseUrl\BaseUrlMiddleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -40,10 +41,12 @@ class HomePageHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        $basePath = $request->getAttribute(BaseUrlMiddleware::BASE_PATH);
+
         if ($this->authentication !== false) {
             $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
             if (!$session->has(UserInterface::class)) {
-                return new RedirectResponse($this->router->generateUri('login'));
+                return new RedirectResponse($basePath . $this->router->generateUri('login'));
             }
 
             $user = $session->get(UserInterface::class);

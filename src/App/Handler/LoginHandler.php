@@ -4,6 +4,7 @@ declare (strict_types = 1);
 
 namespace App\Handler;
 
+use Blast\BaseUrl\BaseUrlMiddleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -41,9 +42,10 @@ class LoginHandler implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $route = $request->getAttribute(RouteResult::class);
+        $basePath = $request->getAttribute(BaseUrlMiddleware::BASE_PATH);
 
         if ($this->authentication === false) {
-            return new RedirectResponse($this->router->generateUri('home'));
+            return new RedirectResponse($basePath . $this->router->generateUri('home'));
         }
 
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
@@ -53,7 +55,7 @@ class LoginHandler implements MiddlewareInterface
                 $session->clear();
             }
 
-            return new RedirectResponse($this->router->generateUri('home'));
+            return new RedirectResponse($basePath . $this->router->generateUri('home'));
         }
 
         $error = '';
@@ -61,7 +63,7 @@ class LoginHandler implements MiddlewareInterface
             $response = $handler->handle($request);
 
             if ($response->getStatusCode() !== 302) {
-                return new RedirectResponse($this->router->generateUri('home'));
+                return new RedirectResponse($basePath . $this->router->generateUri('home'));
             }
 
             $error = 'Login Failure, please try again';

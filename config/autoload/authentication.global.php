@@ -7,7 +7,7 @@ return [
     'authentication' => [
         'username' => 'username',
         'password' => 'password',
-        'redirect' => '/app/document-manager/login',
+        'redirect' => 'login',
     ],
 
 ];

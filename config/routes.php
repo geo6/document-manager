@@ -33,16 +33,16 @@ use Zend\Expressive\MiddlewareFactory;
  * );
  */
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
-    $app->get('/app/document-manager[/]', App\Handler\HomePageHandler::class, 'home');
-    $app->get('/app/document-manager/scan/{path:.+}', App\Handler\ScanHandler::class, 'scan');
-    $app->get('/app/document-manager/download/{path:.+}', App\Handler\DownloadHandler::class, 'download');
-    $app->get('/app/document-manager/view/{path:.+}', App\Handler\DownloadHandler::class, 'view');
+    $app->get('/', App\Handler\HomePageHandler::class, 'home');
+    $app->get('/scan/{path:.+}', App\Handler\ScanHandler::class, 'scan');
+    $app->get('/download/{path:.+}', App\Handler\DownloadHandler::class, 'download');
+    $app->get('/view/{path:.+}', App\Handler\DownloadHandler::class, 'view');
 
-    $app->route('/app/document-manager/login', [
+    $app->route('/login', [
         App\Handler\LoginHandler::class,
         Zend\Expressive\Authentication\AuthenticationMiddleware::class,
     ], ['GET', 'POST'], 'login');
-    $app->get('/app/document-manager/logout', App\Handler\LoginHandler::class, 'logout');
+    $app->get('/logout', App\Handler\LoginHandler::class, 'logout');
 
     //$app->get('/api/ping', App\Handler\PingHandler::class, 'api.ping');
 };
