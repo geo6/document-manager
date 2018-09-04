@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Middleware;
 
@@ -25,7 +25,7 @@ class AclMiddlewareFactory
 
         $this->injectUsersRoles($acl);
 
-        /**
+        /*
          * Add resource "public".
          * Add READ access for everyone to directory "public".
          */
@@ -37,7 +37,7 @@ class AclMiddlewareFactory
                 [AclMiddleware::PERM_READ]
             );
         }
-        /**
+        /*
          * Add role "role".
          * Add resource directory "role".
          * Add READ access for each role to its directory.
@@ -51,15 +51,15 @@ class AclMiddlewareFactory
                     $acl->addRole($role);
                 }
 
-                $acl->addResource('directory.roles.' . $role);
+                $acl->addResource('directory.roles.'.$role);
                 $acl->allow(
                     $role,
-                    'directory.roles.' . $role,
+                    'directory.roles.'.$role,
                     [AclMiddleware::PERM_READ]
                 );
             }
         }
-        /**
+        /*
          * Add role "username".
          * Add resource directory "username".
          * Add READ, WRITE, DELETE access for each user on its directory.
@@ -73,10 +73,10 @@ class AclMiddlewareFactory
                     $acl->addRole($user);
                 }
 
-                $acl->addResource('directory.users.' . $user);
+                $acl->addResource('directory.users.'.$user);
                 $acl->allow(
                     $user,
-                    'directory.users.' . $user,
+                    'directory.users.'.$user,
                     [AclMiddleware::PERM_READ, AclMiddleware::PERM_WRITE, AclMiddleware::PERM_DELETE]
                 );
             }
@@ -129,7 +129,7 @@ class AclMiddlewareFactory
         );
 
         $sqlUser = sprintf(
-            "SELECT %s FROM %s",
+            'SELECT %s FROM %s',
             $config['field']['identity'],
             $config['table']
         );
@@ -137,7 +137,7 @@ class AclMiddlewareFactory
 
         if (false === $stmtUser) {
             throw new AuthenticationException\RuntimeException(
-                'An error occurred when preparing to fetch user details from ' .
+                'An error occurred when preparing to fetch user details from '.
                 'the repository; please verify your configuration'
             );
         }
@@ -152,6 +152,7 @@ class AclMiddlewareFactory
                         'The sql_get_roles configuration setting must include an :identity parameter'
                     );
                 }
+
                 try {
                     $stmtRoles = $pdo->prepare($config['sql_get_roles']);
                 } catch (PDOException $e) {
@@ -200,6 +201,7 @@ class AclMiddlewareFactory
                     }
                 }
             }
+
             try {
                 $acl->addRole($role, $parents);
             } catch (AclExceptionInterface $e) {

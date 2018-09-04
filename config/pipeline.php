@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 use App\Middleware\AclMiddleware;
 use App\Middleware\UIMiddleware;
@@ -19,7 +19,7 @@ use Zend\Expressive\Router\Middleware\RouteMiddleware;
 use Zend\Expressive\Session\SessionMiddleware;
 use Zend\Stratigility\Middleware\ErrorHandler;
 
-/**
+/*
  * Setup middleware pipeline:
  */
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {

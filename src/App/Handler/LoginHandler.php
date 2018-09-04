@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Handler;
 
@@ -45,7 +45,7 @@ class LoginHandler implements MiddlewareInterface
         $basePath = $request->getAttribute(BaseUrlMiddleware::BASE_PATH);
 
         if ($this->authentication === false) {
-            return new RedirectResponse($basePath . $this->router->generateUri('home'));
+            return new RedirectResponse($basePath.$this->router->generateUri('home'));
         }
 
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
@@ -55,7 +55,7 @@ class LoginHandler implements MiddlewareInterface
                 $session->clear();
             }
 
-            return new RedirectResponse($basePath . $this->router->generateUri('home'));
+            return new RedirectResponse($basePath.$this->router->generateUri('home'));
         }
 
         $error = '';
@@ -63,7 +63,7 @@ class LoginHandler implements MiddlewareInterface
             $response = $handler->handle($request);
 
             if ($response->getStatusCode() !== 302) {
-                return new RedirectResponse($basePath . $this->router->generateUri('home'));
+                return new RedirectResponse($basePath.$this->router->generateUri('home'));
             }
 
             $error = 'Login Failure, please try again';
@@ -72,6 +72,7 @@ class LoginHandler implements MiddlewareInterface
         $data = [
             'error' => $error,
         ];
+
         return new HtmlResponse($this->template->render('app::login', $data));
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Handler;
 
@@ -47,7 +47,7 @@ class ScanHandler implements RequestHandlerInterface
         if ($this->authentication !== false) {
             $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
             if (!$session->has(UserInterface::class)) {
-                return new RedirectResponse($basePath . $this->router->generateUri('login'));
+                return new RedirectResponse($basePath.$this->router->generateUri('login'));
             }
 
             $user = $session->get(UserInterface::class);
@@ -62,7 +62,7 @@ class ScanHandler implements RequestHandlerInterface
         $breadcrumb = [];
         $content = [
             'directories' => [],
-            'files' => [],
+            'files'       => [],
         ];
         $images = [];
 
@@ -82,12 +82,12 @@ class ScanHandler implements RequestHandlerInterface
             if ($pathExploded[0] === 'public' && $acl->hasResource('directory.public')) {
                 $access = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_READ);
                 $delete = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_DELETE);
-            } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.' . $pathExploded[1])) {
-                $access = $acl->isAllowed($user['username'], 'directory.roles.' . $pathExploded[1], AclMiddleware::PERM_READ);
-                $delete = $acl->isAllowed($user['username'], 'directory.roles.' . $pathExploded[1], AclMiddleware::PERM_DELETE);
-            } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.' . $pathExploded[1])) {
-                $access = $acl->isAllowed($user['username'], 'directory.users.' . $pathExploded[1], AclMiddleware::PERM_READ);
-                $delete = $acl->isAllowed($user['username'], 'directory.users.' . $pathExploded[1], AclMiddleware::PERM_DELETE);
+            } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.'.$pathExploded[1])) {
+                $access = $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_READ);
+                $delete = $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_DELETE);
+            } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.'.$pathExploded[1])) {
+                $access = $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_READ);
+                $delete = $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_DELETE);
             }
         }
         if ($access !== true) {
@@ -97,15 +97,15 @@ class ScanHandler implements RequestHandlerInterface
             ])))->withStatus(403);
         }
 
-        if (is_dir('data/' . $path) && is_readable('data/' . $path)) {
+        if (is_dir('data/'.$path) && is_readable('data/'.$path)) {
             if ($path === 'roles') {
                 if (isset($user)) {
                     foreach ($user['roles'] as $role) {
-                        $directoryRole = 'data/roles/' . $role;
+                        $directoryRole = 'data/roles/'.$role;
 
                         if (is_dir($directoryRole) &&
                             is_readable($directoryRole) &&
-                            $acl->isAllowed($user['username'], 'directory.roles.' . $role, AclMiddleware::PERM_READ)
+                            $acl->isAllowed($user['username'], 'directory.roles.'.$role, AclMiddleware::PERM_READ)
                         ) {
                             $content['directories'][] = new Document($directoryRole);
                         }
@@ -113,11 +113,11 @@ class ScanHandler implements RequestHandlerInterface
                 }
             } elseif (isset($user) && $path === 'users') {
                 if (isset($user)) {
-                    $directoryUser = 'data/users/' . $user['username'];
+                    $directoryUser = 'data/users/'.$user['username'];
 
                     if (is_dir($directoryUser) &&
                         is_readable($directoryUser) &&
-                        $acl->isAllowed($user['username'], 'directory.users.' . $user['username'], AclMiddleware::PERM_READ)
+                        $acl->isAllowed($user['username'], 'directory.users.'.$user['username'], AclMiddleware::PERM_READ)
                     ) {
                         $content['directories'][] = new Document($directoryUser);
                     }
@@ -126,7 +126,7 @@ class ScanHandler implements RequestHandlerInterface
                 $finder = new Finder();
                 $finder->ignoreUnreadableDirs();
                 $finder->followLinks();
-                $finder->in('data/' . $path);
+                $finder->in('data/'.$path);
                 $finder->depth(0);
                 $finder->notName('*.info');
                 $finder->sortByName();
@@ -150,14 +150,15 @@ class ScanHandler implements RequestHandlerInterface
         }
 
         $data = [
-            'path' => $path,
-            'breadcrumb' => $breadcrumb,
-            'content' => $content,
-            'images' => $images,
+            'path'        => $path,
+            'breadcrumb'  => $breadcrumb,
+            'content'     => $content,
+            'images'      => $images,
             'permissions' => [
                 AclMiddleware::PERM_DELETE => $delete,
             ],
         ];
+
         return new HtmlResponse($this->template->render('app::scan', $data));
     }
 }

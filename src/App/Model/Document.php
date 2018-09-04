@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Model;
 
@@ -17,9 +17,6 @@ class Document extends SplFileInfo
         parent::__construct($filename);
     }
 
-    /**
-     *
-     */
     public function getEXIF()
     {
         if ($this->isReadable() && $this->getSize() > 0 && $this->isImage()) {
@@ -29,13 +26,10 @@ class Document extends SplFileInfo
         return false;
     }
 
-    /**
-     *
-     */
     public function getFontAwesomeIcon(): string
     {
         $mime = $this->getMimeType();
-        $mimes = new MimeTypes;
+        $mimes = new MimeTypes();
 
         if (preg_match('/text\/.+/', $mime) === 1) {
             return 'fa-file-alt';
@@ -58,12 +52,9 @@ class Document extends SplFileInfo
         return $mime;
     }
 
-    /**
-     *
-     */
     public function getInfo()
     {
-        $file = $this->getRealPath() . '.info';
+        $file = $this->getRealPath().'.info';
 
         if (file_exists($file)) {
             return file_get_contents($file);
@@ -72,13 +63,10 @@ class Document extends SplFileInfo
         return false;
     }
 
-    /**
-     *
-     */
     public function getMimeType()
     {
         if ($this->isDir()) {
-            return null;
+            return;
         } elseif (!$this->isReadable()) {
             return false;
         } else {
@@ -108,23 +96,17 @@ class Document extends SplFileInfo
         $ext = ['o', 'Ko', 'Mo', 'Go', 'To', 'Po', 'Eo', 'Zo', 'Yo'];
         $factor = floor((strlen($size) - 1) / 3);
 
-        return sprintf("%.{$decimals}f ", $size / pow(1024, $factor)) . @$ext[$factor];
+        return sprintf("%.{$decimals}f ", $size / pow(1024, $factor)).@$ext[$factor];
     }
 
-    /**
-     *
-     */
     public function getRelativePath(): string
     {
         $path = $this->getRealPath();
         $root = (new SplFileInfo('data'))->getRealPath();
 
-        return str_replace($root . '/', '', $path);
+        return str_replace($root.'/', '', $path);
     }
 
-    /**
-     *
-     */
     public function isImage(): bool
     {
         $mime = $this->getMimeType();

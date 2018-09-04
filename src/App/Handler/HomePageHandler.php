@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Handler;
 
@@ -46,7 +46,7 @@ class HomePageHandler implements RequestHandlerInterface
         if ($this->authentication !== false) {
             $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
             if (!$session->has(UserInterface::class)) {
-                return new RedirectResponse($basePath . $this->router->generateUri('login'));
+                return new RedirectResponse($basePath.$this->router->generateUri('login'));
             }
 
             $user = $session->get(UserInterface::class);
@@ -56,8 +56,8 @@ class HomePageHandler implements RequestHandlerInterface
         $data = [
             'directories' => [
                 'public' => null,
-                'roles' => [],
-                'user' => null,
+                'roles'  => [],
+                'user'   => null,
             ],
         ];
 
@@ -68,18 +68,18 @@ class HomePageHandler implements RequestHandlerInterface
         }
         if (isset($user, $acl)) {
             foreach ($user['roles'] as $role) {
-                if (is_dir('data/roles/' . $role) &&
-                    is_readable('data/roles/' . $role) &&
-                    $acl->isAllowed($user['username'], 'directory.roles.' . $role, AclMiddleware::PERM_READ)
+                if (is_dir('data/roles/'.$role) &&
+                    is_readable('data/roles/'.$role) &&
+                    $acl->isAllowed($user['username'], 'directory.roles.'.$role, AclMiddleware::PERM_READ)
                 ) {
-                    $data['directories']['roles'][] = new Document('data/roles/' . $role);
+                    $data['directories']['roles'][] = new Document('data/roles/'.$role);
                 }
             }
-            if (is_dir('data/users/' . $user['username']) &&
-                is_readable('data/users/' . $user['username']) &&
-                $acl->isAllowed($user['username'], 'directory.users.' . $user['username'], AclMiddleware::PERM_READ)
+            if (is_dir('data/users/'.$user['username']) &&
+                is_readable('data/users/'.$user['username']) &&
+                $acl->isAllowed($user['username'], 'directory.users.'.$user['username'], AclMiddleware::PERM_READ)
             ) {
-                $data['directories']['user'] = new Document('data/users/' . $user['username']);
+                $data['directories']['user'] = new Document('data/users/'.$user['username']);
             }
         }
 
