@@ -1,5 +1,3 @@
-/*global $*/
-
 window.app = window.app || {};
 
 $(document).ready(function() {
