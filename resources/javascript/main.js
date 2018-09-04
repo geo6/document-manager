@@ -1,7 +1,5 @@
 /*global $*/
 
-import './fontawesome';
-
 window.app = window.app || {};
 
 $(document).ready(function() {
