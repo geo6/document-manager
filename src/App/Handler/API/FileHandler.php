@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Handler\API;
 
@@ -24,8 +24,8 @@ class FileHandler implements RequestHandlerInterface
         $method = $request->getMethod();
         $params = $request->getParsedBody();
 
-        if (isset($params['path']) && file_exists('data/' . $params['path'])) {
-            $document = new Document('data/' . $params['path']);
+        if (isset($params['path']) && file_exists('data/'.$params['path'])) {
+            $document = new Document('data/'.$params['path']);
 
             $data = [
                 'path'      => $document->getRealPath(),
@@ -36,7 +36,7 @@ class FileHandler implements RequestHandlerInterface
 
             switch ($method) {
                 case 'DELETE':
-                    $data['deleted'] = @unlink('data/' . $params['path']);
+                    $data['deleted'] = @unlink('data/'.$params['path']);
 
                     $log = ['file' => $data['path']];
 

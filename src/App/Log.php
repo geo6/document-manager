@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App;
 
@@ -14,7 +14,7 @@ class Log
 
     public function __construct()
     {
-        $this->path = 'data/log/' . date('Y') . '/' . date('Ym') . '.log';
+        $this->path = 'data/log/'.date('Y').'/'.date('Ym').'.log';
 
         $directory = dirname($this->path);
         if (!file_exists($directory) || !is_dir($directory)) {
