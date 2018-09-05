@@ -38,11 +38,11 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->get('/download/{path:.+}', App\Handler\DownloadHandler::class, 'download');
     $app->get('/view/{path:.+}', App\Handler\DownloadHandler::class, 'view');
 
+    $app->get('/api/ping', App\Handler\API\PingHandler::class, 'api.ping');
+
     $app->route('/login', [
         App\Handler\LoginHandler::class,
         Zend\Expressive\Authentication\AuthenticationMiddleware::class,
     ], ['GET', 'POST'], 'login');
     $app->get('/logout', App\Handler\LoginHandler::class, 'logout');
-
-    //$app->get('/api/ping', App\Handler\PingHandler::class, 'api.ping');
 };
