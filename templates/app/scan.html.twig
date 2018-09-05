@@ -49,7 +49,7 @@
             </td>
             <td>
                 {% if f.isImage() %}
-                <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal" data-toggle="modal" class="float-right text-muted" style="text-decoration: none;">
+                <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal-view" data-toggle="modal" class="float-right text-muted" style="text-decoration: none;">
                     <i class="far fa-eye"></i>
                     View
                 </a>
@@ -102,6 +102,6 @@
     {{ content.files|length }} file(s)
 </p>
 
-{{ include("@app/modal.html.twig") }}
+{{ include("@app/modal-view.html.twig") }}
 
 {% endblock %}

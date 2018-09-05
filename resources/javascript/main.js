@@ -1,9 +1,9 @@
 window.app = window.app || {};
 
 $(document).ready(() => {
-    $('#modal').on('show.bs.modal', (event) => {
+    $('#modal-view').on('show.bs.modal', (event) => {
         const link = event.relatedTarget;
-        const index = $('a[data-target="#modal"]').index(link);
+        const index = $('a[data-target="#modal-view"]').index(link);
 
         $('#carousel').carousel(index);
     });
