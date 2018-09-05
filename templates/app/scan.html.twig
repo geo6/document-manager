@@ -43,7 +43,7 @@
         </tr>
         {% endfor %}
         {% for f in content.files %}
-        <tr>
+        <tr data-path="{{ f.getRelativePath() }}">
             <td class="text-center">
                 <i class="far {{ f.getFontAwesomeIcon() }}" title="{{ f.getMimeType() }}"></i>
             </td>
@@ -77,10 +77,17 @@
             <td class="text-right">{{ f.getReadableSize(0) }}</td>
             {% if permissions.delete %}
             <td class="text-center">
-                <a href="#" class="text-danger" style="text-decoration: none;">
+                {% if f.isRemovable() %}
+                <a href="{{ path('api.file') }}" class="text-danger btn-delete" style="text-decoration: none;">
                     <i class="far fa-trash-alt"></i>
                     Delete
                 </a>
+                {% else %}
+                <span class="text-muted" title="Permission denied" style="cursor: help;">
+                    <i class="far fa-trash-alt"></i>
+                    Delete
+                </span>
+                {% endif %}
             </td>
             {% endif %}
         </tr>

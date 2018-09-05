@@ -17,6 +17,11 @@ class Document extends SplFileInfo
         parent::__construct($filename);
     }
 
+    public function isRemovable(): bool
+    {
+        return is_writable(dirname($this->getRealPath()));
+    }
+
     public function getEXIF()
     {
         if ($this->isReadable() && $this->getSize() > 0 && $this->isImage()) {

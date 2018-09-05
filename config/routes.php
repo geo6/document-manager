@@ -39,6 +39,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->get('/view/{path:.+}', App\Handler\DownloadHandler::class, 'view');
 
     $app->get('/api/ping', App\Handler\API\PingHandler::class, 'api.ping');
+    $app->delete('/api/file', App\Handler\API\FileHandler::class, 'api.file');
 
     $app->route('/login', [
         App\Handler\LoginHandler::class,

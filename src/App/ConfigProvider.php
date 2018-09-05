@@ -32,6 +32,7 @@ class ConfigProvider
     {
         return [
             'invokables' => [
+                Handler\API\FileHandler::class => Handler\API\FileHandler::class,
                 Handler\API\PingHandler::class => Handler\API\PingHandler::class,
             ],
             'factories'  => [
