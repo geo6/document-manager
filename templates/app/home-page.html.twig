@@ -40,21 +40,21 @@ Home
             </td>
         </tr>
         {% endfor %}
-        {% if not directories.user is null %}
+        {% for d in directories.users %}
         <tr>
             <td class="text-center">
                 <i class="fas fa-user"></i>
             </td>
             <td>
-                <a href="{{ path('scan', {'path': directories.user.getRelativePath()}) }}">
-                    {{ directories.user.getFilename() }}
+                <a href="{{ path('scan', {'path': d.getRelativePath()}) }}">
+                    {{ d.getFilename() }}
                 </a>
             </td>
             <td class="text-info">
                 This directory is only accessible to you.
             </td>
         </tr>
-        {% endif %}
+        {% endfor %}
     </tbody>
 </table>
 

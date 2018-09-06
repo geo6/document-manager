@@ -10,6 +10,7 @@ use Blast\BaseUrl\BaseUrlMiddleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Symfony\Component\Finder\Finder;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Authentication\UserInterface;
@@ -67,19 +68,40 @@ class HomePageHandler implements RequestHandlerInterface
             }
         }
         if (isset($user, $acl)) {
-            foreach ($user['roles'] as $role) {
-                if (is_dir('data/roles/'.$role) &&
-                    is_readable('data/roles/'.$role) &&
-                    $acl->isAllowed($user['username'], 'directory.roles.'.$role, AclMiddleware::PERM_READ)
-                ) {
-                    $data['directories']['roles'][] = new Document('data/roles/'.$role);
+            $finder = new Finder();
+            $finder->ignoreUnreadableDirs();
+            $finder->in('data/roles');
+            $finder->depth(0);
+            $finder->sortByName();
+
+            foreach ($finder->directories() as $d) {
+                $document = new Document($d->getPathname());
+
+                if ($acl->isAllowed(
+                    $user['username'],
+                    'directory.roles.'.$document->getFilename(),
+                    AclMiddleware::PERM_READ
+                )) {
+                    $data['directories']['roles'][] = $document;
                 }
             }
-            if (is_dir('data/users/'.$user['username']) &&
-                is_readable('data/users/'.$user['username']) &&
-                $acl->isAllowed($user['username'], 'directory.users.'.$user['username'], AclMiddleware::PERM_READ)
-            ) {
-                $data['directories']['user'] = new Document('data/users/'.$user['username']);
+
+            $finder = new Finder();
+            $finder->ignoreUnreadableDirs();
+            $finder->in('data/users');
+            $finder->depth(0);
+            $finder->sortByName();
+
+            foreach ($finder->directories() as $d) {
+                $document = new Document($d->getPathname());
+
+                if ($acl->isAllowed(
+                    $user['username'],
+                    'directory.users.'.$document->getFilename(),
+                    AclMiddleware::PERM_READ
+                )) {
+                    $data['directories']['users'][] = $document;
+                }
             }
         }
 
