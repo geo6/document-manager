@@ -125,7 +125,6 @@ class ScanHandler implements RequestHandlerInterface
             } else {
                 $finder = new Finder();
                 $finder->ignoreUnreadableDirs();
-                $finder->followLinks();
                 $finder->in('data/'.$path);
                 $finder->depth(0);
                 $finder->notName('*.info');
