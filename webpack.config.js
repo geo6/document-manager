@@ -12,14 +12,6 @@ module.exports = (env, options) => {
             path: path.resolve(__dirname, 'public/js')
         },
         module: {
-            rules: [{
-                test: /\.css$/,
-                use: [{
-                    loader: 'style-loader'
-                }, {
-                    loader: 'css-loader'
-                }]
-            }]
         },
         plugins: [
             // See https://github.com/mlwilkerson/uglify-es-terser-92percent-repro/
