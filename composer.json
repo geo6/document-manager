@@ -70,7 +70,8 @@
     },
     "scripts": {
         "post-create-project-cmd": [
-            "@development-enable"
+            "@development-enable",
+            "npm install"
         ],
         "development-disable": "zf-development-mode disable",
         "development-enable": "zf-development-mode enable",
