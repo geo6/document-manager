@@ -58,7 +58,7 @@ class HomePageHandler implements RequestHandlerInterface
             'directories' => [
                 'public' => null,
                 'roles'  => [],
-                'user'   => [],
+                'users'  => [],
             ],
         ];
 
