@@ -78,16 +78,20 @@ class ScanHandler implements RequestHandlerInterface
 
         $access = true;
         $delete = false;
+        $write = false;
         if (isset($user, $acl)) {
             if ($pathExploded[0] === 'public' && $acl->hasResource('directory.public')) {
                 $access = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_READ);
                 $delete = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_DELETE);
+                $write = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_WRITE);
             } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.'.$pathExploded[1])) {
                 $access = $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_READ);
                 $delete = $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_DELETE);
+                $write = $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_WRITE);
             } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.'.$pathExploded[1])) {
                 $access = $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_READ);
                 $delete = $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_DELETE);
+                $write = $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_WRITE);
             }
         }
         if ($access !== true) {
@@ -159,6 +163,7 @@ class ScanHandler implements RequestHandlerInterface
             'images'      => $images,
             'permissions' => [
                 AclMiddleware::PERM_DELETE => $delete,
+                AclMiddleware::PERM_WRITE  => $write,
             ],
         ];
 

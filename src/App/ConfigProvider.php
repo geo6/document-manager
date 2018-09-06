@@ -34,6 +34,7 @@ class ConfigProvider
             'invokables' => [
                 Handler\API\FileHandler::class => Handler\API\FileHandler::class,
                 Handler\API\PingHandler::class => Handler\API\PingHandler::class,
+                Handler\API\UploadHandler::class => Handler\API\UploadHandler::class,
             ],
             'factories'  => [
                 Middleware\AclMiddleware::class => Middleware\AclMiddlewareFactory::class,

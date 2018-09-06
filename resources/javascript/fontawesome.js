@@ -12,16 +12,19 @@ import {
     faFilePdf,
     faFilePowerpoint,
     faFileWord,
+    faPlusSquare,
     faTrashAlt,
     faUserCircle
 } from '@fortawesome/free-regular-svg-icons';
 import {
     faCaretRight,
     faCloud,
+    faFileUpload,
     faFolder,
     faHome,
     faSignInAlt,
     faSignOutAlt,
+    faUpload,
     faUser,
     faUsers
 } from '@fortawesome/free-solid-svg-icons';
@@ -37,12 +40,15 @@ library.add(
     faFileImage,
     faFilePdf,
     faFilePowerpoint,
+    faFileUpload,
     faFileWord,
     faFolder,
     faHome,
+    faPlusSquare,
     faSignInAlt,
     faSignOutAlt,
     faTrashAlt,
+    faUpload,
     faUser,
     faUserCircle,
     faUsers

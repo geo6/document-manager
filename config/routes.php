@@ -40,6 +40,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
 
     $app->get('/api/ping', App\Handler\API\PingHandler::class, 'api.ping');
     $app->delete('/api/file', App\Handler\API\FileHandler::class, 'api.file');
+    $app->route('/api/upload', App\Handler\API\UploadHandler::class, ['GET', 'POST'], 'api.upload');
 
     $app->route('/login', [
         App\Handler\LoginHandler::class,

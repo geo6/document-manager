@@ -1,12 +1,33 @@
 {% extends '@layout/default.html.twig' %}
 
 {% block title %}
-{{ path|split('/')|last }}
+    {{ path|split('/')|last }}
 {% endblock %}
+
+{% block javascript %}
+<script>
+    window.app = {
+        api: '{{ path("api.upload") }}',
+        directory: '{{ path }}',
+        types: []
+    };
+</script>
+{% endblock %}
+
 
 {% block content %}
 
 {{ include("@app/breadcrumb.html.twig") }}
+
+{% if permissions.write %}
+<div>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#modal-upload">
+        <i class="fas fa-file-upload"></i>
+        Upload
+    </button>
+</div>
+<hr>
+{% endif %}
 
 <table class="table table-hover table-sm">
     <thead>
@@ -103,5 +124,6 @@
 </p>
 
 {{ include("@app/modal-view.html.twig") }}
+{{ include("@app/modal-upload.html.twig") }}
 
 {% endblock %}

@@ -1,6 +1,10 @@
+import initUpload from './upload';
+
 window.app = window.app || {};
 
 $(document).ready(() => {
+    initUpload();
+
     $('#modal-view').on('show.bs.modal', (event) => {
         const link = event.relatedTarget;
         const index = $('a[data-target="#modal-view"]').index(link);
@@ -32,8 +36,6 @@ $(document).ready(() => {
 
                 return response.json();
             }).then((data) => {
-                console.log(data);
-
                 if (data.deleted === true) {
                     $(event.target).closest('tr').remove();
                 } else {
