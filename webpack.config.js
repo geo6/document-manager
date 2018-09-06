@@ -25,6 +25,7 @@ module.exports = (env, options) => {
             // See https://github.com/mlwilkerson/uglify-es-terser-92percent-repro/
             new MinifyPlugin()
         ],
-        devtool: options.mode === 'development' ? 'eval-cheap-module-source-map' : 'source-map',
+        // Production : see https://github.com/webpack-contrib/babel-minify-webpack-plugin/issues/68
+        devtool: options.mode === 'development' ? 'eval-cheap-module-source-map' : false
     };
 };
