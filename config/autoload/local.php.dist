@@ -9,4 +9,15 @@
 declare(strict_types=1);
 
 return [
+
+    'twig' => [
+        'assets_url' => '/app/document-manager/',
+    ],
+
+    'authentication' => [
+    ],
+
+    'authorization' => [
+    ],
+
 ];
