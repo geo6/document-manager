@@ -19,13 +19,13 @@ class Document extends SplFileInfo
 
     public function isRemovable(): bool
     {
-        return is_writable(dirname($this->getRealPath()));
+        return is_writable(dirname($this->getPathname()));
     }
 
     public function getEXIF()
     {
         if ($this->isReadable() && $this->getSize() > 0 && $this->isImage()) {
-            return @exif_read_data($this->getRealPath());
+            return @exif_read_data($this->getPathname());
         }
 
         return false;
@@ -59,7 +59,7 @@ class Document extends SplFileInfo
 
     public function getInfo()
     {
-        $file = $this->getRealPath().'.info';
+        $file = $this->getPathname().'.info';
 
         if (file_exists($file)) {
             return file_get_contents($file);
@@ -75,7 +75,7 @@ class Document extends SplFileInfo
         } elseif (!$this->isReadable()) {
             return false;
         } else {
-            return mime_content_type($this->getRealPath());
+            return mime_content_type($this->getPathname());
         }
     }
 
@@ -106,8 +106,8 @@ class Document extends SplFileInfo
 
     public function getRelativePath(): string
     {
-        $path = $this->getRealPath();
-        $root = (new SplFileInfo('data'))->getRealPath();
+        $path = $this->getPathname();
+        $root = (new SplFileInfo('data'))->getPathname();
 
         return str_replace($root.'/', '', $path);
     }

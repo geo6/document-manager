@@ -28,7 +28,7 @@ class FileHandler implements RequestHandlerInterface
             $document = new Document('data/'.$params['path']);
 
             $data = [
-                'path'      => $document->getRealPath(),
+                'path'      => $document->getPathname(),
                 'readable'  => $document->isReadable(),
                 'writable'  => $document->isWritable(),
                 'removable' => $document->isRemovable(),

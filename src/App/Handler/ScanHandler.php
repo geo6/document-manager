@@ -132,7 +132,7 @@ class ScanHandler implements RequestHandlerInterface
                 $finder->sortByName();
 
                 foreach ($finder as $f) {
-                    $document = new Document($f->getRealPath());
+                    $document = new Document($f->getPathname());
 
                     if ($document->isDir()) {
                         $content['directories'][] = $document;
