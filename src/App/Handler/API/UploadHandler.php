@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Handler\API;
 
@@ -27,16 +27,16 @@ class UploadHandler implements RequestHandlerInterface
 
         $directory = $params['directory'];
 
-        $resumableIdentifier  = $params['resumableIdentifier'] ?? '';
-        $resumableFilename    = $params['resumableFilename'] ?? '';
+        $resumableIdentifier = $params['resumableIdentifier'] ?? '';
+        $resumableFilename = $params['resumableFilename'] ?? '';
         $resumableChunkNumber = $params['resumableChunkNumber'] ?? 0;
 
-        $tempDirectory = sys_get_temp_dir() . '/' . $resumableIdentifier;
+        $tempDirectory = sys_get_temp_dir().'/'.$resumableIdentifier;
         if (!file_exists($tempDirectory) || !is_dir($tempDirectory)) {
             $mkdir = mkdir($tempDirectory);
         }
 
-        $chunk = $tempDirectory . '/' . $resumableFilename . '.part.' . $resumableChunkNumber;
+        $chunk = $tempDirectory.'/'.$resumableFilename.'.part.'.$resumableChunkNumber;
 
         switch ($method) {
             case 'GET':
@@ -59,21 +59,21 @@ class UploadHandler implements RequestHandlerInterface
                     foreach ($files as $file) {
                         $file->moveTo($chunk);
 
-                        $resumableTotalSize   = $params['resumableTotalSize'] ?? 0;
+                        $resumableTotalSize = $params['resumableTotalSize'] ?? 0;
                         $resumableTotalChunks = $params['resumableTotalChunks'] ?? 0;
 
                         $uploadedSize = 0;
-                        $listChunks   = glob($tempDirectory . '/*.part.*');
+                        $listChunks = glob($tempDirectory.'/*.part.*');
                         foreach ($listChunks as $uploadedChunk) {
                             $uploadedSize += filesize($uploadedChunk);
                         }
 
                         if ($uploadedSize >= $resumableTotalSize) {
-                            $handle = fopen($tempDirectory . '/' . $resumableFilename, 'w');
+                            $handle = fopen($tempDirectory.'/'.$resumableFilename, 'w');
 
                             if ($handle !== false) {
                                 for ($i = 1; $i <= $resumableTotalChunks; $i++) {
-                                    $uploadedChunk = $tempDirectory . '/' . $resumableFilename . '.part.' . $i;
+                                    $uploadedChunk = $tempDirectory.'/'.$resumableFilename.'.part.'.$i;
 
                                     if (file_exists($uploadedChunk) && is_readable($uploadedChunk)) {
                                         $content = file_get_contents($uploadedChunk);
@@ -89,8 +89,8 @@ class UploadHandler implements RequestHandlerInterface
                                 fclose($handle);
 
                                 $rename = rename(
-                                    $tempDirectory . '/' . $resumableFilename,
-                                    'data/' . $directory . '/' . $resumableFilename
+                                    $tempDirectory.'/'.$resumableFilename,
+                                    'data/'.$directory.'/'.$resumableFilename
                                 );
 
                                 if ($rename === false) {
