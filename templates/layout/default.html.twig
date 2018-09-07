@@ -22,8 +22,8 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                {% if user is defined %}
                 <ul class="navbar-nav ml-auto">
+                {% if user is defined %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-user-circle"></i> {{ user.details.fullname }}
@@ -34,8 +34,13 @@
                             </a>
                         </div>
                     </li>
-                </ul>
                 {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/geo6/document-manager" target="_blank">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>

@@ -3,6 +3,9 @@ import {
     dom
 } from '@fortawesome/fontawesome-svg-core';
 import {
+    faGithub
+} from '@fortawesome/free-brands-svg-icons';
+import {
     faEye,
     faFile,
     faFileAlt,
@@ -43,6 +46,7 @@ library.add(
     faFileUpload,
     faFileWord,
     faFolder,
+    faGithub,
     faHome,
     faPlusSquare,
     faSignInAlt,
