@@ -32,13 +32,13 @@ class ConfigProvider
     {
         return [
             'invokables' => [
-                Handler\API\FileHandler::class   => Handler\API\FileHandler::class,
                 Handler\API\PingHandler::class   => Handler\API\PingHandler::class,
             ],
             'factories'  => [
                 Middleware\AclMiddleware::class => Middleware\AclMiddlewareFactory::class,
                 Middleware\UIMiddleware::class  => Middleware\UIMiddlewareFactory::class,
 
+                Handler\API\FileHandler::class   => Handler\API\FileHandlerFactory::class,
                 Handler\API\UploadHandler::class => Handler\API\UploadHandlerFactory::class,
 
                 Handler\HomePageHandler::class => Handler\HomePageHandlerFactory::class,
