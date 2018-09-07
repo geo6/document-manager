@@ -82,7 +82,9 @@ class UploadHandler implements RequestHandlerInterface
 
                                         @unlink($uploadedChunk);
                                     } else {
-                                        throw new Exception(sprintf('Unable to open chunk #%d of file "%s".', $i, $resumableFilename));
+                                        throw new Exception(
+                                            sprintf('Unable to open chunk #%d of file "%s".', $i, $resumableFilename)
+                                        );
                                     }
                                 }
 
@@ -94,14 +96,18 @@ class UploadHandler implements RequestHandlerInterface
                                 );
 
                                 if ($rename === false) {
-                                    throw new Exception(sprintf('Unable to move file to directory "%s".', $directory));
+                                    throw new Exception(
+                                        sprintf('Unable to move file to directory "%s".', $directory)
+                                    );
                                 }
 
                                 $data['success'] = true;
 
                                 rmdir($tempDirectory);
                             } else {
-                                throw new Exception(sprintf('Unable to write file "%s" in temporary folder.', $resumableFilename));
+                                throw new Exception(
+                                    sprintf('Unable to write file "%s" in temporary folder.', $resumableFilename)
+                                );
                             }
                         }
                     }
