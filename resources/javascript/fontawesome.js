@@ -13,8 +13,7 @@ import {
     faFilePowerpoint,
     faFileWord,
     faPlusSquare,
-    faTrashAlt,
-    faUserCircle
+    faTrashAlt
 } from '@fortawesome/free-regular-svg-icons';
 import {
     faCaretRight,
@@ -26,6 +25,7 @@ import {
     faSignOutAlt,
     faUpload,
     faUser,
+    faUserCircle,
     faUsers
 } from '@fortawesome/free-solid-svg-icons';
 
