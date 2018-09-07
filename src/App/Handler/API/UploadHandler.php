@@ -90,9 +90,16 @@ class UploadHandler implements RequestHandlerInterface
 
                                 fclose($handle);
 
+                                $i = 1;
+                                $new = 'data/'.$directory.'/'.$resumableFilename;
+                                $path = pathinfo($new);
+                                while (file_exists($new)) {
+                                    $new = $path['dirname'].'/'.$path['filename'].'.'.($i++).'.'.$path['extension'];
+                                }
+
                                 $rename = rename(
                                     $tempDirectory.'/'.$resumableFilename,
-                                    'data/'.$directory.'/'.$resumableFilename
+                                    $new
                                 );
 
                                 if ($rename === false) {
