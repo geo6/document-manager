@@ -23,7 +23,8 @@ function initResumableJS () {
         testChunks: true,
         query: {
             directory: window.app.directory
-        }
+        },
+        permanentErrors: [400, 401, 403, 404, 409, 415, 500, 501]
     });
 
     resumable.assignBrowse($('#btn-upload-browse'));
