@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Handler;
 
+use App\Log;
 use Blast\BaseUrl\BaseUrlMiddleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -16,6 +17,7 @@ use Zend\Expressive\Router;
 use Zend\Expressive\Router\RouteResult;
 use Zend\Expressive\Session\SessionMiddleware;
 use Zend\Expressive\Template;
+use Zend\Log\Logger;
 
 class LoginHandler implements MiddlewareInterface
 {
@@ -63,8 +65,14 @@ class LoginHandler implements MiddlewareInterface
             $response = $handler->handle($request);
 
             if ($response->getStatusCode() !== 302) {
+                $user = $session->get(UserInterface::class);
+
+                (new Log())->write('User "{username}" logged in.', ['username' => $user['username']], Logger::INFO);
+
                 return new RedirectResponse($basePath.$this->router->generateUri('home'));
             }
+
+            (new Log())->write('User "{username}" failed to log in.', ['username' => $_POST['username']], Logger::WARN);
 
             $error = 'Login Failure, please try again';
         }
