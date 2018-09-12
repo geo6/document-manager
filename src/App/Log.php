@@ -32,19 +32,10 @@ class Log
         //}
     }
 
-    public static function read(string $file): array
+    public function read(): array
     {
-        $directory = realpath(dirname($file));
-        if (!file_exists($directory) || !is_dir($directory) || !is_readable($directory)) {
-            throw new ErrorException(
-                sprintf(
-                    'The directory "%s" is not a valid directory to read log files.',
-                    $directory
-                )
-            );
-        }
         $logs = [];
-        $fp = fopen($file, 'r');
+        $fp = fopen($this->path, 'r');
         if ($fp) {
             while (($r = fgets($fp, 10240)) !== false) {
                 // Zend\Log : %timestamp% %priorityName% (%priority%): %message% %extra%

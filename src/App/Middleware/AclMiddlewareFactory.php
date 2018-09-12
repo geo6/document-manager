@@ -25,7 +25,12 @@ class AclMiddlewareFactory
 
         $this->injectUsersRoles($acl);
 
-        /*
+        /**
+         * Add resource "logs"
+         */
+        $acl->addResource('logs');
+
+        /**
          * Add resource "public".
          * Add READ access for everyone to directory "public".
          */
@@ -37,7 +42,7 @@ class AclMiddlewareFactory
                 [AclMiddleware::PERM_READ]
             );
         }
-        /*
+        /**
          * Add role "role".
          * Add resource directory "role".
          * Add READ access for each role to its directory.
@@ -59,7 +64,7 @@ class AclMiddlewareFactory
                 );
             }
         }
-        /*
+        /**
          * Add role "username".
          * Add resource directory "username".
          * Add READ, WRITE, DELETE access for each user on its directory.
@@ -240,13 +245,13 @@ class AclMiddlewareFactory
                 if (is_array($resources)) {
                     foreach ($resources as $key => $value) {
                         if (is_numeric($key)) {
-                            $acl->$type($role, $value, [AclMiddleware::PERM_READ, AclMiddleware::PERM_WRITE, AclMiddleware::PERM_DELETE]);
+                            $acl->$type($role, $value);
                         } else {
                             $acl->$type($role, $key, $value);
                         }
                     }
                 } else {
-                    $acl->$type($role, $resources, [AclMiddleware::PERM_READ, AclMiddleware::PERM_WRITE, AclMiddleware::PERM_DELETE]);
+                    $acl->$type($role, $resources);
                 }
             } catch (AclExceptionInterface $e) {
                 throw new AuthenticationException\InvalidConfigException($e->getMessage(), $e->getCode(), $e);

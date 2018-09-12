@@ -16,6 +16,6 @@ class UIMiddlewareFactory
         $router = $container->get(RouterInterface::class);
         $template = $container->get(TemplateRendererInterface::class);
 
-        return new UIMiddleware($router, $template, get_class($container));
+        return new UIMiddleware($router, $template);
     }
 }

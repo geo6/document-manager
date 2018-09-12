@@ -34,8 +34,9 @@ use Zend\Expressive\MiddlewareFactory;
  */
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
     $app->get('/', App\Handler\HomePageHandler::class, 'home');
-    $app->get('/scan/{path:.+}', App\Handler\ScanHandler::class, 'scan');
     $app->get('/download/{path:.+}', App\Handler\DownloadHandler::class, 'download');
+    $app->get('/logs', App\Handler\LogsHandler::class, 'logs');
+    $app->get('/scan/{path:.+}', App\Handler\ScanHandler::class, 'scan');
     $app->get('/view/{path:.+}', App\Handler\DownloadHandler::class, 'view');
 
     $app->get('/api/ping', App\Handler\API\PingHandler::class, 'api.ping');

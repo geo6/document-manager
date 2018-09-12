@@ -36,6 +36,17 @@ class UIMiddleware implements MiddlewareInterface
                 'user',
                 $user
             );
+
+            $user = $session->get(UserInterface::class);
+            $acl = $request->getAttribute(AclMiddleware::ACL_ATTRIBUTE);
+
+            $this->template->addDefaultParam(
+                $this->template::TEMPLATE_ALL,
+                'permissions',
+                [
+                    'logs' => $acl->isAllowed($user['username'], 'logs'),
+                ]
+            );
         }
 
         return $handler->handle($request);

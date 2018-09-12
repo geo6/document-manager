@@ -7,3 +7,28 @@ h1>.svg-inline--fa.fa-caret-right {
 #carousel {
     background-color: rgba(128, 128, 128, 0.5);
 }
+
+.log-notice {
+    background-color: rgb(190, 229, 235) !important;
+}
+.table-striped tbody tr.log-notice:nth-of-type(2n) {
+    background-color: rgba(190, 229, 235, 0.5) !important;
+}
+.log-warn {
+    background-color: rgb(255, 238, 186) !important;
+}
+.table-striped tbody tr.log-warn:nth-of-type(2n) {
+    background-color: rgba(255, 238, 186, 0.5) !important;
+}
+.log-err,
+.log-crit,
+.log-alert,
+.log-emerg {
+    background-color: rgb(245, 198, 203) !important;
+}
+.table-striped tbody tr.log-err:nth-of-type(2n),
+.table-striped tbody tr.log-crit:nth-of-type(2n),
+.table-striped tbody tr.log-alert:nth-of-type(2n),
+.table-striped tbody tr.log-emerg:nth-of-type(2n) {
+    background-color: rgba(245, 198, 203, 0.5) !important;
+}

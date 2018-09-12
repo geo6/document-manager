@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Handler\API;
 
+use App\Log;
 use App\Middleware\AclMiddleware;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
@@ -13,6 +14,7 @@ use Zend\Diactoros\Response\EmptyResponse;
 use Zend\Diactoros\Response\JsonResponse;
 use Zend\Expressive\Authentication\UserInterface;
 use Zend\Expressive\Session\SessionMiddleware;
+use Zend\Log\Logger;
 
 /**
  * @see https://github.com/23/resumable.js/blob/master/samples/Backend%20on%20PHP.md
@@ -154,6 +156,16 @@ class UploadHandler implements RequestHandlerInterface
                             }
                         }
                     }
+
+                    $log = ['file' => $new];
+
+                    if ($session->has(UserInterface::class)) {
+                        $user = $session->get(UserInterface::class);
+
+                        $log['username'] = $user['username'];
+                    }
+
+                    (new Log())->write('File "{file}" uploaded.', $log, Logger::NOTICE);
 
                     return new JsonResponse($data);
                 } catch (Exception $e) {

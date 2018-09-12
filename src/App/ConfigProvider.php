@@ -32,7 +32,7 @@ class ConfigProvider
     {
         return [
             'invokables' => [
-                Handler\API\PingHandler::class   => Handler\API\PingHandler::class,
+                Handler\API\PingHandler::class => Handler\API\PingHandler::class,
             ],
             'factories'  => [
                 Middleware\AclMiddleware::class => Middleware\AclMiddlewareFactory::class,
@@ -42,9 +42,10 @@ class ConfigProvider
                 Handler\API\UploadHandler::class => Handler\API\UploadHandlerFactory::class,
 
                 Handler\HomePageHandler::class => Handler\HomePageHandlerFactory::class,
-                Handler\ScanHandler::class     => Handler\ScanHandlerFactory::class,
                 Handler\DownloadHandler::class => Handler\DownloadHandlerFactory::class,
+                Handler\LogsHandler::class      => Handler\LogsHandlerFactory::class,
                 Handler\LoginHandler::class    => Handler\LoginHandlerFactory::class,
+                Handler\ScanHandler::class     => Handler\ScanHandlerFactory::class,
             ],
         ];
     }
