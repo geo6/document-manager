@@ -25,12 +25,12 @@ class AclMiddlewareFactory
 
         $this->injectUsersRoles($acl);
 
-        /**
+        /*
          * Add resource "logs"
          */
         $acl->addResource('logs');
 
-        /**
+        /*
          * Add resource "public".
          * Add READ access for everyone to directory "public".
          */
@@ -42,7 +42,7 @@ class AclMiddlewareFactory
                 [AclMiddleware::PERM_READ]
             );
         }
-        /**
+        /*
          * Add role "role".
          * Add resource directory "role".
          * Add READ access for each role to its directory.
@@ -64,7 +64,7 @@ class AclMiddlewareFactory
                 );
             }
         }
-        /**
+        /*
          * Add role "username".
          * Add resource directory "username".
          * Add READ, WRITE, DELETE access for each user on its directory.

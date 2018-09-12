@@ -41,11 +41,11 @@ class ConfigProvider
                 Handler\API\FileHandler::class   => Handler\API\FileHandlerFactory::class,
                 Handler\API\UploadHandler::class => Handler\API\UploadHandlerFactory::class,
 
-                Handler\HomePageHandler::class => Handler\HomePageHandlerFactory::class,
-                Handler\DownloadHandler::class => Handler\DownloadHandlerFactory::class,
+                Handler\HomePageHandler::class  => Handler\HomePageHandlerFactory::class,
+                Handler\DownloadHandler::class  => Handler\DownloadHandlerFactory::class,
                 Handler\LogsHandler::class      => Handler\LogsHandlerFactory::class,
-                Handler\LoginHandler::class    => Handler\LoginHandlerFactory::class,
-                Handler\ScanHandler::class     => Handler\ScanHandlerFactory::class,
+                Handler\LoginHandler::class     => Handler\LoginHandlerFactory::class,
+                Handler\ScanHandler::class      => Handler\ScanHandlerFactory::class,
             ],
         ];
     }

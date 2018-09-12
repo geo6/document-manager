@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Handler;
 
-use App\Middleware\AclMiddleware;
 use App\Log;
+use App\Middleware\AclMiddleware;
 use Blast\BaseUrl\BaseUrlMiddleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Symfony\Component\Finder\Finder;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Authentication\UserInterface;
