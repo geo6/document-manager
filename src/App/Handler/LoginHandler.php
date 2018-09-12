@@ -74,7 +74,7 @@ class LoginHandler implements MiddlewareInterface
 
             (new Log())->write('User "{username}" failed to log in.', ['username' => $_POST['username']], Logger::WARN);
 
-            $error = 'Login Failure, please try again';
+            $error = 'Login failure, please try again.';
         }
 
         $data = [
