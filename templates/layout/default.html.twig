@@ -23,7 +23,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                {% if permissions is defined and permissions.logs %}
+                {% if permissions.logs is defined and permissions.logs %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('logs') }}">
                             <i class="fas fa-receipt"></i>
