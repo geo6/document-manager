@@ -149,6 +149,16 @@ class UploadHandler implements RequestHandlerInterface
                                 $data['success'] = true;
 
                                 rmdir($tempDirectory);
+
+                                $log = ['file' => $new];
+
+                                if ($session->has(UserInterface::class)) {
+                                    $user = $session->get(UserInterface::class);
+
+                                    $log['username'] = $user['username'];
+                                }
+
+                                (new Log())->write('File "{file}" uploaded.', $log, Logger::NOTICE);
                             } else {
                                 throw new Exception(
                                     sprintf('Unable to write file "%s" in temporary folder.', $resumableFilename)
@@ -156,16 +166,6 @@ class UploadHandler implements RequestHandlerInterface
                             }
                         }
                     }
-
-                    $log = ['file' => $new];
-
-                    if ($session->has(UserInterface::class)) {
-                        $user = $session->get(UserInterface::class);
-
-                        $log['username'] = $user['username'];
-                    }
-
-                    (new Log())->write('File "{file}" uploaded.', $log, Logger::NOTICE);
 
                     return new JsonResponse($data);
                 } catch (Exception $e) {
