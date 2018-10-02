@@ -36,7 +36,7 @@
         "vistag/human-readable": "dev-master",
         "zendframework/zend-component-installer": "2.1.1",
         "zendframework/zend-config-aggregator": "1.1.1",
-        "zendframework/zend-diactoros": "1.8.6",
+        "zendframework/zend-diactoros": "2.0.0",
         "zendframework/zend-expressive": "3.2.0",
         "zendframework/zend-expressive-authentication": "0.5.0",
         "zendframework/zend-expressive-authentication-session": "0.5.0",
