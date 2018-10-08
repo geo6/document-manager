@@ -3120,7 +3120,7 @@
                 }
             ],
             "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
-            "time": "2018-09-17T20:20:31+00:00"
+            "time": "2018-08-14T15:39:17+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
