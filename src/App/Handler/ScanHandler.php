@@ -13,21 +13,30 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Symfony\Component\Finder\Finder;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Authentication\UserInterface;
-use Zend\Expressive\Router;
+use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Session\SessionMiddleware;
-use Zend\Expressive\Template;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
 class ScanHandler implements RequestHandlerInterface
 {
+    /**
+     * @var string $containerName
+     */
     private $containerName;
 
+    /**
+     * @var RouterInterface $router
+     */
     private $router;
 
+    /**
+     * @var TemplateRendererInterface $template
+     */
     private $template;
 
     public function __construct(
-        Router\RouterInterface $router,
-        Template\TemplateRendererInterface $template = null,
+        RouterInterface $router,
+        TemplateRendererInterface $template,
         string $containerName
     ) {
         $this->router = $router;
@@ -100,6 +109,8 @@ class ScanHandler implements RequestHandlerInterface
 
             if ($path === 'roles') {
                 if ($session->has(UserInterface::class)) {
+                    $user = $session->get(UserInterface::class);
+
                     foreach ($finder->directories() as $d) {
                         $document = new Document($d->getPathname());
 
@@ -114,6 +125,8 @@ class ScanHandler implements RequestHandlerInterface
                 }
             } elseif ($path === 'users') {
                 if ($session->has(UserInterface::class)) {
+                    $user = $session->get(UserInterface::class);
+
                     foreach ($finder->directories() as $d) {
                         $document = new Document($d->getPathname());
 

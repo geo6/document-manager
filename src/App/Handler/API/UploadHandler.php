@@ -27,7 +27,7 @@ class UploadHandler implements RequestHandlerInterface
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
 
         $params = array_merge(
-            $request->getParsedBody(),
+            (array) $request->getParsedBody(),
             $request->getQueryParams()
         );
 
@@ -106,7 +106,9 @@ class UploadHandler implements RequestHandlerInterface
                                     if (file_exists($uploadedChunk) && is_readable($uploadedChunk)) {
                                         $content = file_get_contents($uploadedChunk);
 
-                                        fwrite($handle, $content);
+                                        if ($content !== false) {
+                                            fwrite($handle, $content);
+                                        }
 
                                         @unlink($uploadedChunk);
                                     } else {

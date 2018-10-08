@@ -15,7 +15,14 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 
 class UIMiddleware implements MiddlewareInterface
 {
+    /**
+     *  @var RouterInterface $router
+     */
     private $router;
+
+    /**
+     *  @var TemplateRendererInterface $template
+     */
     private $template;
 
     public function __construct(RouterInterface $router, TemplateRendererInterface $template)

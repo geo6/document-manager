@@ -12,21 +12,30 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Authentication\UserInterface;
-use Zend\Expressive\Router;
+use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Session\SessionMiddleware;
-use Zend\Expressive\Template;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
 class LogsHandler implements RequestHandlerInterface
 {
+    /**
+     * @var string $containerName
+     */
     private $containerName;
 
+    /**
+     * @var RouterInterface $router
+     */
     private $router;
 
+    /**
+     * @var TemplateRendererInterface $template
+     */
     private $template;
 
     public function __construct(
-        Router\RouterInterface $router,
-        Template\TemplateRendererInterface $template = null,
+        RouterInterface $router,
+        TemplateRendererInterface $template,
         string $containerName
     ) {
         $this->router = $router;

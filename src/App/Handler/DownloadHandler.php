@@ -15,22 +15,32 @@ use Zend\Diactoros\Response\EmptyResponse;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Stream;
 use Zend\Expressive\Authentication\UserInterface;
-use Zend\Expressive\Router;
+use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Router\RouteResult;
 use Zend\Expressive\Session\SessionMiddleware;
-use Zend\Expressive\Template;
+use Zend\Expressive\Template\TemplateRendererInterface;
 
 class DownloadHandler implements RequestHandlerInterface
 {
+    /**
+     * @var string $containerName
+     */
     private $containerName;
 
+    /**
+     * @var RouterInterface $router
+     */
     private $router;
 
+    /**
+     * @var TemplateRendererInterface $template
+     */
     private $template;
 
+
     public function __construct(
-        Router\RouterInterface $router,
-        Template\TemplateRendererInterface $template = null,
+        RouterInterface $router,
+        TemplateRendererInterface $template,
         string $containerName
     ) {
         $this->router = $router;
@@ -75,27 +85,35 @@ class DownloadHandler implements RequestHandlerInterface
             $document = new Document($file);
 
             $mime = $document->getMimeType();
-            $content = gzencode(file_get_contents($file));
+            $content = file_get_contents($file);
 
-            $body = new Stream('php://temp', 'w+');
-            $body->write($content);
-            $body->rewind();
+            if ($content !== false && $mime !== false) {
+                $gzcontent = gzencode($content);
 
-            $response = (new Response())->
-                withBody($body)->
-                withStatus(200)->
-                withHeader('Content-Encoding', 'gzip')->
-                withHeader('Content-Length', strlen($content))->
-                withHeader('Content-Type', $mime);
+                if ($gzcontent !== false) {
+                    $body = new Stream('php://temp', 'w+');
+                    $body->write($gzcontent);
+                    $body->rewind();
 
-            if ($mode === 'download') {
-                $response = $response->withHeader(
-                    'Content-Disposition',
-                    'attachment; filename="'.$document->getBasename().'"'
-                );
+                    $response = (new Response())->
+                        withBody($body)->
+                        withStatus(200)->
+                        withHeader('Content-Encoding', 'gzip')->
+                        withHeader('Content-Length', (string) strlen($gzcontent))->
+                        withHeader('Content-Type', $mime);
+
+                    if ($mode === 'download') {
+                        $response = $response->withHeader(
+                            'Content-Disposition',
+                            'attachment; filename="'.$document->getBasename().'"'
+                        );
+                    }
+
+                    return $response;
+                }
             }
 
-            return $response;
+            return new EmptyResponse();
         }
 
         return (new EmptyResponse())->withStatus(404);

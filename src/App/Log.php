@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace App;
 
+use ErrorException;
 use Zend\Log\Logger;
 use Zend\Log\Processor\PsrPlaceholder;
 use Zend\Log\Writer\Stream;
 
 class Log
 {
+    /**
+     * @var string $path
+     */
     private $path;
 
     public function __construct()
@@ -22,7 +26,7 @@ class Log
         }
     }
 
-    public function write(string $message, array $data = [], int $level = Logger::INFO)
+    public function write(string $message, array $data = [], int $level = Logger::INFO): void
     {
         //if (file_exists($this->path) && is_writable($this->path)) {
         $logger = new Logger();
@@ -36,7 +40,7 @@ class Log
     {
         $logs = [];
         $fp = fopen($this->path, 'r');
-        if ($fp) {
+        if ($fp !== false) {
             while (($r = fgets($fp, 10240)) !== false) {
                 // Zend\Log : %timestamp% %priorityName% (%priority%): %message% %extra%
                 if (preg_match(
@@ -60,8 +64,8 @@ class Log
                     );
                 }
             }
+            fclose($fp);
         }
-        fclose($fp);
 
         return $logs;
     }

@@ -20,6 +20,9 @@ class AclMiddleware implements MiddlewareInterface
     public const PERM_WRITE = 'write';
     public const PERM_DELETE = 'delete';
 
+    /**
+     * @var Acl $acl
+     */
     private $acl;
 
     public function __construct(Acl $acl)

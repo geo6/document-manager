@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Middleware;
 
 use PDO;
+use PDOException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Zend\Expressive\Authentication\Exception as AuthenticationException;
@@ -13,7 +14,14 @@ use Zend\Permissions\Acl\Exception\ExceptionInterface as AclExceptionInterface;
 
 class AclMiddlewareFactory
 {
+    /**
+     * @var array|null $authentication
+     */
     private $authentication;
+
+    /**
+     * @var array|null $authorization
+     */
     private $authorization;
 
     public function __invoke(ContainerInterface $container): MiddlewareInterface
