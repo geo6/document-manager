@@ -23,8 +23,6 @@ use Zend\Expressive\Template;
 
 class DownloadHandler implements RequestHandlerInterface
 {
-    private $authentication;
-
     private $containerName;
 
     private $router;
@@ -34,30 +32,19 @@ class DownloadHandler implements RequestHandlerInterface
     public function __construct(
         Router\RouterInterface $router,
         Template\TemplateRendererInterface $template = null,
-        string $containerName,
-        bool $authentication
+        string $containerName
     ) {
         $this->router = $router;
         $this->template = $template;
         $this->containerName = $containerName;
-        $this->authentication = $authentication;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        $acl = $request->getAttribute(AclMiddleware::ACL_ATTRIBUTE);
         $basePath = $request->getAttribute(BaseUrlMiddleware::BASE_PATH);
-
-        if ($this->authentication !== false) {
-            $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
-            if (!$session->has(UserInterface::class)) {
-                return new RedirectResponse($basePath.$this->router->generateUri('login'));
-            }
-
-            $user = $session->get(UserInterface::class);
-            $acl = $request->getAttribute(AclMiddleware::ACL_ATTRIBUTE);
-        }
-
         $route = $request->getAttribute(RouteResult::class);
+        $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
 
         $mode = $route->getMatchedRouteName();
 
@@ -67,7 +54,9 @@ class DownloadHandler implements RequestHandlerInterface
         $pathExploded = explode('/', $path);
 
         $access = true;
-        if (isset($user, $acl)) {
+        if ($session->has(UserInterface::class)) {
+            $user = $session->get(UserInterface::class);
+
             if ($pathExploded[0] === 'public' && $acl->hasResource('directory.public')) {
                 $access = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_READ);
             } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.'.$pathExploded[1])) {

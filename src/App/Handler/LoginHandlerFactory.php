@@ -15,8 +15,7 @@ class LoginHandlerFactory
     {
         $router = $container->get(RouterInterface::class);
         $template = $container->get(TemplateRendererInterface::class);
-        $authentication = isset($container->get('config')['authentication']['pdo']);
 
-        return new LoginHandler($router, $template, get_class($container), $authentication);
+        return new LoginHandler($router, $template, get_class($container));
     }
 }

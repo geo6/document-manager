@@ -21,24 +21,10 @@ use Zend\Log\Logger;
  */
 class UploadHandler implements RequestHandlerInterface
 {
-    private $authentication;
-
-    public function __construct(bool $authentication)
-    {
-        $this->authentication = $authentication;
-    }
-
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        if ($this->authentication !== false) {
-            $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
-            if (!$session->has(UserInterface::class)) {
-                return (new EmptyResponse())->withStatus(401);
-            }
-
-            $user = $session->get(UserInterface::class);
-            $acl = $request->getAttribute(AclMiddleware::ACL_ATTRIBUTE);
-        }
+        $acl = $request->getAttribute(AclMiddleware::ACL_ATTRIBUTE);
+        $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
 
         $params = array_merge(
             $request->getParsedBody(),
@@ -47,18 +33,22 @@ class UploadHandler implements RequestHandlerInterface
 
         $method = $request->getMethod();
 
+        if (!$session->has(UserInterface::class)) {
+            return (new EmptyResponse())->withStatus(401);
+        }
+
+        $user = $session->get(UserInterface::class);
+
         $directory = $params['directory'];
         $pathExploded = explode('/', $directory);
 
         $access = true;
-        if (isset($user, $acl)) {
-            if ($pathExploded[0] === 'public' && $acl->hasResource('directory.public')) {
-                $access = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_WRITE);
-            } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.'.$pathExploded[1])) {
-                $access = $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_WRITE);
-            } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.'.$pathExploded[1])) {
-                $access = $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_WRITE);
-            }
+        if ($pathExploded[0] === 'public' && $acl->hasResource('directory.public')) {
+            $access = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_WRITE);
+        } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.'.$pathExploded[1])) {
+            $access = $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_WRITE);
+        } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.'.$pathExploded[1])) {
+            $access = $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_WRITE);
         }
 
         if ($access !== true) {

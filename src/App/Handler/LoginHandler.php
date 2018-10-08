@@ -21,8 +21,6 @@ use Zend\Log\Logger;
 
 class LoginHandler implements MiddlewareInterface
 {
-    private $authentication;
-
     private $containerName;
 
     private $router;
@@ -32,24 +30,17 @@ class LoginHandler implements MiddlewareInterface
     public function __construct(
         Router\RouterInterface $router,
         Template\TemplateRendererInterface $template = null,
-        string $containerName,
-        bool $authentication
+        string $containerName
     ) {
         $this->router = $router;
         $this->template = $template;
         $this->containerName = $containerName;
-        $this->authentication = $authentication;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $route = $request->getAttribute(RouteResult::class);
         $basePath = $request->getAttribute(BaseUrlMiddleware::BASE_PATH);
-
-        if ($this->authentication === false) {
-            return new RedirectResponse($basePath.$this->router->generateUri('home'));
-        }
-
+        $route = $request->getAttribute(RouteResult::class);
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
 
         if ($session->has(UserInterface::class)) {

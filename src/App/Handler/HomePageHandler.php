@@ -20,8 +20,6 @@ use Zend\Expressive\Template;
 
 class HomePageHandler implements RequestHandlerInterface
 {
-    private $authentication;
-
     private $containerName;
 
     private $router;
@@ -31,28 +29,18 @@ class HomePageHandler implements RequestHandlerInterface
     public function __construct(
         Router\RouterInterface $router,
         Template\TemplateRendererInterface $template = null,
-        string $containerName,
-        bool $authentication
+        string $containerName
     ) {
         $this->router = $router;
         $this->template = $template;
         $this->containerName = $containerName;
-        $this->authentication = $authentication;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        $acl = $request->getAttribute(AclMiddleware::ACL_ATTRIBUTE);
         $basePath = $request->getAttribute(BaseUrlMiddleware::BASE_PATH);
-
-        if ($this->authentication !== false) {
-            $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
-            if (!$session->has(UserInterface::class)) {
-                return new RedirectResponse($basePath.$this->router->generateUri('login'));
-            }
-
-            $user = $session->get(UserInterface::class);
-            $acl = $request->getAttribute(AclMiddleware::ACL_ATTRIBUTE);
-        }
+        $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
 
         $data = [
             'directories' => [
@@ -62,12 +50,13 @@ class HomePageHandler implements RequestHandlerInterface
             ],
         ];
 
-        if (is_dir('data/public') && is_readable('data/public')) {
-            if (!isset($acl) || $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_READ)) {
+        if ($session->has(UserInterface::class)) {
+            $user = $session->get(UserInterface::class);
+
+            if (is_dir('data/public') && is_readable('data/public') && $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_READ)) {
                 $data['directories']['public'] = new Document('data/public');
             }
-        }
-        if (isset($user, $acl)) {
+
             $finder = new Finder();
             $finder->ignoreUnreadableDirs();
             $finder->in('data/roles');
@@ -102,6 +91,10 @@ class HomePageHandler implements RequestHandlerInterface
                 )) {
                     $data['directories']['users'][] = $document;
                 }
+            }
+        } else {
+            if (is_dir('data/public') && is_readable('data/public')) {
+                $data['directories']['public'] = new Document('data/public');
             }
         }
 

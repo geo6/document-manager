@@ -18,49 +18,39 @@ use Zend\Log\Logger;
 
 class FileHandler implements RequestHandlerInterface
 {
-    private $authentication;
-
-    public function __construct(bool $authentication)
-    {
-        $this->authentication = $authentication;
-    }
-
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        $acl = $request->getAttribute(AclMiddleware::ACL_ATTRIBUTE);
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
-
-        if ($this->authentication !== false) {
-            if (!$session->has(UserInterface::class)) {
-                return (new EmptyResponse())->withStatus(401);
-            }
-
-            $user = $session->get(UserInterface::class);
-            $acl = $request->getAttribute(AclMiddleware::ACL_ATTRIBUTE);
-        }
 
         $method = $request->getMethod();
         $params = $request->getParsedBody();
+
+        if (!$session->has(UserInterface::class)) {
+            return (new EmptyResponse())->withStatus(401);
+        }
+
+        $user = $session->get(UserInterface::class);
 
         if (isset($params['path']) && file_exists('data/'.$params['path'])) {
             $pathExploded = explode('/', $params['path']);
 
             $access = true;
-            if (isset($user, $acl)) {
-                if ($pathExploded[0] === 'public' && $acl->hasResource('directory.public')) {
-                    $access = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_READ);
-                    if ($method === 'DELETE') {
-                        $access = $access && $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_DELETE);
-                    }
-                } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.'.$pathExploded[1])) {
-                    $access = $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_READ);
-                    if ($method === 'DELETE') {
-                        $access = $access && $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_DELETE);
-                    }
-                } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.'.$pathExploded[1])) {
-                    $access = $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_READ);
-                    if ($method === 'DELETE') {
-                        $access = $access && $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_DELETE);
-                    }
+
+            if ($pathExploded[0] === 'public' && $acl->hasResource('directory.public')) {
+                $access = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_READ);
+                if ($method === 'DELETE') {
+                    $access = $access && $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_DELETE);
+                }
+            } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.'.$pathExploded[1])) {
+                $access = $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_READ);
+                if ($method === 'DELETE') {
+                    $access = $access && $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_DELETE);
+                }
+            } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.'.$pathExploded[1])) {
+                $access = $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_READ);
+                if ($method === 'DELETE') {
+                    $access = $access && $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_DELETE);
                 }
             }
 

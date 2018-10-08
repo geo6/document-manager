@@ -15,8 +15,7 @@ class HomePageHandlerFactory
     {
         $router = $container->get(RouterInterface::class);
         $template = $container->get(TemplateRendererInterface::class);
-        $authentication = isset($container->get('config')['authentication']['pdo']);
 
-        return new HomePageHandler($router, $template, get_class($container), $authentication);
+        return new HomePageHandler($router, $template, get_class($container));
     }
 }

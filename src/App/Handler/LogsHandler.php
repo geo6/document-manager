@@ -19,8 +19,6 @@ use Zend\Expressive\Template;
 
 class LogsHandler implements RequestHandlerInterface
 {
-    private $authentication;
-
     private $containerName;
 
     private $router;
@@ -30,35 +28,26 @@ class LogsHandler implements RequestHandlerInterface
     public function __construct(
         Router\RouterInterface $router,
         Template\TemplateRendererInterface $template = null,
-        string $containerName,
-        bool $authentication
+        string $containerName
     ) {
         $this->router = $router;
         $this->template = $template;
         $this->containerName = $containerName;
-        $this->authentication = $authentication;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        $acl = $request->getAttribute(AclMiddleware::ACL_ATTRIBUTE);
         $basePath = $request->getAttribute(BaseUrlMiddleware::BASE_PATH);
+        $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
 
-        if ($this->authentication !== false) {
-            $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
+        $user = $session->get(UserInterface::class);
 
-            if (!$session->has(UserInterface::class)) {
-                return new RedirectResponse($basePath.$this->router->generateUri('login'));
-            }
-
-            $user = $session->get(UserInterface::class);
-            $acl = $request->getAttribute(AclMiddleware::ACL_ATTRIBUTE);
-
-            if ($acl->isAllowed($user['username'], 'logs') !== true) {
-                return (new HtmlResponse($this->template->render('error::error', [
-                    'status' => 403,
-                    'reason' => 'Forbidden',
-                ])))->withStatus(403);
-            }
+        if ($acl->isAllowed($user['username'], 'logs') !== true) {
+            return (new HtmlResponse($this->template->render('error::error', [
+                'status' => 403,
+                'reason' => 'Forbidden',
+            ])))->withStatus(403);
         }
 
         $logs = [];

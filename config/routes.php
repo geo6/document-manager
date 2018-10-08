@@ -33,15 +33,25 @@ use Zend\Expressive\MiddlewareFactory;
  * );
  */
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
-    $app->get('/', App\Handler\HomePageHandler::class, 'home');
-    $app->get('/download/{path:.+}', App\Handler\DownloadHandler::class, 'download');
-    $app->get('/logs', App\Handler\LogsHandler::class, 'logs');
-    $app->get('/scan/{path:.+}', App\Handler\ScanHandler::class, 'scan');
-    $app->get('/view/{path:.+}', App\Handler\DownloadHandler::class, 'view');
+    $loadAuthenticationMiddleware = function ($middleware) use ($container) {
+        if (isset($container->get('config')['authentication']['pdo'])) {
+            return [
+                Zend\Expressive\Authentication\AuthenticationMiddleware::class,
+                $middleware,
+            ];
+        }
+        return $middleware;
+    };
+
+    $app->get('/', $loadAuthenticationMiddleware(App\Handler\HomePageHandler::class), 'home');
+    $app->get('/download/{path:.+}', $loadAuthenticationMiddleware(App\Handler\DownloadHandler::class), 'download');
+    $app->get('/logs', $loadAuthenticationMiddleware(App\Handler\LogsHandler::class), 'logs');
+    $app->get('/scan/{path:.+}', $loadAuthenticationMiddleware(App\Handler\ScanHandler::class), 'scan');
+    $app->get('/view/{path:.+}', $loadAuthenticationMiddleware(App\Handler\DownloadHandler::class), 'view');
 
     $app->get('/api/ping', App\Handler\API\PingHandler::class, 'api.ping');
-    $app->delete('/api/file', App\Handler\API\FileHandler::class, 'api.file');
-    $app->route('/api/upload', App\Handler\API\UploadHandler::class, ['GET', 'POST'], 'api.upload');
+    $app->delete('/api/file', $loadAuthenticationMiddleware(App\Handler\API\FileHandler::class), 'api.file');
+    $app->route('/api/upload', $loadAuthenticationMiddleware(App\Handler\API\UploadHandler::class), ['GET', 'POST'], 'api.upload');
 
     $app->route('/login', [
         App\Handler\LoginHandler::class,
