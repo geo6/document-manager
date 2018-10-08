@@ -11,7 +11,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Authentication\UserInterface;
 use Zend\Expressive\Router;
 use Zend\Expressive\Session\SessionMiddleware;

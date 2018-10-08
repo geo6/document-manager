@@ -12,7 +12,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Symfony\Component\Finder\Finder;
 use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Authentication\UserInterface;
 use Zend\Expressive\Router;
 use Zend\Expressive\Session\SessionMiddleware;

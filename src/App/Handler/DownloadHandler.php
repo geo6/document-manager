@@ -13,7 +13,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\EmptyResponse;
 use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Diactoros\Stream;
 use Zend\Expressive\Authentication\UserInterface;
 use Zend\Expressive\Router;

@@ -40,6 +40,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
                 $middleware,
             ];
         }
+
         return $middleware;
     };
 
