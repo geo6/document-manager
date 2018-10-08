@@ -15,28 +15,27 @@ use Zend\Diactoros\Response\EmptyResponse;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Stream;
 use Zend\Expressive\Authentication\UserInterface;
-use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Router\RouteResult;
+use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Session\SessionMiddleware;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
 class DownloadHandler implements RequestHandlerInterface
 {
     /**
-     * @var string $containerName
+     * @var string
      */
     private $containerName;
 
     /**
-     * @var RouterInterface $router
+     * @var RouterInterface
      */
     private $router;
 
     /**
-     * @var TemplateRendererInterface $template
+     * @var TemplateRendererInterface
      */
     private $template;
-
 
     public function __construct(
         RouterInterface $router,

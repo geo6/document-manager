@@ -12,7 +12,7 @@ use Zend\Log\Writer\Stream;
 class Log
 {
     /**
-     * @var string $path
+     * @var string
      */
     private $path;
 

@@ -15,12 +15,12 @@ use Zend\Permissions\Acl\Exception\ExceptionInterface as AclExceptionInterface;
 class AclMiddlewareFactory
 {
     /**
-     * @var array|null $authentication
+     * @var array|null
      */
     private $authentication;
 
     /**
-     * @var array|null $authorization
+     * @var array|null
      */
     private $authorization;
 

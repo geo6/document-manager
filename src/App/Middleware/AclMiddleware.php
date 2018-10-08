@@ -21,7 +21,7 @@ class AclMiddleware implements MiddlewareInterface
     public const PERM_DELETE = 'delete';
 
     /**
-     * @var Acl $acl
+     * @var Acl
      */
     private $acl;
 

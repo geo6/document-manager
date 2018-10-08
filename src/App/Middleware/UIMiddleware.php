@@ -16,12 +16,12 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 class UIMiddleware implements MiddlewareInterface
 {
     /**
-     *  @var RouterInterface $router
+     *  @var RouterInterface
      */
     private $router;
 
     /**
-     *  @var TemplateRendererInterface $template
+     *  @var TemplateRendererInterface
      */
     private $template;
 

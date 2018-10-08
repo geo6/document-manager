@@ -20,17 +20,17 @@ use Zend\Expressive\Template\TemplateRendererInterface;
 class ScanHandler implements RequestHandlerInterface
 {
     /**
-     * @var string $containerName
+     * @var string
      */
     private $containerName;
 
     /**
-     * @var RouterInterface $router
+     * @var RouterInterface
      */
     private $router;
 
     /**
-     * @var TemplateRendererInterface $template
+     * @var TemplateRendererInterface
      */
     private $template;
 
