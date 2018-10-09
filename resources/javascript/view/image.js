@@ -5,4 +5,8 @@ export default function () {
 
         $('#carousel').carousel(index);
     });
+
+    $('#carousel').on('slid.bs.carousel', () => {
+        $('#modal-view-image').modal('handleUpdate');
+    });
 }
