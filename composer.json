@@ -1,7 +1,21 @@
 {
     "name": "geo6/document-manager",
     "type": "project",
-    "description": "",
+    "description": "Browse directories and upload documents using Zend Expressive",
+    "keywords": [
+        "php",
+        "zend-expressive",
+        "zend-framework",
+        "zend",
+        "expressive",
+        "explorer",
+        "file",
+        "browse",
+        "upload",
+        "download",
+        "image",
+        "geojson"
+    ],
     "license": "GPL-3.0-or-later",
     "authors": [
         {
