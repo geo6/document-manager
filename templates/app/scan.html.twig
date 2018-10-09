@@ -77,7 +77,7 @@
             <td>
                 {% if f.isImage() %}
                 <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal-view-image" data-toggle="modal" class="float-right text-muted" style="text-decoration: none;">
-                    <i class="far fa-eye"></i>
+                    <i class="far fa-image"></i>
                     View
                 </a>
                 {% elseif f.isGeoJSON() %}

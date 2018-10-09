@@ -6,7 +6,6 @@ import {
     faGithub
 } from '@fortawesome/free-brands-svg-icons';
 import {
-    faEye,
     faFile,
     faFileAlt,
     faFileArchive,
@@ -15,6 +14,7 @@ import {
     faFilePdf,
     faFilePowerpoint,
     faFileWord,
+    faImage,
     faPlusSquare,
     faTrashAlt
 } from '@fortawesome/free-regular-svg-icons';
@@ -43,7 +43,6 @@ library.add(
     faCaretRight,
     faCircle,
     faCloud,
-    faEye,
     faFile,
     faFileAlt,
     faFileArchive,
@@ -56,6 +55,7 @@ library.add(
     faFolder,
     faGithub,
     faHome,
+    faImage,
     faPlusSquare,
     faReceipt,
     faSearchLocation,
