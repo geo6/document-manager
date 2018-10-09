@@ -4,7 +4,14 @@
     {{ path|split('/')|last }}
 {% endblock %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+    crossorigin="">
+{% endblock %}
+
 {% block javascript %}
+<script src="{{ asset('js/dm.min.js') }}"></script>
 <script>
     window.app = {
         api: '{{ path("api.upload") }}',
@@ -13,7 +20,6 @@
     };
 </script>
 {% endblock %}
-
 
 {% block content %}
 
@@ -70,19 +76,33 @@
             </td>
             <td>
                 {% if f.isImage() %}
-                <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal-view" data-toggle="modal" class="float-right text-muted" style="text-decoration: none;">
+                <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal-view-image" data-toggle="modal" class="float-right text-muted" style="text-decoration: none;">
                     <i class="far fa-eye"></i>
+                    View
+                </a>
+                {% elseif f.isGeoJSON() %}
+                <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal-view-geojson" data-toggle="modal" class="float-right text-muted" style="text-decoration: none;">
+                    <i class="fas fa-search-location"></i>
                     View
                 </a>
                 {% endif %}
                 <a href="{{ path('download', {'path': f.getRelativePath()}) }}">
                     {{ f.getFilename() }}
                 </a>
-                {% set exif = f.getEXIF() %}
-                {% if exif and exif.DateTime is defined %}
-                <p class="mb-0 text-info small">
-                    {{ exif.Make|default('?') }} &bull; {{ exif.Model|default('?') }} &bull; {{ exif.DateTime }}
-                </p>
+                {% if f.isImage() %}
+                    {% set exif = f.getEXIF() %}
+                    {% if exif.DateTime is defined %}
+                    <p class="mb-0 text-info small">
+                        {{ exif.Make|default('?') }} &bull; {{ exif.Model|default('?') }} &bull; {{ exif.DateTime }}
+                    </p>
+                    {% endif %}
+                {% elseif f.isGeoJSON() %}
+                    <p class="mb-0 text-info small">
+                        {% if f.getTitle() %}
+                            {{ f.getTitle() }}<br>
+                        {% endif %}
+                        {{ f.getDescription() }}
+                    </p>
                 {% endif %}
                 {% if f.getInfo() %}
                 <p class="mb-0 text-info small">
@@ -90,14 +110,14 @@
                 </p>
                 {% endif %}
             </td>
-            <td>
+            <td class="text-nowrap">
                 <span title="{{ f.getReadableMTime('%c') }}">
                     {{ f.getReadableMTime('%e %B %Y') }}
                 </span>
             </td>
-            <td class="text-right">{{ f.getReadableSize(0) }}</td>
+            <td class="text-nowrap text-right">{{ f.getReadableSize(0) }}</td>
             {% if permissions.delete %}
-            <td class="text-center">
+            <td class="text-nowrap text-center">
                 {% if f.isRemovable() %}
                 <a href="{{ path('api.file') }}" class="text-danger btn-delete" style="text-decoration: none;">
                     <i class="far fa-trash-alt"></i>
@@ -123,7 +143,8 @@
     {{ content.files|length }} file(s)
 </p>
 
-{{ include("@app/modal-view.html.twig") }}
+{{ include("@app/modal-view/image.html.twig") }}
+{{ include("@app/modal-view/geojson.html.twig") }}
 {{ include("@app/modal-upload.html.twig") }}
 
 {% endblock %}

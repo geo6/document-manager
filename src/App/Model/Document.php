@@ -23,18 +23,6 @@ class Document extends SplFileInfo
     }
 
     /**
-     * @return array|false
-     */
-    public function getEXIF()
-    {
-        if ($this->isReadable() && $this->getSize() > 0 && $this->isImage()) {
-            return @exif_read_data($this->getPathname());
-        }
-
-        return false;
-    }
-
-    /**
      * @return string
      */
     public function getFontAwesomeIcon(): string
@@ -135,5 +123,30 @@ class Document extends SplFileInfo
         $mime = $this->getMimeType();
 
         return $mime !== false && preg_match('/image\/.+/', $mime) === 1;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isGeoJSON(): bool
+    {
+        $mime = $this->getMimeType();
+        $extension = $this->getExtension();
+
+        if (in_array($mime, ['application/json', 'text/plain'], true) && in_array(strtolower($extension), ['json', 'geojson'], true)) {
+            $content = file_get_contents($this->getPathname());
+
+            if ($content !== false) {
+                $json = json_decode($content);
+
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    if (isset($json->type) && ($json->type === 'Feature' || $json->type === 'FeatureCollection')) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }

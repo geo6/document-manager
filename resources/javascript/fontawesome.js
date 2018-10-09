@@ -19,12 +19,16 @@ import {
     faTrashAlt
 } from '@fortawesome/free-regular-svg-icons';
 import {
+    faAngleDoubleLeft,
+    faAngleDoubleRight,
     faCaretRight,
+    faCircle,
     faCloud,
     faFileUpload,
     faFolder,
     faHome,
     faReceipt,
+    faSearchLocation,
     faSignInAlt,
     faSignOutAlt,
     faUpload,
@@ -34,7 +38,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
+    faAngleDoubleLeft,
+    faAngleDoubleRight,
     faCaretRight,
+    faCircle,
     faCloud,
     faEye,
     faFile,
@@ -51,6 +58,7 @@ library.add(
     faHome,
     faPlusSquare,
     faReceipt,
+    faSearchLocation,
     faSignInAlt,
     faSignOutAlt,
     faTrashAlt,

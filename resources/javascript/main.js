@@ -1,16 +1,13 @@
 import initUpload from './upload';
+import initViewImage from './view/image';
+import initViewGeoJSON from './view/geojson';
 
 window.app = window.app || {};
 
 $(document).ready(() => {
     initUpload();
-
-    $('#modal-view').on('show.bs.modal', (event) => {
-        const link = event.relatedTarget;
-        const index = $('a[data-target="#modal-view"]').index(link);
-
-        $('#carousel').carousel(index);
-    });
+    initViewImage();
+    initViewGeoJSON();
 
     $('.btn-delete').on('click', (event) => {
         const href = $(event.target).attr('href');

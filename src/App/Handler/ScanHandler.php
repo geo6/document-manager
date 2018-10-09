@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Handler;
 
 use App\Middleware\AclMiddleware;
-use App\Model\Document;
+use App\Model;
 use Blast\BaseUrl\BaseUrlMiddleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -112,7 +112,7 @@ class ScanHandler implements RequestHandlerInterface
                     $user = $session->get(UserInterface::class);
 
                     foreach ($finder->directories() as $d) {
-                        $document = new Document($d->getPathname());
+                        $document = new Model\Document($d->getPathname());
 
                         if ($acl->isAllowed(
                             $user['username'],
@@ -128,7 +128,7 @@ class ScanHandler implements RequestHandlerInterface
                     $user = $session->get(UserInterface::class);
 
                     foreach ($finder->directories() as $d) {
-                        $document = new Document($d->getPathname());
+                        $document = new Model\Document($d->getPathname());
 
                         if ($acl->isAllowed(
                             $user['username'],
@@ -141,7 +141,13 @@ class ScanHandler implements RequestHandlerInterface
                 }
             } else {
                 foreach ($finder as $f) {
-                    $document = new Document($f->getPathname());
+                    $document = new Model\Document($f->getPathname());
+
+                    if ($document->isImage()) {
+                        $document = new Model\Image($f->getPathname());
+                    } elseif ($document->isGeoJSON()) {
+                        $document = new Model\GeoJSON($f->getPathname());
+                    }
 
                     if ($document->isDir()) {
                         $content['directories'][] = $document;
