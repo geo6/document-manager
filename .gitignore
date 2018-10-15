@@ -22,5 +22,3 @@ temp/
 # Misc.
 .vscode/
 config/application/
-public/css/
-public/js/
