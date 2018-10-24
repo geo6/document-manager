@@ -1,4 +1,12 @@
 *
 !cache
 !cache/.gitkeep
+!log
+!log/.gitkeep
+!public
+!public/.gitkeep
+!roles
+!roles/.gitkeep
+!users
+!users/.gitkeep
 !.gitignore
