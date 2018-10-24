@@ -95,8 +95,8 @@ class AclMiddlewareFactory
             }
         }
 
-        $this->injectConfigRoles($acl, $this->authorization['roles']);
-        $this->injectConfigResources($acl, $this->authorization['resources']);
+        $this->injectConfigRoles($acl, $this->authorization['roles'] ?? []);
+        $this->injectConfigResources($acl, $this->authorization['resources'] ?? []);
         $this->injectConfigPermissions($acl, $this->authorization['allow'] ?? [], 'allow');
         $this->injectConfigPermissions($acl, $this->authorization['deny'] ?? [], 'deny');
 
