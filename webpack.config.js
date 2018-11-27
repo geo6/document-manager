@@ -4,8 +4,7 @@ const MinifyPlugin = require('babel-minify-webpack-plugin');
 module.exports = (env, options) => {
     return {
         entry: {
-            'fa': './resources/javascript/fontawesome.js',
-            'dm': './resources/javascript/main.js',
+            'dm': './resources/javascript/main.js'
         },
         output: {
             filename: '[name].min.js',
