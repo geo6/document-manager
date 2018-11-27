@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "39a5e7e40a0d86546b40f87a6de5742e",
+    "content-hash": "f967fc5b402cd08d6c506805ae09b397",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -39,31 +39,33 @@
         },
         {
             "name": "dflydev/fig-cookies",
-            "version": "v1.0.2",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dflydev/dflydev-fig-cookies.git",
-                "reference": "883233c159d00d39e940bd12cfe42c0d23420c1c"
+                "reference": "a59857139b9e30978b5b802b3631b5eaf34e8c66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dflydev/dflydev-fig-cookies/zipball/883233c159d00d39e940bd12cfe42c0d23420c1c",
-                "reference": "883233c159d00d39e940bd12cfe42c0d23420c1c",
+                "url": "https://api.github.com/repos/dflydev/dflydev-fig-cookies/zipball/a59857139b9e30978b5b802b3631b5eaf34e8c66",
+                "reference": "a59857139b9e30978b5b802b3631b5eaf34e8c66",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4",
-                "psr/http-message": "~1.0"
+                "ext-pcre": "*",
+                "php": "^7.2",
+                "psr/http-message": "^1"
             },
             "require-dev": {
-                "codeclimate/php-test-reporter": "~0.1@dev",
-                "phpunit/phpunit": "~4.5",
-                "squizlabs/php_codesniffer": "~2.3"
+                "doctrine/coding-standard": "^4",
+                "phpstan/phpstan": "^0.10.1",
+                "phpunit/phpunit": "^7.2.6",
+                "squizlabs/php_codesniffer": "^3.3"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "2.0.x-dev"
                 }
             },
             "autoload": {
@@ -87,7 +89,7 @@
                 "psr-7",
                 "psr7"
             ],
-            "time": "2016-03-28T09:10:18+00:00"
+            "time": "2018-07-11T06:54:37+00:00"
         },
         {
             "name": "fig/http-message-util",
@@ -1553,23 +1555,23 @@
         },
         {
             "name": "zendframework/zend-expressive-session-ext",
-            "version": "1.1.1",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-session-ext.git",
-                "reference": "b1102131c1e2293026a15b82d1ea459b8f3a9dcb"
+                "reference": "40425178d89e7fdc2785870ed5cc4381e2346e55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-session-ext/zipball/b1102131c1e2293026a15b82d1ea459b8f3a9dcb",
-                "reference": "b1102131c1e2293026a15b82d1ea459b8f3a9dcb",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-session-ext/zipball/40425178d89e7fdc2785870ed5cc4381e2346e55",
+                "reference": "40425178d89e7fdc2785870ed5cc4381e2346e55",
                 "shasum": ""
             },
             "require": {
-                "dflydev/fig-cookies": "^1.0",
+                "dflydev/fig-cookies": "^1.0 || ^2.0",
                 "ext-session": "*",
                 "php": "^7.1",
-                "zendframework/zend-expressive-session": "^1.0.0"
+                "zendframework/zend-expressive-session": "^1.2"
             },
             "conflict": {
                 "phpspec/prophecy": "<1.7.2"
@@ -1582,8 +1584,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev",
-                    "dev-develop": "1.2.x-dev"
+                    "dev-master": "1.3.x-dev",
+                    "dev-develop": "1.4.x-dev"
                 },
                 "zf": {
                     "config-provider": "Zend\\Expressive\\Session\\Ext\\ConfigProvider"
@@ -1608,7 +1610,7 @@
                 "zend-expressive",
                 "zf"
             ],
-            "time": "2018-05-14T15:11:54+00:00"
+            "time": "2018-10-31T19:49:54+00:00"
         },
         {
             "name": "zendframework/zend-expressive-template",
