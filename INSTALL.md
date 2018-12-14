@@ -65,3 +65,4 @@ See <https://docs.zendframework.com/zend-permissions-acl/usage/> for more inform
 
 - `read`
 - `delete`
+- `write`
