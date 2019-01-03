@@ -59,7 +59,7 @@ See <https://docs.zendframework.com/zend-permissions-acl/usage/> for more inform
 
 - `directory.public`
 - `directory.roles.<rolename>`
-- `directory.roles.<username>`
+- `directory.users.<username>`
 
 `<permission>` can be :
 
