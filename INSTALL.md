@@ -66,3 +66,12 @@ See <https://docs.zendframework.com/zend-permissions-acl/usage/> for more inform
 - `read`
 - `delete`
 - `write`
+
+### System permissions
+
+Here are some suggested permissions :
+
+```shell
+chown -R $USER:www-data data/*
+chmod -R 0775 data/*
+```
