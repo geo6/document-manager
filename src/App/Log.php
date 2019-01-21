@@ -39,32 +39,35 @@ class Log
     public function read(): array
     {
         $logs = [];
-        $fp = fopen($this->path, 'r');
-        if ($fp !== false) {
-            while (($r = fgets($fp, 10240)) !== false) {
-                // Zend\Log : %timestamp% %priorityName% (%priority%): %message% %extra%
-                if (preg_match(
-                    '/^(.+) (DEBUG|INFO|NOTICE|WARN|ERR|CRIT|ALERT|EMERG) \(([0-9])\): (.+) (\{.+\})$/',
-                    $r,
-                    $matches
-                ) === 1) {
-                    $logs[] = [
-                        'timestamp'     => strtotime($matches[1]), // ISO 8601
-                        'priority_name' => $matches[2],
-                        'priority'      => $matches[3],
-                        'message'       => $matches[4],
-                        'extra'         => json_decode($matches[5], true),
-                    ];
-                } else {
-                    throw new ErrorException(
-                        sprintf(
-                            'Invalid log record format for "%s".',
-                            $r
-                        )
-                    );
+
+        if (file_exists($this->path) && is_readable($this->path)) {
+            $fp = fopen($this->path, 'r');
+            if ($fp !== false) {
+                while (($r = fgets($fp, 10240)) !== false) {
+                    // Zend\Log : %timestamp% %priorityName% (%priority%): %message% %extra%
+                    if (preg_match(
+                        '/^(.+) (DEBUG|INFO|NOTICE|WARN|ERR|CRIT|ALERT|EMERG) \(([0-9])\): (.+) (\{.+\})$/',
+                        $r,
+                        $matches
+                    ) === 1) {
+                        $logs[] = [
+                            'timestamp'     => strtotime($matches[1]), // ISO 8601
+                            'priority_name' => $matches[2],
+                            'priority'      => $matches[3],
+                            'message'       => $matches[4],
+                            'extra'         => json_decode($matches[5], true),
+                        ];
+                    } else {
+                        throw new ErrorException(
+                            sprintf(
+                                'Invalid log record format for "%s".',
+                                $r
+                            )
+                        );
+                    }
                 }
+                fclose($fp);
             }
-            fclose($fp);
         }
 
         return $logs;
