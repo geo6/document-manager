@@ -34,7 +34,7 @@ class Document extends SplFileInfo
             return 'fa-file';
         } elseif (preg_match('/text\/.+/', $mime) === 1) {
             return 'fa-file-alt';
-        } elseif (preg_match('/image\/.+/', $mime) === 1) {
+        } elseif (preg_match('/image\/.+/', $mime) === 1 && $this->isImage()) {
             return 'fa-file-image';
         } elseif ($mime === 'application/pdf') {
             return 'fa-file-pdf';
@@ -122,7 +122,17 @@ class Document extends SplFileInfo
     {
         $mime = $this->getMimeType();
 
-        return $mime !== false && preg_match('/image\/.+/', $mime) === 1;
+        $imageMimeTypes = [
+            image_type_to_mime_type(IMAGETYPE_BMP),
+            image_type_to_mime_type(IMAGETYPE_GIF),
+            image_type_to_mime_type(IMAGETYPE_ICO),
+            image_type_to_mime_type(IMAGETYPE_JPEG),
+            image_type_to_mime_type(IMAGETYPE_JPEG2000),
+            image_type_to_mime_type(IMAGETYPE_PNG),
+            image_type_to_mime_type(IMAGETYPE_WEBP),
+        ];
+
+        return $mime !== false && preg_match('/image\/.+/', $mime) === 1 && in_array($mime, $imageMimeTypes);
     }
 
     /**
