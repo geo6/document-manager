@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "042106629b0d5a7b7ed3ca9f5eaf7d5b",
+    "content-hash": "e1c5314e6decb494e675c58d6027a197",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -140,6 +140,43 @@
                 "response"
             ],
             "time": "2018-11-19T16:19:58+00:00"
+        },
+        {
+            "name": "geo6/php-image-tools",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/geo6/php-image-tools.git",
+                "reference": "f301164c68058e28f0ddb934768eb34c0a6577aa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/geo6/php-image-tools/zipball/f301164c68058e28f0ddb934768eb34c0a6577aa",
+                "reference": "f301164c68058e28f0ddb934768eb34c0a6577aa",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "ext-mbstring": "*",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.10.6",
+                "phpstan/phpstan-strict-rules": "^0.10.1",
+                "squizlabs/php_codesniffer": "^3.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Geo6\\Image\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "description": "PHP Library that provides tools for image processing (thumbnail, EXIF rotation, ...)",
+            "time": "2018-12-13T09:52:22+00:00"
         },
         {
             "name": "mtymek/blast-base-url",

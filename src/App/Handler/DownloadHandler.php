@@ -6,7 +6,9 @@ namespace App\Handler;
 
 use App\Middleware\AclMiddleware;
 use App\Model\Document;
+use App\Model\Image;
 use Blast\BaseUrl\BaseUrlMiddleware;
+use Geo6\Image\Image as ImageTool;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -84,6 +86,29 @@ class DownloadHandler implements RequestHandlerInterface
             $document = new Document($file);
 
             $mime = $document->getMimeType();
+
+            if ($document->isImage() && $mode === 'view') {
+                $document = new Image($file);
+                $exif = $document->getEXIF();
+
+                if (isset($exif['Orientation']) && $exif['Orientation'] > 1) {
+                    $rotatedDirectory = 'data/cache/'.ltrim(dirname($file), 'data/');
+                    $rotatedFile = $rotatedDirectory.'/'.basename($file).'.rotated';
+
+                    if (!file_exists($rotatedFile)) {
+                        if (!file_exists($rotatedDirectory) || !is_dir($rotatedDirectory)) {
+                            mkdir(dirname($rotatedFile), 0775, true);
+                        }
+
+                        $image = ImageTool::createFromFile($file);
+                        $rotated = $image->EXIFRotate();
+                        $rotated->save($rotatedFile);
+                    }
+
+                    $file = $rotatedFile;
+                }
+            }
+
             $content = file_get_contents($file);
 
             if ($content !== false && $mime !== false) {
