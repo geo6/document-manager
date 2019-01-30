@@ -76,12 +76,12 @@
             </td>
             <td>
                 {% if f.isImage() %}
-                <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal-view-image" data-toggle="modal" class="float-right text-muted" style="text-decoration: none;">
+                <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal-view-image" data-toggle="modal" class="float-right" style="text-decoration: none;">
                     <i class="far fa-image"></i>
                     View
                 </a>
                 {% elseif f.isGeoJSON() %}
-                <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal-view-geojson" data-toggle="modal" class="float-right text-muted" style="text-decoration: none;">
+                <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal-view-geojson" data-toggle="modal" class="float-right" style="text-decoration: none;">
                     <i class="fas fa-search-location"></i>
                     View
                 </a>
