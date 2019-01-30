@@ -95,7 +95,12 @@ class DownloadHandler implements RequestHandlerInterface
                     $rotatedDirectory = 'data/cache/'.ltrim(dirname($file), 'data/');
                     $rotatedFile = $rotatedDirectory.'/'.basename($file).'.rotated';
 
-                    if (!file_exists($rotatedFile)) {
+                    $md5File = $rotatedDirectory.'/'.basename($file).'.md5';
+
+                    $md5_1 = md5_file($file);
+                    $md5_2 = file_exists($md5File) ? file_get_contents($md5File) : null;
+
+                    if (!file_exists($rotatedFile) || $md5_1 !== $md5_2) {
                         if (!file_exists($rotatedDirectory) || !is_dir($rotatedDirectory)) {
                             mkdir(dirname($rotatedFile), 0775, true);
                         }
@@ -103,6 +108,8 @@ class DownloadHandler implements RequestHandlerInterface
                         $image = ImageTool::createFromFile($file);
                         $rotated = $image->EXIFRotate();
                         $rotated->save($rotatedFile);
+
+                        file_put_contents($md5File, $md5_1);
                     }
 
                     $file = $rotatedFile;
