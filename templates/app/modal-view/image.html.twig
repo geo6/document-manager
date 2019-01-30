@@ -6,7 +6,7 @@
                     <div class="carousel-inner">
                     {% for image in images %}
                     <div class="carousel-item{% if image is same as(images|first) %} active{% endif %}">
-                        <img class="d-block mx-auto" src="{{ path('view', {'path': image.getRelativePath()}) }}" alt="{{ image.getBasename() }}">
+                        <img class="d-block mx-auto" style="max-width:100%;" src="{{ path('view', {'path': image.getRelativePath()}) }}" alt="{{ image.getBasename() }}">
                         <div class="carousel-caption d-none d-md-block">
                             <h5>{{ image.getBasename() }}</h5>
                             {% set exif = image.getEXIF() %}
