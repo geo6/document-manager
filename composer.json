@@ -42,7 +42,7 @@
         "zendframework/zend-expressive-helpers": "5.1.2",
         "zendframework/zend-expressive-session": "1.2.0",
         "zendframework/zend-expressive-session-ext": "1.3.0",
-        "zendframework/zend-expressive-twigrenderer": "2.2.0",
+        "zendframework/zend-expressive-twigrenderer": "2.3.0",
         "zendframework/zend-log": "2.10",
         "zendframework/zend-permissions-acl": "2.7",
         "zendframework/zend-servicemanager": "3.4.0",
