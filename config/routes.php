@@ -52,6 +52,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
 
     $app->get('/api/ping', App\Handler\API\PingHandler::class, 'api.ping');
     $app->delete('/api/file', $loadAuthenticationMiddleware(App\Handler\API\FileHandler::class), 'api.file');
+    $app->post('/api/directory/new', $loadAuthenticationMiddleware(App\Handler\API\DirectoryHandler::class), 'api.directory.new');
     $app->route('/api/upload', $loadAuthenticationMiddleware(App\Handler\API\UploadHandler::class), ['GET', 'POST'], 'api.upload');
 
     $app->route('/login', [

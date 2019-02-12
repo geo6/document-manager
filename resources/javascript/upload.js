@@ -19,7 +19,7 @@ export default function initUpload () {
 function initResumableJS () {
     let resumable = new Resumable({
         fileType: window.app.types,
-        target: window.app.api,
+        target: window.app.api.upload,
         testChunks: true,
         query: {
             directory: window.app.directory

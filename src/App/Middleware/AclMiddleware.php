@@ -19,6 +19,7 @@ class AclMiddleware implements MiddlewareInterface
     public const PERM_READ = 'read';
     public const PERM_WRITE = 'write';
     public const PERM_DELETE = 'delete';
+    public const PERM_DIRECTORY_CREATE = 'createDirectory';
 
     /**
      * @var Acl
