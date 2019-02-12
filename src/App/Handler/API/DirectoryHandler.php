@@ -80,7 +80,7 @@ class DirectoryHandler implements RequestHandlerInterface
         return (new EmptyResponse())->withStatus(400);
     }
 
-    private function create(string $name)
+    private function create(string $name) : JsonResponse
     {
         $pathExploded = explode('/', $this->directory);
 
