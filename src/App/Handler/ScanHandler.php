@@ -174,8 +174,8 @@ class ScanHandler implements RequestHandlerInterface
             'content'     => $content,
             'images'      => $images,
             'permissions' => [
-                AclMiddleware::PERM_DELETE => $delete,
-                AclMiddleware::PERM_WRITE  => $write,
+                AclMiddleware::PERM_DELETE           => $delete,
+                AclMiddleware::PERM_WRITE            => $write,
                 AclMiddleware::PERM_DIRECTORY_CREATE => $createDirectory,
             ],
         ];

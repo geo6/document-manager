@@ -1,12 +1,11 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Handler\API;
 
 use App\Log;
 use App\Middleware\AclMiddleware;
-use App\Model\Document;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -38,7 +37,7 @@ class DirectoryHandler implements RequestHandlerInterface
 
         $this->user = $session->get(UserInterface::class);
 
-        if (isset($params['directory']) && file_exists('data/' . $params['directory'])) {
+        if (isset($params['directory']) && file_exists('data/'.$params['directory'])) {
             $this->directory = $params['directory'];
 
             $pathExploded = explode('/', $this->directory);
@@ -47,10 +46,10 @@ class DirectoryHandler implements RequestHandlerInterface
 
             if ($pathExploded[0] === 'public' && $acl->hasResource('directory.public')) {
                 $access = $acl->isAllowed($this->user['username'], 'directory.public', AclMiddleware::PERM_READ);
-            } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.' . $pathExploded[1])) {
-                $access = $acl->isAllowed($this->user['username'], 'directory.roles.' . $pathExploded[1], AclMiddleware::PERM_READ);
-            } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.' . $pathExploded[1])) {
-                $access = $acl->isAllowed($this->user['username'], 'directory.users.' . $pathExploded[1], AclMiddleware::PERM_READ);
+            } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.'.$pathExploded[1])) {
+                $access = $acl->isAllowed($this->user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_READ);
+            } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.'.$pathExploded[1])) {
+                $access = $acl->isAllowed($this->user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_READ);
             }
 
             if ($access !== true) {
@@ -63,10 +62,10 @@ class DirectoryHandler implements RequestHandlerInterface
                 case 'POST':
                     if ($pathExploded[0] === 'public' && $acl->hasResource('directory.public')) {
                         $permission = $acl->isAllowed($this->user['username'], 'directory.public', AclMiddleware::PERM_DIRECTORY_CREATE);
-                    } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.' . $pathExploded[1])) {
-                        $permission = $acl->isAllowed($this->user['username'], 'directory.roles.' . $pathExploded[1], AclMiddleware::PERM_DIRECTORY_CREATE);
-                    } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.' . $pathExploded[1])) {
-                        $permission = $acl->isAllowed($this->user['username'], 'directory.users.' . $pathExploded[1], AclMiddleware::PERM_DIRECTORY_CREATE);
+                    } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.'.$pathExploded[1])) {
+                        $permission = $acl->isAllowed($this->user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_DIRECTORY_CREATE);
+                    } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.'.$pathExploded[1])) {
+                        $permission = $acl->isAllowed($this->user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_DIRECTORY_CREATE);
                     }
 
                     if ($permission !== true) {
@@ -85,13 +84,13 @@ class DirectoryHandler implements RequestHandlerInterface
         $pathExploded = explode('/', $this->directory);
 
         $data = [
-            'path' => 'data/' . $this->directory . '/' . $name,
-            'created' => mkdir('data/' . $this->directory . '/' . $name),
+            'path'    => 'data/'.$this->directory.'/'.$name,
+            'created' => mkdir('data/'.$this->directory.'/'.$name),
         ];
 
         $log = [
             'directory' => $data['path'],
-            'username' => $this->user['username'],
+            'username'  => $this->user['username'],
         ];
 
         if ($data['created'] === true) {
