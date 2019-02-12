@@ -9,7 +9,7 @@ $(document).ready(() => {
     initViewImage();
     initViewGeoJSON();
 
-    $('.btn-delete').on('click', (event) => {
+    $('.btn-delete').on('click', event => {
         const href = $(event.target).attr('href');
         const {
             path
@@ -26,20 +26,20 @@ $(document).ready(() => {
                 body: JSON.stringify({
                     path
                 })
-            }).then((response) => {
+            }).then(response => {
                 if (response.ok !== true) {
                     throw response.statusText;
                 }
 
                 return response.json();
-            }).then((data) => {
+            }).then(data => {
                 if (data.deleted === true) {
                     $(event.target).closest('tr').remove();
                 } else {
                     $(event.target).closest('tr').addClass('table-danger');
                 }
-            }).catch((error) => {
-                console.error(error);
+            }).catch(error => {
+                throw new Error(error);
             });
         }
     });
