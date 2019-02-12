@@ -20,10 +20,10 @@ class Log
     /** @var string */
     private $path;
 
-    public function __construct(int $year, int $month)
+    public function __construct(?int $year = null, ?int $month = null)
     {
-        $this->year = $year;
-        $this->month = $month;
+        $this->year = $year ?? intval(date('Y'));
+        $this->month = $month ?? intval(date('n'));
 
         $this->path = 'data/log/'.$this->year.'/'.$this->year.str_pad((string) $this->month, 2, '0', STR_PAD_LEFT).'.log';
 
