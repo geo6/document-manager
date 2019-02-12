@@ -75,8 +75,8 @@ class LogsHandler implements RequestHandlerInterface
             }
 
             $list[$y][] = [
-                'text' => date('F Y', mktime(12, 0, 0, intval($m), 1, intval($y))),
-                'year' => $y,
+                'text'  => date('F Y', mktime(12, 0, 0, intval($m), 1, intval($y))),
+                'year'  => $y,
                 'month' => $m,
             ];
         }
