@@ -46,7 +46,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
 
     $app->get('/', $loadAuthenticationMiddleware(App\Handler\HomePageHandler::class), 'home');
     $app->get('/download/{path:.+}', $loadAuthenticationMiddleware(App\Handler\DownloadHandler::class), 'download');
-    $app->get('/logs', $loadAuthenticationMiddleware(App\Handler\LogsHandler::class), 'logs');
+    $app->get('/logs[/{year:[0-9]{4}}/{month:[0-9]{2}}]', $loadAuthenticationMiddleware(App\Handler\LogsHandler::class), 'logs');
     $app->get('/scan/{path:.+}', $loadAuthenticationMiddleware(App\Handler\ScanHandler::class), 'scan');
     $app->get('/view/{path:.+}', $loadAuthenticationMiddleware(App\Handler\DownloadHandler::class), 'view');
 

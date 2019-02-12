@@ -4,36 +4,45 @@
 Logs
 {% endblock %}
 
+{% block javascript %}
+<script>
+    $('#logs-select').on('change', event => {
+        location.href = $(event.target).find('option:selected').data('url');
+    });
+</script>
+{% endblock %}
+
 {% block content %}
 
-{% for year, logs_by_year in logs %}
-<h1>{{ year }}</h1>
-
-    {% for month, logs_by_month in logs_by_year %}
-    <h2>{{ month | date('F') }}</h2>
-
-    <table class="table table-bordered table-striped table-sm">
-        <thead>
-            <tr>
-                <th>Datetime</th>
-                <th>Level</th>
-                <th>Username</th>
-                <th>Log</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for log in logs_by_month | reverse %}
-            <tr class="log-{{ log.priority_name | lower }}">
-                <td class="text-nowrap">{{ log.timestamp | date }}</td>
-                <td class="text-nowrap">{{ log.priority_name }}</td>
-                <td class="text-center">{{ log.extra.username | default('-') }}</td>
-                <td>{{ log.message }}</td>
-            </tr>
+<select class="form-control form-control-lg" id="logs-select">
+    {% for y, months in list %}
+    <optgroup label="{{ y }}">
+        {% for m in months %}
+        <option value="{{ m.year ~ m.month }}" autocomplete="off" data-url="{{ path('logs', {year: m.year, month: m.month}) }}"{{ (year == m.year and month == m.month) ? " selected" }}>{{ m.text }}</option>
         {% endfor %}
-        </tbody>
-    </table>
+    </optgroup>
     {% endfor %}
+</select>
 
-{% endfor %}
+<table class="table table-bordered table-striped table-sm mt-3">
+    <thead>
+        <tr>
+            <th>Datetime</th>
+            <th>Level</th>
+            <th>Username</th>
+            <th>Log</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for log in logs | reverse %}
+        <tr class="log-{{ log.priority_name | lower }}">
+            <td class="text-nowrap">{{ log.timestamp | date }}</td>
+            <td class="text-nowrap">{{ log.priority_name }}</td>
+            <td class="text-center">{{ log.extra.username | default('-') }}</td>
+            <td>{{ log.message }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}

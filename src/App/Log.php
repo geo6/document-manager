@@ -11,14 +11,21 @@ use Zend\Log\Writer\Stream;
 
 class Log
 {
-    /**
-     * @var string
-     */
+    /** @var int */
+    private $year;
+
+    /** @var int */
+    private $month;
+
+    /** @var string */
     private $path;
 
-    public function __construct()
+    public function __construct(int $year, int $month)
     {
-        $this->path = 'data/log/'.date('Y').'/'.date('Ym').'.log';
+        $this->year = $year;
+        $this->month = $month;
+
+        $this->path = 'data/log/'.$this->year.'/'.$this->year.str_pad((string) $this->month, 2, '0', STR_PAD_LEFT).'.log';
 
         $directory = dirname($this->path);
         if (!file_exists($directory) || !is_dir($directory)) {

@@ -58,24 +58,34 @@ class LogsHandler implements RequestHandlerInterface
             ])))->withStatus(403);
         }
 
-        $logs = [];
-        $_logs = (new Log())->read();
-        foreach ($_logs as $log) {
-            $year = date('Y', $log['timestamp']);
-            $month = date('Y-m', $log['timestamp']);
+        $year = $request->getAttribute('year') ?? date('Y');
+        $month = $request->getAttribute('month') ?? date('m');
 
-            if (!isset($logs[$year])) {
-                $logs[$year] = [];
-            }
-            if (!isset($logs[$year][$month])) {
-                $logs[$year][$month] = [];
+        $glob = glob('data/log/*/*.log');
+        rsort($glob);
+
+        $list = [];
+        foreach ($glob as $g) {
+            $name = pathinfo($g, PATHINFO_FILENAME);
+            $y = substr($name, 0, 4);
+            $m = substr($name, 4, 2);
+
+            if (!isset($list[$y])) {
+                $list[$y] = [];
             }
 
-            $logs[$year][$month][] = $log;
+            $list[$y][] = [
+                'text' => date('F Y', mktime(12, 0, 0, intval($m), 1, intval($y))),
+                'year' => $y,
+                'month' => $m,
+            ];
         }
 
         $data = [
-            'logs' => $logs,
+            'year'  => $year,
+            'month' => $month,
+            'logs'  => (new Log(intval($year), intval($month)))->read(),
+            'list'  => $list,
         ];
 
         return new HtmlResponse($this->template->render('app::logs', $data));
