@@ -17,7 +17,7 @@ class Document extends SplFileInfo
     /**
      * @return bool
      */
-    public function isRemovable(): bool
+    public function isDirectoryWritable(): bool
     {
         return is_writable(dirname($this->getPathname()));
     }

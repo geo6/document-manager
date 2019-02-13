@@ -70,6 +70,22 @@ class FileHandler implements RequestHandlerInterface
 
                     return $this->delete('data/'.$params['path']);
                     break;
+
+                case 'PUT':
+                    if ($pathExploded[0] === 'public' && $acl->hasResource('directory.public')) {
+                        $permission = $acl->isAllowed($this->user['username'], 'directory.public', AclMiddleware::PERM_RENAME);
+                    } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.'.$pathExploded[1])) {
+                        $permission = $acl->isAllowed($this->user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_RENAME);
+                    } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.'.$pathExploded[1])) {
+                        $permission = $acl->isAllowed($this->user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_RENAME);
+                    }
+
+                    if ($permission !== true) {
+                        return (new EmptyResponse())->withStatus(403);
+                    }
+
+                    return $this->rename('data/'.$params['path'], $params['name']);
+                    break;
             }
         }
 
@@ -84,7 +100,6 @@ class FileHandler implements RequestHandlerInterface
             'path'      => $document->getPathname(),
             'readable'  => $document->isReadable(),
             'writable'  => $document->isWritable(),
-            'removable' => $document->isRemovable(),
             'deleted'   => @unlink($path),
         ];
 
@@ -97,6 +112,31 @@ class FileHandler implements RequestHandlerInterface
             (new Log())->write('File "{file}" deleted.', $log, Logger::WARN);
         } else {
             (new Log())->write('File "{file}" failed to be deleted.', $log, Logger::ERR);
+        }
+
+        return new JsonResponse($data);
+    }
+
+    private function rename(string $path, string $name) : JsonResponse
+    {
+        $document = new Document($path);
+
+        $data = [
+            'path'      => $document->getPathname(),
+            'readable'  => $document->isReadable(),
+            'writable'  => $document->isWritable(),
+            'renamed'   => rename($path, $document->getPath().'/'.$name),
+        ];
+
+        $log = [
+            'file'     => $data['path'],
+            'username' => $this->user['username'],
+        ];
+
+        if ($data['renamed'] === true) {
+            (new Log())->write(sprintf('File "{file}" renamed into "%s".', $name), $log, Logger::WARN);
+        } else {
+            (new Log())->write(sprintf('File "{file}" failed to be renamed into "%s".', $name), $log, Logger::ERR);
         }
 
         return new JsonResponse($data);
