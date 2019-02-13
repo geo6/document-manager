@@ -132,7 +132,7 @@ class Document extends SplFileInfo
             image_type_to_mime_type(IMAGETYPE_WEBP),
         ];
 
-        return $mime !== false && preg_match('/image\/.+/', $mime) === 1 && in_array($mime, $imageMimeTypes);
+        return $mime !== false && preg_match('/image\/.+/', $mime) === 1 && in_array($mime, $imageMimeTypes, true);
     }
 
     /**
