@@ -37,8 +37,10 @@ class DirectoryHandler implements RequestHandlerInterface
 
         $this->user = $session->get(UserInterface::class);
 
-        if (isset($params['directory']) && file_exists('data/'.$params['directory'])) {
-            $this->directory = $params['directory'];
+        $directory = html_entity_decode($params['directory']);
+
+        if (isset($directory) && file_exists('data/'.$directory)) {
+            $this->directory = $directory;
 
             $pathExploded = explode('/', $this->directory);
 
