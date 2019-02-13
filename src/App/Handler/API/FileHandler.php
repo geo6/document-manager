@@ -35,8 +35,9 @@ class FileHandler implements RequestHandlerInterface
 
         $this->user = $session->get(UserInterface::class);
 
-        if (isset($params['path']) && file_exists('data/'.$params['path'])) {
-            $pathExploded = explode('/', $params['path']);
+        if (isset($params['path']) && file_exists('data/'.html_entity_decode($params['path']))) {
+            $path = html_entity_decode($params['path']);
+            $pathExploded = explode('/', $path);
 
             $access = true;
 
@@ -68,7 +69,7 @@ class FileHandler implements RequestHandlerInterface
                         return (new EmptyResponse())->withStatus(403);
                     }
 
-                    return $this->delete('data/'.$params['path']);
+                    return $this->delete('data/'.$path);
                     break;
 
                 case 'PUT':
@@ -85,9 +86,9 @@ class FileHandler implements RequestHandlerInterface
                     }
 
                     if (isset($params['name'])) {
-                        return $this->rename('data/'.$params['path'], $params['name']);
+                        return $this->rename('data/'.$path, $params['name']);
                     } elseif (isset($params['description'])) {
-                        return $this->description('data/'.$params['path'], $params['description']);
+                        return $this->description('data/'.$path, $params['description']);
                     }
                     break;
             }
