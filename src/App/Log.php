@@ -35,6 +35,8 @@ class Log
 
     public function write(string $message, array $data = [], int $level = Logger::INFO): void
     {
+        $data['ip'] = $_SERVER['REMOTE_ADDR'];
+
         //if (file_exists($this->path) && is_writable($this->path)) {
         $logger = new Logger();
         $logger->addWriter(new Stream($this->path));

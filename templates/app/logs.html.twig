@@ -29,6 +29,7 @@ Logs
         <tr>
             <th>Datetime</th>
             <th>Level</th>
+            <th>IP</th>
             <th>Username</th>
             <th>Log</th>
         </tr>
@@ -38,6 +39,7 @@ Logs
         <tr class="log-{{ log.priority_name | lower }}">
             <td class="text-nowrap">{{ log.timestamp | date }}</td>
             <td class="text-nowrap">{{ log.priority_name }}</td>
+            <td class="text-center">{{ log.extra.ip | default('-') }}</td>
             <td class="text-center">{{ log.extra.username | default('-') }}</td>
             <td>{{ log.message }}</td>
         </tr>
