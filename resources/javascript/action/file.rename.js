@@ -3,16 +3,15 @@
 import api from '../api';
 
 export default function () {
-    $('.btn-rename').on('click', event => {
+    $('#modal-rename').on('show.bs.modal', event => {
         const {
             path
-        } = $(event.target).closest('tr').data();
-
-        event.preventDefault();
+        } = $(event.relatedTarget).closest('tr').data();
 
         $('#modal-rename').data({
             path
         });
+
         $('#rename-name, #rename-name-new').val(path.substring(path.lastIndexOf('/') + 1));
     });
 
