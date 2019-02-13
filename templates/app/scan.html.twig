@@ -123,31 +123,42 @@
                         <i class="fas fa-ellipsis-v"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                        {% if not f.isDirectoryWritable() %}
                         {% if permissions.delete %}
-                        {% if f.isDirectoryWritable() %}
+                        <button type="button" class="dropdown-item disabled" tabindex="-1" aria-disabled="true" title="Permission denied" style="cursor: help;">
+                            <i class="far fa-trash-alt"></i>
+                            Delete
+                        </button>
+                        {% endif %}
+                        {% if permissions.rename %}
+                        <button type="button" class="dropdown-item disabled" tabindex="-1" aria-disabled="true" title="Permission denied" style="cursor: help;">
+                            <i class="far fa-edit"></i>
+                            Rename
+                        </button>
+                        {% endif %}
+                        {% if permissions.description %}
+                        <button type="button" class="dropdown-item disabled" tabindex="-1" aria-disabled="true" title="Permission denied" style="cursor: help;">
+                            <i class="far fa-file-alt"></i>
+                            Edit description
+                        </button>
+                        {% endif %}
+                        {% else %}
+                        {% if permissions.delete %}
                         <button type="button" class="dropdown-item text-danger btn-delete">
                             <i class="far fa-trash-alt"></i>
                             Delete
                         </button>
-                        {% else %}
-                        <button type="button" class="dropdown-item disabled" tabindex="-1" aria-disabled="true" title="Permission denied"
-                            style="cursor: help;">
-                            <i class="far fa-trash-alt"></i>
-                            Delete
-                        </button>
-                        {% endif %}
                         {% endif %}
                         {% if permissions.rename %}
-                        {% if f.isDirectoryWritable() %}
                         <button type="button" class="dropdown-item btn-rename" data-toggle="modal" data-target="#modal-rename">
                             <i class="far fa-edit"></i>
                             Rename
                         </button>
-                        {% else %}
-                        <button type="button" class="dropdown-item disabled" tabindex="-1" aria-disabled="true" title="Permission denied"
-                            style="cursor: help;">
-                            <i class="far fa-edit"></i>
-                            Rename
+                        {% endif %}
+                        {% if permissions.description %}
+                        <button type="button" class="dropdown-item btn-description" data-toggle="modal" data-target="#modal-description">
+                            <i class="far fa-file-alt"></i>
+                            Edit description
                         </button>
                         {% endif %}
                         {% endif %}
@@ -175,6 +186,7 @@
 
 {{ include("@app/modal-view/image.html.twig") }}
 {{ include("@app/modal-view/geojson.html.twig") }}
+{{ include("@app/modal-description.html.twig") }}
 {{ include("@app/modal-rename.html.twig") }}
 {{ include("@app/modal-upload.html.twig") }}
 

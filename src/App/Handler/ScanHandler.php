@@ -76,6 +76,7 @@ class ScanHandler implements RequestHandlerInterface
         $delete = false;
         $write = false;
         $rename = false;
+        $description = false;
         $createDirectory = false;
         if ($session->has(UserInterface::class)) {
             $user = $session->get(UserInterface::class);
@@ -85,18 +86,21 @@ class ScanHandler implements RequestHandlerInterface
                 $delete = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_DELETE);
                 $write = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_WRITE);
                 $rename = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_RENAME);
+                $description = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_DESCRIPTION);
                 $createDirectory = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_DIRECTORY_CREATE);
             } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.'.$pathExploded[1])) {
                 $access = $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_READ);
                 $delete = $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_DELETE);
                 $write = $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_WRITE);
                 $rename = $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_RENAME);
+                $description = $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_DESCRIPTION);
                 $createDirectory = $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_DIRECTORY_CREATE);
             } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.'.$pathExploded[1])) {
                 $access = $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_READ);
                 $delete = $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_DELETE);
                 $write = $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_WRITE);
                 $rename = $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_RENAME);
+                $description = $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_DESCRIPTION);
                 $createDirectory = $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_DIRECTORY_CREATE);
             }
         }
@@ -181,6 +185,7 @@ class ScanHandler implements RequestHandlerInterface
                 AclMiddleware::PERM_DELETE           => $delete,
                 AclMiddleware::PERM_WRITE            => $write,
                 AclMiddleware::PERM_RENAME           => $rename,
+                AclMiddleware::PERM_DESCRIPTION      => $description,
                 AclMiddleware::PERM_DIRECTORY_CREATE => $createDirectory,
             ],
         ];

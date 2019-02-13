@@ -84,7 +84,11 @@ class FileHandler implements RequestHandlerInterface
                         return (new EmptyResponse())->withStatus(403);
                     }
 
-                    return $this->rename('data/'.$params['path'], $params['name']);
+                    if (isset($params['name'])) {
+                        return $this->rename('data/'.$params['path'], $params['name']);
+                    } elseif (isset($params['description'])) {
+                        return $this->description('data/'.$params['path'], $params['description']);
+                    }
                     break;
             }
         }
@@ -147,6 +151,42 @@ class FileHandler implements RequestHandlerInterface
             }
         } else {
             (new Log())->write(sprintf('File "{file}" failed to be renamed into "%s".', $name), $log, Logger::ERR);
+        }
+
+        return new JsonResponse($data);
+    }
+
+    private function description(string $path, string $description) : JsonResponse
+    {
+        $document = new Document($path);
+
+        $data = [
+            'path'        => $document->getPathname(),
+            'readable'    => $document->isReadable(),
+            'writable'    => $document->isWritable(),
+        ];
+
+        $log = [
+            'file'     => $data['path'],
+            'username' => $this->user['username'],
+        ];
+
+        if (strlen($description) === 0) {
+            $data['description'] = @unlink($path.'.info');
+
+            if ($data['description'] === true) {
+                (new Log())->write('File "{file}" description removed.', $log, Logger::WARN);
+            } else {
+                (new Log())->write('File "{file}" description failed to be removed.', $log, Logger::ERR);
+            }
+        } else {
+            $data['description'] = (file_put_contents($path.'.info', rtrim($description, PHP_EOL).PHP_EOL) !== false);
+
+            if ($data['description'] === true) {
+                (new Log())->write('File "{file}" description edited.', $log, Logger::NOTICE);
+            } else {
+                (new Log())->write('File "{file}" description failed to be edited.', $log, Logger::ERR);
+            }
         }
 
         return new JsonResponse($data);
