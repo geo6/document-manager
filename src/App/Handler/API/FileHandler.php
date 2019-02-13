@@ -94,7 +94,7 @@ class FileHandler implements RequestHandlerInterface
         ];
 
         if ($data['deleted'] === true) {
-            (new Log())->write('File "{file}" deleted.', $log, Logger::NOTICE);
+            (new Log())->write('File "{file}" deleted.', $log, Logger::WARN);
         } else {
             (new Log())->write('File "{file}" failed to be deleted.', $log, Logger::ERR);
         }
