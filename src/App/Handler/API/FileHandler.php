@@ -135,6 +135,16 @@ class FileHandler implements RequestHandlerInterface
 
         if ($data['renamed'] === true) {
             (new Log())->write(sprintf('File "{file}" renamed into "%s".', $name), $log, Logger::WARN);
+
+            if (file_exists($data['path'].'.info')) {
+                $description = rename($data['path'].'.info', $document->getPath().'/'.$name.'.info');
+
+                if ($data['renamed'] === true) {
+                    (new Log())->write(sprintf('File "{file}" description renamed into "%s".', $name.'.info'), $log, Logger::WARN);
+                } else {
+                    (new Log())->write(sprintf('File "{file}" description failed to be renamed into "%s".', $name.'.info'), $log, Logger::ERR);
+                }
+            }
         } else {
             (new Log())->write(sprintf('File "{file}" failed to be renamed into "%s".', $name), $log, Logger::ERR);
         }
