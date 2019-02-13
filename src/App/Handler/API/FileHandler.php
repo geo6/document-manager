@@ -27,7 +27,12 @@ class FileHandler implements RequestHandlerInterface
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
 
         $method = $request->getMethod();
-        $params = $request->getParsedBody();
+
+        if (in_array($method, ['GET', 'HEAD'])) {
+            $params = $request->getQueryParams();
+        } else {
+            $params = $request->getParsedBody();
+        }
 
         if (!$session->has(UserInterface::class)) {
             return (new EmptyResponse())->withStatus(401);
@@ -56,6 +61,15 @@ class FileHandler implements RequestHandlerInterface
             $permission = false;
 
             switch ($method) {
+                case 'GET':
+                    $document = new Document('data/'.$path);
+
+                    return new JsonResponse([
+                        'name' => $document->getBasename(),
+                        'description' => $document->getInfo(),
+                    ]);
+                    break;
+
                 case 'DELETE':
                     if ($pathExploded[0] === 'public' && $acl->hasResource('directory.public')) {
                         $permission = $acl->isAllowed($this->user['username'], 'directory.public', AclMiddleware::PERM_DELETE);

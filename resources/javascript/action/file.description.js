@@ -3,16 +3,24 @@
 import api from '../api';
 
 export default function () {
-    $('.btn-description').on('click', event => {
+    $('#modal-description').on('show.bs.modal', event => {
         const {
             path
-        } = $(event.target).closest('tr').data();
-
-        event.preventDefault();
+        } = $(event.relatedTarget).closest('tr').data();
 
         $('#modal-description').data({
             path
         });
+
+        api(
+            window.app.api.file,
+            'GET', {
+                path
+            },
+            json => {
+                $('#textarea-description').val(json.description);
+            }
+        );
     });
 
     $('#modal-description .modal-footer > .btn-primary').on('click', event => {

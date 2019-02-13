@@ -51,7 +51,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->get('/view/{path:.+}', $loadAuthenticationMiddleware(App\Handler\DownloadHandler::class), 'view');
 
     $app->get('/api/ping', App\Handler\API\PingHandler::class, 'api.ping');
-    $app->route('/api/file', $loadAuthenticationMiddleware(App\Handler\API\FileHandler::class), ['DELETE', 'PUT'], 'api.file');
+    $app->route('/api/file', $loadAuthenticationMiddleware(App\Handler\API\FileHandler::class), ['GET', 'DELETE', 'PUT'], 'api.file');
     $app->route('/api/directory', $loadAuthenticationMiddleware(App\Handler\API\DirectoryHandler::class), ['POST'], 'api.directory');
     $app->route('/api/upload', $loadAuthenticationMiddleware(App\Handler\API\UploadHandler::class), ['GET', 'POST'], 'api.upload');
 

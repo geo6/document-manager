@@ -8,13 +8,20 @@
  * @param {function} callback
  */
 export default function (url, method, data, callback) {
-    fetch(url, {
+    let init = {
         method: method,
         headers: {
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    }).then(response => {
+        }
+    };
+
+    if (method === 'GET' || method === 'HEAD') {
+        url += '?'+$.param(data);
+    } else {
+        init.body = JSON.stringify(data);
+    }
+
+    fetch(url, init).then(response => {
         if (response.ok !== true) {
             throw new Error(response.statusText);
         }
