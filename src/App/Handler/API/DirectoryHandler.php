@@ -20,7 +20,7 @@ class DirectoryHandler implements RequestHandlerInterface
     /** @var string */
     private $directory;
 
-    /** @var UserInterface */
+    /** @var array */
     private $user;
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
@@ -37,10 +37,8 @@ class DirectoryHandler implements RequestHandlerInterface
 
         $this->user = $session->get(UserInterface::class);
 
-        $directory = html_entity_decode($params['directory']);
-
-        if (isset($directory) && file_exists('data/'.$directory)) {
-            $this->directory = $directory;
+        if (isset($params['directory']) && file_exists('data/'.html_entity_decode($params['directory']))) {
+            $this->directory = html_entity_decode($params['directory']);
 
             $pathExploded = explode('/', $this->directory);
 
@@ -74,7 +72,9 @@ class DirectoryHandler implements RequestHandlerInterface
                         return (new EmptyResponse())->withStatus(403);
                     }
 
-                    return $this->create($params['new']);
+                    if (isset($params['new'])) {
+                        return $this->create($params['new']);
+                    }
             }
         }
 
