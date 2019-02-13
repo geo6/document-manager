@@ -18,7 +18,7 @@ use Zend\Log\Logger;
 
 class FileHandler implements RequestHandlerInterface
 {
-    /** @var UserInterface */
+    /** @var array */
     private $user;
 
     public function handle(ServerRequestInterface $request) : ResponseInterface
@@ -143,7 +143,7 @@ class FileHandler implements RequestHandlerInterface
             if (file_exists($data['path'].'.info')) {
                 $description = rename($data['path'].'.info', $document->getPath().'/'.$name.'.info');
 
-                if ($data['renamed'] === true) {
+                if ($description === true) {
                     (new Log())->write(sprintf('File "{file}" description renamed into "%s".', $name.'.info'), $log, Logger::WARN);
                 } else {
                     (new Log())->write(sprintf('File "{file}" description failed to be renamed into "%s".', $name.'.info'), $log, Logger::ERR);
