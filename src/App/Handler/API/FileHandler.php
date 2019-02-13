@@ -65,7 +65,7 @@ class FileHandler implements RequestHandlerInterface
                     $document = new Document('data/'.$path);
 
                     return new JsonResponse([
-                        'name' => $document->getBasename(),
+                        'name'        => $document->getBasename(),
                         'description' => $document->getInfo(),
                     ]);
                     break;
