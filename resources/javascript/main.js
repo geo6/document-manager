@@ -1,3 +1,5 @@
+'use strict';
+
 import initDirectoryCreate from './action/directory.create';
 import initFileDelete from './action/file.delete';
 import initFileDescription from './action/file.description';

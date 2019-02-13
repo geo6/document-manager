@@ -1,3 +1,5 @@
+'use strict';
+
 import L from 'leaflet';
 
 export default function () {

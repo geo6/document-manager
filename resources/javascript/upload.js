@@ -1,3 +1,5 @@
+'use strict';
+
 import Resumable from 'resumablejs/resumable';
 
 export default function initUpload () {
