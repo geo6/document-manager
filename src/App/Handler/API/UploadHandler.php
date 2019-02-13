@@ -39,7 +39,7 @@ class UploadHandler implements RequestHandlerInterface
 
         $user = $session->get(UserInterface::class);
 
-        $directory = $params['directory'];
+        $directory = html_entity_decode($params['directory']);
         $pathExploded = explode('/', $directory);
 
         $access = true;
