@@ -6,6 +6,10 @@ h1>.svg-inline--fa.fa-caret-right {
 
 #carousel {
     background-color: rgba(128, 128, 128, 0.5);
+
+    .carousel-caption {
+        text-shadow: #000 0.1em 0.1em 0.2em;
+    }
 }
 
 #map {
