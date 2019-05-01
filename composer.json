@@ -30,7 +30,7 @@
         "geo6/php-image-tools": "1.0.4",
         "mtymek/blast-base-url": "1.0",
         "ralouphie/mimey": "2.0",
-        "symfony/finder": "4.2.4",
+        "symfony/finder": "4.2.7",
         "vistag/human-readable": "dev-master",
         "zendframework/zend-component-installer": "2.1.1",
         "zendframework/zend-config-aggregator": "1.1.1",
