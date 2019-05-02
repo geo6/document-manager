@@ -27,7 +27,7 @@
         "php": "^7.2",
         "ext-exif": "*",
         "ext-fileinfo": "*",
-        "geo6/php-image-tools": "1.0.4",
+        "geo6/php-image-tools": "1.0.6",
         "mtymek/blast-base-url": "1.0",
         "ralouphie/mimey": "2.1.0",
         "symfony/finder": "4.2.8",
