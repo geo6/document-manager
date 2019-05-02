@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "576a66940083da2537c7a888f3a5458a",
+    "content-hash": "208e9c529c02cb5e0ceba81f15ced4f9",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -143,16 +143,16 @@
         },
         {
             "name": "geo6/php-image-tools",
-            "version": "v1.0.4",
+            "version": "v1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/geo6/php-image-tools.git",
-                "reference": "f301164c68058e28f0ddb934768eb34c0a6577aa"
+                "reference": "39b81a0f459b7a4fac488b61f55057adae7ef857"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/geo6/php-image-tools/zipball/f301164c68058e28f0ddb934768eb34c0a6577aa",
-                "reference": "f301164c68058e28f0ddb934768eb34c0a6577aa",
+                "url": "https://api.github.com/repos/geo6/php-image-tools/zipball/39b81a0f459b7a4fac488b61f55057adae7ef857",
+                "reference": "39b81a0f459b7a4fac488b61f55057adae7ef857",
                 "shasum": ""
             },
             "require": {
@@ -176,7 +176,7 @@
                 "GPL-3.0-or-later"
             ],
             "description": "PHP Library that provides tools for image processing (thumbnail, EXIF rotation, ...)",
-            "time": "2018-12-13T09:52:22+00:00"
+            "time": "2019-04-01T13:39:27+00:00"
         },
         {
             "name": "mtymek/blast-base-url",
