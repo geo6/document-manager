@@ -93,6 +93,11 @@
                                 <i class="far fa-fw fa-file-code"></i>
                                 View
                             </a>
+                        {% elseif f.getMimeType() == 'text/plain' %}
+                            <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal-view-text" data-toggle="modal" class="float-right" style="text-decoration: none;">
+                                <i class="far fa-fw fa-file-alt"></i>
+                                View
+                            </a>
                         {% endif %}
                         <a href="{{ path('download', {'path': f.getRelativePath()}) }}">
                             {{ f.getFilename() }}
@@ -195,6 +200,7 @@
     {{ include("@app/modal/view/html.html.twig") }}
     {{ include("@app/modal/view/image.html.twig") }}
     {{ include("@app/modal/view/geojson.html.twig") }}
+    {{ include("@app/modal/view/text.html.twig") }}
     {{ include("@app/modal/description.html.twig") }}
     {{ include("@app/modal/rename.html.twig") }}
     {{ include("@app/modal/upload.html.twig") }}

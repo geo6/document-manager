@@ -8,6 +8,7 @@ import initUpload from './upload';
 import initViewHTML from './view/html';
 import initViewImage from './view/image';
 import initViewGeoJSON from './view/geojson';
+import initViewText from './view/text';
 
 window.app = window.app || {};
 
@@ -19,6 +20,7 @@ $(document).ready(() => {
     initViewHTML();
     initViewImage();
     initViewGeoJSON();
+    initViewText();
 
     initFileDelete();
     initFileDescription();
