@@ -32,14 +32,16 @@ class Document extends SplFileInfo
 
         if ($mime === false) {
             return 'fa-file';
-        } elseif (preg_match('/text\/.+/', $mime) === 1) {
-            return 'fa-file-alt';
-        } elseif (preg_match('/image\/.+/', $mime) === 1 && $this->isImage()) {
-            return 'fa-file-image';
         } elseif ($mime === 'application/pdf') {
             return 'fa-file-pdf';
         } elseif ($mime === 'application/zip') {
             return 'fa-file-archive';
+        } elseif ($mime === 'text/html') {
+            return 'fa-file-code';
+        } elseif (preg_match('/text\/.+/', $mime) === 1) {
+            return 'fa-file-alt';
+        } elseif (preg_match('/image\/.+/', $mime) === 1 && $this->isImage()) {
+            return 'fa-file-image';
         } elseif (in_array($mime, $mimes->getAllMimeTypes('doc'), true) || in_array($mime, $mimes->getAllMimeTypes('docx'), true)) {
             return 'fa-file-word';
         } elseif (in_array($mime, $mimes->getAllMimeTypes('xls'), true) || in_array($mime, $mimes->getAllMimeTypes('xlsx'), true)) {
