@@ -80,12 +80,17 @@
                     <td>
                         {% if f.isImage() %}
                             <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal-view-image" data-toggle="modal" class="float-right" style="text-decoration: none;">
-                                <i class="far fa-image"></i>
+                                <i class="far fa-fw fa-image"></i>
                                 View
                             </a>
                         {% elseif f.isGeoJSON() %}
                             <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal-view-geojson" data-toggle="modal" class="float-right" style="text-decoration: none;">
-                                <i class="fas fa-map-marked-alt"></i>
+                                <i class="fas fa-fw fa-map-marked-alt"></i>
+                                View
+                            </a>
+                        {% elseif f.getMimeType() == 'text/html' %}
+                            <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal-view-html" data-toggle="modal" class="float-right" style="text-decoration: none;">
+                                <i class="far fa-fw fa-file-code"></i>
                                 View
                             </a>
                         {% endif %}
@@ -187,6 +192,7 @@
         file(s)
     </p>
 
+    {{ include("@app/modal/view/html.html.twig") }}
     {{ include("@app/modal/view/image.html.twig") }}
     {{ include("@app/modal/view/geojson.html.twig") }}
     {{ include("@app/modal/description.html.twig") }}
