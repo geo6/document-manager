@@ -1,193 +1,196 @@
 {% extends '@layout/default.html.twig' %}
 
 {% block title %}
-{{ path | split('/') | last }}
+    {{ path | split('/') | last }}
 {% endblock %}
 
 {% block stylesheets %}
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-    crossorigin="">
+    <link crossorigin="" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" rel="stylesheet">
 {% endblock %}
 
 {% block javascript %}
-<script src="{{ asset('/js/dm.min.js') }}"></script>
-<script>
-    window.app = {
-        api: {
-            upload: '{{ path("api.upload") }}',
-            file: '{{ path("api.file") }}',
-            directory: '{{ path("api.directory") }}'
-        },
-        directory: '{{ path }}',
-        types: []
-    };
-</script>
+    <script src="{{ asset('/js/dm.min.js') }}"></script>
+    <script>
+        window.app = {
+            api: {
+                upload: '{{ path("api.upload") }}',
+                file: '{{ path("api.file") }}',
+                directory: '{{ path("api.directory") }}'
+            },
+            directory: '{{ path }}',
+            types: []
+        };
+    </script>
 {% endblock %}
 
 {% block content %}
 
-{{ include("@app/breadcrumb.html.twig") }}
+    {{ include("@app/breadcrumb.html.twig") }}
 
-<div>
-    {% if permissions.createDirectory %}
-    <button class="btn btn-outline-primary" id="btn-directory-create">
-        <i class="fas fa-folder-plus"></i>
-        New directory
-    </button>
-    {% endif %}
-    {% if permissions.write %}
-    <button class="btn btn-outline-primary" data-toggle="modal" data-target="#modal-upload">
-        <i class="fas fa-file-upload"></i>
-        Upload
-    </button>
-    {% endif %}
-</div>
+    <div>
+        {% if permissions.createDirectory %}
+            <button class="btn btn-outline-primary" id="btn-directory-create">
+                <i class="fas fa-folder-plus"></i>
+                New directory
+            </button>
+        {% endif %}
+        {% if permissions.write %}
+            <button class="btn btn-outline-primary" data-target="#modal-upload" data-toggle="modal">
+                <i class="fas fa-file-upload"></i>
+                Upload
+            </button>
+        {% endif %}
+    </div>
 
-<table class="table table-hover table-sm mt-3">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Name</th>
-            <th></th>
-            <th>Last modified</th>
-            <th class="text-right">Size</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for d in content.directories %}
-        <tr>
-            <td class="text-center">
-                <i class="fas fa-folder"></i>
-            </td>
-            <td>
-                <a href="{{ path('scan', {'path': d.getRelativePath()}) }}">
-                    {{ d.getFilename() }}
-                </a>
-            </td>
-            <td></td>
-            <td>
-                <span title="{{ d.getReadableMTime() }}">
-                    {{ d.getReadableMTime('%e %B %Y') }}
-                </span>
-            </td>
-            <td></td>
-        </tr>
-        {% endfor %}
-        {% for f in content.files %}
-        <tr data-path="{{ f.getRelativePath() }}">
-            <td class="text-center">
-                <i class="far {{ f.getFontAwesomeIcon() }}" title="{{ f.getMimeType() }}"></i>
-            </td>
-            <td>
-                {% if f.isImage() %}
-                <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal-view-image" data-toggle="modal"
-                    class="float-right" style="text-decoration: none;">
-                    <i class="far fa-image"></i>
-                    View
-                </a>
-                {% elseif f.isGeoJSON() %}
-                <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal-view-geojson"
-                    data-toggle="modal" class="float-right" style="text-decoration: none;">
-                    <i class="fas fa-search-location"></i>
-                    View
-                </a>
-                {% endif %}
-                <a href="{{ path('download', {'path': f.getRelativePath()}) }}">
-                    {{ f.getFilename() }}
-                </a>
-                {% if f.isImage() %}
-                {% set exif = f.getEXIF() %}
-                {% if exif.DateTime is defined %}
-                <p class="mb-0 text-info small">
-                    {{ exif.Make|default('?') }} &bull; {{ exif.Model|default('?') }} &bull; {{ exif.DateTime }}
-                </p>
-                {% endif %}
-                {% elseif f.isGeoJSON() %}
-                <p class="mb-0 text-info small">
-                    {% if f.getTitle() %}
-                    {{ f.getTitle() }}<br>
-                    {% endif %}
-                    {{ f.getDescription() }}
-                </p>
-                {% endif %}
-                {% if f.getInfo() %}
-                <p class="mb-0 text-info small">
-                    {{ f.getInfo() }}
-                </p>
-                {% endif %}
-            </td>
-            <td class="text-center">
-                {% if permissions.delete or permissions.rename %}
-                <div class="dropdown">
-                    <a href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-ellipsis-v"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                        {% if not f.isDirectoryWritable() %}
-                        {% if permissions.delete %}
-                        <button type="button" class="dropdown-item disabled" tabindex="-1" aria-disabled="true" title="Permission denied" style="cursor: help;">
-                            <i class="far fa-trash-alt"></i>
-                            Delete
-                        </button>
+    <table class="table table-hover table-sm mt-3">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th></th>
+                <th>Last modified</th>
+                <th class="text-right">Size</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in content.directories %}
+                <tr>
+                    <td class="text-center">
+                        <i class="fas fa-folder"></i>
+                    </td>
+                    <td>
+                        <a href="{{ path('scan', {'path': d.getRelativePath()}) }}">
+                            {{ d.getFilename() }}
+                        </a>
+                    </td>
+                    <td></td>
+                    <td>
+                        <span title="{{ d.getReadableMTime() }}">
+                            {{ d.getReadableMTime('%e %B %Y') }}
+                        </span>
+                    </td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+            {% for f in content.files %}
+                <tr data-path="{{ f.getRelativePath() }}">
+                    <td class="text-center">
+                        <i class="far {{ f.getFontAwesomeIcon() }}" title="{{ f.getMimeType() }}"></i>
+                    </td>
+                    <td>
+                        {% if f.isImage() %}
+                            <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal-view-image" data-toggle="modal" class="float-right" style="text-decoration: none;">
+                                <i class="far fa-image"></i>
+                                View
+                            </a>
+                        {% elseif f.isGeoJSON() %}
+                            <a href="{{ path('view', {'path': f.getRelativePath()}) }}" data-target="#modal-view-geojson" data-toggle="modal" class="float-right" style="text-decoration: none;">
+                                <i class="fas fa-search-location"></i>
+                                View
+                            </a>
                         {% endif %}
-                        {% if permissions.rename %}
-                        <button type="button" class="dropdown-item disabled" tabindex="-1" aria-disabled="true" title="Permission denied" style="cursor: help;">
-                            <i class="far fa-edit"></i>
-                            Rename
-                        </button>
+                        <a href="{{ path('download', {'path': f.getRelativePath()}) }}">
+                            {{ f.getFilename() }}
+                        </a>
+                        {% if f.isImage() %}
+                            {% set exif = f.getEXIF() %}
+                            {% if exif.DateTime is defined %}
+                                <p class="mb-0 text-info small">
+                                    {{ exif.Make|default('?') }}
+                                    &bull;
+                                    {{ exif.Model|default('?') }}
+                                    &bull;
+                                    {{ exif.DateTime }}
+                                </p>
+                            {% endif %}
+                        {% elseif f.isGeoJSON() %}
+                            <p class="mb-0 text-info small">
+                                {% if f.getTitle() %}
+                                    {{ f.getTitle() }}<br>
+                                {% endif %}
+                                {{ f.getDescription() }}
+                            </p>
                         {% endif %}
-                        {% if permissions.description %}
-                        <button type="button" class="dropdown-item disabled" tabindex="-1" aria-disabled="true" title="Permission denied" style="cursor: help;">
-                            <i class="far fa-file-alt"></i>
-                            Edit description
-                        </button>
+                        {% if f.getInfo() %}
+                            <p class="mb-0 text-info small">
+                                {{ f.getInfo() }}
+                            </p>
                         {% endif %}
-                        {% else %}
-                        {% if permissions.delete %}
-                        <button type="button" class="dropdown-item text-danger btn-delete">
-                            <i class="far fa-trash-alt"></i>
-                            Delete
-                        </button>
+                    </td>
+                    <td class="text-center">
+                        {% if permissions.delete or permissions.rename %}
+                            <div class="dropdown">
+                                <a aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" href="#" id="dropdownMenuButton">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </a>
+                                <div aria-labelledby="dropdownMenuButton" class="dropdown-menu dropdown-menu-right">
+                                    {% if not f.isDirectoryWritable() %}
+                                        {% if permissions.delete %}
+                                            <button aria-disabled="true" class="dropdown-item disabled" style="cursor: help;" tabindex="-1" title="Permission denied" type="button">
+                                                <i class="far fa-trash-alt"></i>
+                                                Delete
+                                            </button>
+                                        {% endif %}
+                                        {% if permissions.rename %}
+                                            <button aria-disabled="true" class="dropdown-item disabled" style="cursor: help;" tabindex="-1" title="Permission denied" type="button">
+                                                <i class="far fa-edit"></i>
+                                                Rename
+                                            </button>
+                                        {% endif %}
+                                        {% if permissions.description %}
+                                            <button aria-disabled="true" class="dropdown-item disabled" style="cursor: help;" tabindex="-1" title="Permission denied" type="button">
+                                                <i class="far fa-file-alt"></i>
+                                                Edit description
+                                            </button>
+                                        {% endif %}
+                                    {% else %}
+                                        {% if permissions.delete %}
+                                            <button class="dropdown-item text-danger btn-delete" type="button">
+                                                <i class="far fa-trash-alt"></i>
+                                                Delete
+                                            </button>
+                                        {% endif %}
+                                        {% if permissions.rename %}
+                                            <button class="dropdown-item btn-rename" data-target="#modal-rename" data-toggle="modal" type="button">
+                                                <i class="far fa-edit"></i>
+                                                Rename
+                                            </button>
+                                        {% endif %}
+                                        {% if permissions.description %}
+                                            <button class="dropdown-item btn-description" data-target="#modal-description" data-toggle="modal" type="button">
+                                                <i class="far fa-file-alt"></i>
+                                                Edit description
+                                            </button>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </div>
                         {% endif %}
-                        {% if permissions.rename %}
-                        <button type="button" class="dropdown-item btn-rename" data-toggle="modal" data-target="#modal-rename">
-                            <i class="far fa-edit"></i>
-                            Rename
-                        </button>
-                        {% endif %}
-                        {% if permissions.description %}
-                        <button type="button" class="dropdown-item btn-description" data-toggle="modal" data-target="#modal-description">
-                            <i class="far fa-file-alt"></i>
-                            Edit description
-                        </button>
-                        {% endif %}
-                        {% endif %}
-                    </div>
-                </div>
-                {% endif %}
-            </td>
-            <td class="text-nowrap">
-                <span title="{{ f.getReadableMTime('%c') }}">
-                    {{ f.getReadableMTime('%e %B %Y') }}
-                </span>
-            </td>
-            <td class="text-nowrap text-right">{{ f.getReadableSize(0) }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                    </td>
+                    <td class="text-nowrap">
+                        <span title="{{ f.getReadableMTime('%c') }}">
+                            {{ f.getReadableMTime('%e %B %Y') }}
+                        </span>
+                    </td>
+                    <td class="text-nowrap text-right">{{ f.getReadableSize(0) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-<hr>
+    <hr>
 
-<p class="small text-muted">
-    {{ content.directories|length }} directorie(s) and
-    {{ content.files|length }} file(s)
-</p>
+    <p class="small text-muted">
+        {{ content.directories|length }}
+        directorie(s) and
+        {{ content.files|length }}
+        file(s)
+    </p>
 
-{{ include("@app/modal/view/image.html.twig") }}
-{{ include("@app/modal/view/geojson.html.twig") }}
-{{ include("@app/modal/description.html.twig") }}
-{{ include("@app/modal/rename.html.twig") }}
-{{ include("@app/modal/upload.html.twig") }}
+    {{ include("@app/modal/view/image.html.twig") }}
+    {{ include("@app/modal/view/geojson.html.twig") }}
+    {{ include("@app/modal/description.html.twig") }}
+    {{ include("@app/modal/rename.html.twig") }}
+    {{ include("@app/modal/upload.html.twig") }}
 
 {% endblock %}
