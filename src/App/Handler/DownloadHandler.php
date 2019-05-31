@@ -8,7 +8,7 @@ use App\Middleware\AclMiddleware;
 use App\Model\Document;
 use App\Model\Image;
 use Blast\BaseUrl\BaseUrlMiddleware;
-use Geo6\Image\Image as ImageTool;
+use Intervention\Image\ImageManagerStatic;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -89,34 +89,24 @@ class DownloadHandler implements RequestHandlerInterface
 
             if ($document->isImage() && $mode === 'view') {
                 $document = new Image($file);
-                $exif = $document->getEXIF();
 
-                if (isset($exif['Orientation']) && $exif['Orientation'] > 1) {
-                    $rotatedDirectory = 'data/cache/'.ltrim(dirname($file), 'data/');
-                    $rotatedFile = $rotatedDirectory.'/'.basename($file).'.rotated';
+                $image = ImageManagerStatic::make($file);
+                $image->orientate();
 
-                    $md5File = $rotatedDirectory.'/'.basename($file).'.md5';
-
-                    $md5_1 = md5_file($file);
-                    $md5_2 = file_exists($md5File) ? file_get_contents($md5File) : null;
-
-                    if (!file_exists($rotatedFile) || $md5_1 !== $md5_2) {
-                        if (!file_exists($rotatedDirectory) || !is_dir($rotatedDirectory)) {
-                            mkdir(dirname($rotatedFile), 0775, true);
-                        }
-
-                        $image = ImageTool::createFromFile($file);
-                        $rotated = $image->EXIFRotate();
-                        $rotated->save($rotatedFile);
-
-                        file_put_contents($md5File, $md5_1);
-                    }
-
-                    $file = $rotatedFile;
+                if ($image->height() > $image->width()) {
+                    $image->heighten(640, function ($constraint) {
+                        $constraint->upsize();
+                    });
+                } else {
+                    $image->widen(640, function ($constraint) {
+                        $constraint->upsize();
+                    });
                 }
-            }
 
-            $content = file_get_contents($file);
+                $content = (string) $image->encode();
+            } else {
+                $content = file_get_contents($file);
+            }
 
             if ($content !== false && $mime !== false) {
                 $gzcontent = gzencode($content);
