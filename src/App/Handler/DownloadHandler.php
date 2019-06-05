@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Handler;
 
@@ -59,7 +59,7 @@ class DownloadHandler implements RequestHandlerInterface
         $mode = $route->getMatchedRouteName();
 
         $path = $request->getAttribute('path');
-        $file = 'data/' . $path;
+        $file = 'data/'.$path;
 
         $pathExploded = explode('/', $path);
 
@@ -69,10 +69,10 @@ class DownloadHandler implements RequestHandlerInterface
 
             if ($pathExploded[0] === 'public' && $acl->hasResource('directory.public')) {
                 $access = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_READ);
-            } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.' . $pathExploded[1])) {
-                $access = $acl->isAllowed($user['username'], 'directory.roles.' . $pathExploded[1], AclMiddleware::PERM_READ);
-            } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.' . $pathExploded[1])) {
-                $access = $acl->isAllowed($user['username'], 'directory.users.' . $pathExploded[1], AclMiddleware::PERM_READ);
+            } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.'.$pathExploded[1])) {
+                $access = $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_READ);
+            } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.'.$pathExploded[1])) {
+                $access = $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_READ);
             }
         }
         if ($access !== true) {
@@ -107,13 +107,13 @@ class DownloadHandler implements RequestHandlerInterface
                         ->withBody($body)
                         ->withStatus(200)
                         ->withHeader('Content-Encoding', 'gzip')
-                        ->withHeader('Content-Length', (string)strlen($gzcontent))
+                        ->withHeader('Content-Length', (string) strlen($gzcontent))
                         ->withHeader('Content-Type', $mime);
 
                     if ($mode === 'download') {
                         $response = $response->withHeader(
                             'Content-Disposition',
-                            'attachment; filename="' . $document->getBasename() . '"'
+                            'attachment; filename="'.$document->getBasename().'"'
                         );
                     }
 
@@ -156,6 +156,6 @@ class DownloadHandler implements RequestHandlerInterface
             $image->save($thumbnail);
         }
 
-        return (string)$image->encode();
+        return (string) $image->encode();
     }
 }
