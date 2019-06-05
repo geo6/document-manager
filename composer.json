@@ -17,12 +17,6 @@
         "geojson"
     ],
     "license": "GPL-3.0-or-later",
-    "authors": [
-        {
-            "name": "Jonathan Beliën",
-            "email": "jbe@geo6.be"
-        }
-    ],
     "require": {
         "php": "^7.2",
         "ext-exif": "*",
