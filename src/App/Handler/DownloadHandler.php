@@ -90,20 +90,7 @@ class DownloadHandler implements RequestHandlerInterface
             if ($document->isImage() && $mode === 'view') {
                 $document = new Image($file);
 
-                $image = ImageManagerStatic::make($file);
-                $image->orientate();
-
-                if ($image->height() > $image->width()) {
-                    $image->heighten(640, function ($constraint) {
-                        $constraint->upsize();
-                    });
-                } else {
-                    $image->widen(640, function ($constraint) {
-                        $constraint->upsize();
-                    });
-                }
-
-                $content = (string)$image->encode();
+                $content = self::thumbnail($file);
             } else {
                 $content = file_get_contents($file);
             }
@@ -138,5 +125,37 @@ class DownloadHandler implements RequestHandlerInterface
         }
 
         return (new EmptyResponse())->withStatus(404);
+    }
+
+    private static function thumbnail(string $file): string
+    {
+        $directory = dirname($file);
+        $fname = basename($file);
+        $thumbnail = sprintf('%s/.thumbnails/%s', $directory, $fname);
+
+        if (file_exists($thumbnail)) {
+            $image = ImageManagerStatic::make($thumbnail);
+        } else {
+            $image = ImageManagerStatic::make($file);
+            $image->orientate();
+
+            if ($image->height() > $image->width()) {
+                $image->heighten(640, function ($constraint) {
+                    $constraint->upsize();
+                });
+            } else {
+                $image->widen(640, function ($constraint) {
+                    $constraint->upsize();
+                });
+            }
+
+            if (!file_exists(dirname($thumbnail)) || !is_dir(dirname($thumbnail))) {
+                mkdir(dirname($thumbnail), 0777, true);
+            }
+
+            $image->save($thumbnail);
+        }
+
+        return (string)$image->encode();
     }
 }
