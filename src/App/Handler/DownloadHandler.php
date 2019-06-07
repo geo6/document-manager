@@ -90,39 +90,26 @@ class DownloadHandler implements RequestHandlerInterface
             if ($document->isImage() && $mode === 'view') {
                 $document = new Image($file);
 
-                $content = self::thumbnail($file);
+                $stream = new Stream(self::thumbnail($file));
             } else {
-                $content = file_get_contents($file);
+                $stream = new Stream($file);
             }
 
-            if ($content !== false && $mime !== false) {
-                $gzcontent = gzencode($content);
-
-                if ($gzcontent !== false) {
-                    $body = new Stream('php://temp', 'w+');
-                    $body->write($gzcontent);
-                    $body->rewind();
-
                     $response = (new Response())
-                        ->withBody($body)
+                ->withBody($stream)
                         ->withStatus(200)
-                        ->withHeader('Content-Encoding', 'gzip')
-                        ->withHeader('Content-Length', (string) strlen($gzcontent))
+                ->withHeader('Content-Length', (string)$stream->getSize())
                         ->withHeader('Content-Type', $mime);
 
                     if ($mode === 'download') {
                         $response = $response->withHeader(
                             'Content-Disposition',
-                            'attachment; filename="'.$document->getBasename().'"'
+                    'attachment; filename="' . $document->getBasename() . '"'
                         );
                     }
 
                     return $response;
                 }
-            }
-
-            return new EmptyResponse();
-        }
 
         return (new EmptyResponse())->withStatus(404);
     }
@@ -156,6 +143,6 @@ class DownloadHandler implements RequestHandlerInterface
             $image->save($thumbnail);
         }
 
-        return (string) $image->encode();
+        return $thumbnail;
     }
 }
