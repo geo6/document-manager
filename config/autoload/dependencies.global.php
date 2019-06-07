@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 return [
     // Provides application-wide services.
@@ -22,7 +22,7 @@ return [
         // Use 'factories' for services provided by callbacks/factory classes.
         'factories' => [
             // Fully\Qualified\ClassName::class => Fully\Qualified\FactoryName::class,
-            Zend\HttpHandlerRunner\Emitter\EmitterInterface::class => App\EmitterFactory::class,
+            Zend\HttpHandlerRunner\Emitter\EmitterInterface::class        => App\EmitterFactory::class,
             Zend\Expressive\Authentication\AuthenticationInterface::class => Zend\Expressive\Authentication\Session\PhpSessionFactory::class,
         ],
     ],
