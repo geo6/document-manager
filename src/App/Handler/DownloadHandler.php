@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace App\Handler;
 
@@ -59,7 +59,7 @@ class DownloadHandler implements RequestHandlerInterface
         $mode = $route->getMatchedRouteName();
 
         $path = $request->getAttribute('path');
-        $file = 'data/'.$path;
+        $file = 'data/' . $path;
 
         $pathExploded = explode('/', $path);
 
@@ -69,10 +69,10 @@ class DownloadHandler implements RequestHandlerInterface
 
             if ($pathExploded[0] === 'public' && $acl->hasResource('directory.public')) {
                 $access = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_READ);
-            } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.'.$pathExploded[1])) {
-                $access = $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_READ);
-            } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.'.$pathExploded[1])) {
-                $access = $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_READ);
+            } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.' . $pathExploded[1])) {
+                $access = $acl->isAllowed($user['username'], 'directory.roles.' . $pathExploded[1], AclMiddleware::PERM_READ);
+            } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.' . $pathExploded[1])) {
+                $access = $acl->isAllowed($user['username'], 'directory.users.' . $pathExploded[1], AclMiddleware::PERM_READ);
             }
         }
         if ($access !== true) {
@@ -91,25 +91,26 @@ class DownloadHandler implements RequestHandlerInterface
                 $document = new Image($file);
 
                 $stream = new Stream(self::thumbnail($file));
+
+                return (new Response())
+                    ->withBody($stream)
+                    ->withStatus(200)
+                    ->withHeader('Content-Length', (string)$stream->getSize())
+                    ->withHeader('Content-Type', $mime);
             } else {
                 $stream = new Stream($file);
+
+                return (new Response())
+                    ->withBody($stream)
+                    ->withStatus(200)
+                    ->withHeader('Content-Length', (string)$stream->getSize())
+                    ->withHeader('Content-Type', $mime)
+                    ->withHeader(
+                        'Content-Disposition',
+                        'attachment; filename="' . $document->getBasename() . '"'
+                    );
             }
-
-                    $response = (new Response())
-                ->withBody($stream)
-                        ->withStatus(200)
-                ->withHeader('Content-Length', (string)$stream->getSize())
-                        ->withHeader('Content-Type', $mime);
-
-                    if ($mode === 'download') {
-                        $response = $response->withHeader(
-                            'Content-Disposition',
-                    'attachment; filename="' . $document->getBasename() . '"'
-                        );
-                    }
-
-                    return $response;
-                }
+        }
 
         return (new EmptyResponse())->withStatus(404);
     }
