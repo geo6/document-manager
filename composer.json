@@ -32,7 +32,7 @@
         "zendframework/zend-expressive": "3.2.1",
         "zendframework/zend-expressive-authentication": "0.5.0",
         "zendframework/zend-expressive-authentication-session": "0.5.0",
-        "zendframework/zend-expressive-fastroute": "3.0.2",
+        "zendframework/zend-expressive-fastroute": "3.0.3",
         "zendframework/zend-expressive-helpers": "5.3.0",
         "zendframework/zend-expressive-session": "1.2.1",
         "zendframework/zend-expressive-session-ext": "1.6.0",
