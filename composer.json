@@ -21,7 +21,7 @@
         "php": "^7.2",
         "ext-exif": "*",
         "ext-fileinfo": "*",
-        "intervention/image": "2.4.2",
+        "intervention/image": "2.5.0",
         "mtymek/blast-base-url": "1.0",
         "ralouphie/mimey": "2.1.0",
         "symfony/finder": "4.3.2",
