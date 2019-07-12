@@ -48,3 +48,19 @@ patch:
         patched: '2019-07-12T07:56:38.913Z'
     - babel-minify-webpack-plugin > babel-core > babel-helpers > babel-template > babel-traverse > babel-types > lodash:
         patched: '2019-07-12T07:56:38.913Z'
+    - snyk > @snyk/dep-graph > lodash:
+        patched: '2019-07-12T07:57:48.705Z'
+    - snyk > snyk-nuget-plugin > lodash:
+        patched: '2019-07-12T07:57:48.705Z'
+    - snyk > snyk-nodejs-lockfile-parser > lodash:
+        patched: '2019-07-12T07:57:48.705Z'
+    - snyk > snyk-config > lodash:
+        patched: '2019-07-12T07:57:48.705Z'
+    - snyk > inquirer > lodash:
+        patched: '2019-07-12T07:57:48.705Z'
+    - snyk > snyk-nodejs-lockfile-parser > graphlib > lodash:
+        patched: '2019-07-12T07:57:48.705Z'
+    - snyk > snyk-go-plugin > graphlib > lodash:
+        patched: '2019-07-12T07:57:48.705Z'
+    - snyk > @snyk/dep-graph > graphlib > lodash:
+        patched: '2019-07-12T07:57:48.705Z'
