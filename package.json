@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "leaflet": "1.5.1",
-    "resumablejs": "1.1.0"
+    "resumablejs": "1.1.0",
+    "snyk": "^1.193.0"
   },
   "devDependencies": {
     "babel-minify-webpack-plugin": "^0.3.1",
@@ -23,6 +24,9 @@
     "fix": "eslint resources/javascript/ --fix",
     "watch": "npm run watch:css & npm run watch:js",
     "watch:css": "node-sass --watch --output-style compressed --output public/css resources/sass/style.scss",
-    "watch:js": "webpack --watch --config webpack.config.js --mode development --progress"
-  }
+    "watch:js": "webpack --watch --config webpack.config.js --mode development --progress",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
+  },
+  "snyk": true
 }
