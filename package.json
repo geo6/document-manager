@@ -1,8 +1,7 @@
 {
   "dependencies": {
     "leaflet": "1.5.1",
-    "resumablejs": "1.1.0",
-    "snyk": "^1.222.1"
+    "resumablejs": "1.1.0"
   },
   "devDependencies": {
     "babel-minify-webpack-plugin": "^0.3.1",
