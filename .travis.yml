@@ -1,8 +1,14 @@
 language: php
 sudo: false
 
-php:
-  - 7.2
+matrix:
+    fast_finish: true
+    include:
+        - php: 7.3
+          env: deps="low"
+        - php: 7.3
+          env: deps="high"
+        - php: 7.2
 
 install:
-  - composer install --no-interaction
+    - composer install --no-interaction --no-dev
