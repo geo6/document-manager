@@ -22,3 +22,4 @@ temp/
 # Misc.
 .vscode/
 config/application/
+hosts.yml
