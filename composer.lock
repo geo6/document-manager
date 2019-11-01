@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b986e1e9c80fd65c35110383f89f4fe",
+    "content-hash": "365cdeaa5a2825645688cc6a6a651862",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1675,16 +1675,16 @@
         },
         {
             "name": "zendframework/zend-expressive-session",
-            "version": "1.2.1",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-session.git",
-                "reference": "b869aaaf2de4d734b1955bf6f79b6da25ab5ad9c"
+                "reference": "71615ce08f3c02b49090b14a3f3f9db23aa8652b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-session/zipball/b869aaaf2de4d734b1955bf6f79b6da25ab5ad9c",
-                "reference": "b869aaaf2de4d734b1955bf6f79b6da25ab5ad9c",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-session/zipball/71615ce08f3c02b49090b14a3f3f9db23aa8652b",
+                "reference": "71615ce08f3c02b49090b14a3f3f9db23aa8652b",
                 "shasum": ""
             },
             "require": {
@@ -1707,8 +1707,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev",
-                    "dev-develop": "1.3.x-dev"
+                    "dev-master": "1.3.x-dev",
+                    "dev-develop": "1.4.x-dev"
                 },
                 "zf": {
                     "config-provider": "Zend\\Expressive\\Session\\ConfigProvider"
@@ -1733,7 +1733,7 @@
                 "zend-expressive",
                 "zf"
             ],
-            "time": "2019-03-05T20:57:32+00:00"
+            "time": "2019-10-16T15:28:15+00:00"
         },
         {
             "name": "zendframework/zend-expressive-session-ext",
