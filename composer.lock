@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "31d46e7b1b79059c8071df4f20498a21",
+    "content-hash": "c45014d018df94d58e27fdcb5d7385e0",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1735,23 +1735,23 @@
         },
         {
             "name": "zendframework/zend-expressive-session-ext",
-            "version": "1.6.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-expressive-session-ext.git",
-                "reference": "11d05b5cc8cbe3cad6c7d5b531cdd7e9e41d8677"
+                "reference": "ba3210afb160450a7aa6139b98eda2b667c41cbd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-expressive-session-ext/zipball/11d05b5cc8cbe3cad6c7d5b531cdd7e9e41d8677",
-                "reference": "11d05b5cc8cbe3cad6c7d5b531cdd7e9e41d8677",
+                "url": "https://api.github.com/repos/zendframework/zend-expressive-session-ext/zipball/ba3210afb160450a7aa6139b98eda2b667c41cbd",
+                "reference": "ba3210afb160450a7aa6139b98eda2b667c41cbd",
                 "shasum": ""
             },
             "require": {
                 "dflydev/fig-cookies": "^1.0 || ^2.0",
                 "ext-session": "*",
                 "php": "^7.1",
-                "zendframework/zend-expressive-session": "^1.2"
+                "zendframework/zend-expressive-session": "^1.3"
             },
             "conflict": {
                 "phpspec/prophecy": "<1.7.2"
@@ -1764,8 +1764,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.6.x-dev",
-                    "dev-develop": "1.7.x-dev"
+                    "dev-master": "1.7.x-dev",
+                    "dev-develop": "1.8.x-dev"
                 },
                 "zf": {
                     "config-provider": "Zend\\Expressive\\Session\\Ext\\ConfigProvider"
@@ -1790,7 +1790,7 @@
                 "zend-expressive",
                 "zf"
             ],
-            "time": "2019-02-28T18:47:31+00:00"
+            "time": "2019-10-16T15:37:33+00:00"
         },
         {
             "name": "zendframework/zend-expressive-template",
