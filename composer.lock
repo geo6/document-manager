@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fb5113c915a72134fb8cb08f973a09ce",
+    "content-hash": "22ef56065723c909cbf8815a317fc494",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -776,7 +776,7 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v4.4.0",
+            "version": "v4.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
