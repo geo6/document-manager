@@ -23,7 +23,7 @@ class DirectoryHandler implements RequestHandlerInterface
     /** @var array */
     private $user;
 
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $acl = $request->getAttribute(AclMiddleware::ACL_ATTRIBUTE);
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
@@ -81,7 +81,7 @@ class DirectoryHandler implements RequestHandlerInterface
         return (new EmptyResponse())->withStatus(400);
     }
 
-    private function create(string $name) : JsonResponse
+    private function create(string $name): JsonResponse
     {
         $pathExploded = explode('/', $this->directory);
 
