@@ -21,7 +21,7 @@ class FileHandler implements RequestHandlerInterface
     /** @var array */
     private $user;
 
-    public function handle(ServerRequestInterface $request) : ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $acl = $request->getAttribute(AclMiddleware::ACL_ATTRIBUTE);
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
@@ -111,7 +111,7 @@ class FileHandler implements RequestHandlerInterface
         return (new EmptyResponse())->withStatus(400);
     }
 
-    private function delete(string $path) : JsonResponse
+    private function delete(string $path): JsonResponse
     {
         $document = new Document($path);
 
@@ -136,7 +136,7 @@ class FileHandler implements RequestHandlerInterface
         return new JsonResponse($data);
     }
 
-    private function rename(string $path, string $name) : JsonResponse
+    private function rename(string $path, string $name): JsonResponse
     {
         $document = new Document($path);
 
@@ -171,7 +171,7 @@ class FileHandler implements RequestHandlerInterface
         return new JsonResponse($data);
     }
 
-    private function description(string $path, string $description) : JsonResponse
+    private function description(string $path, string $description): JsonResponse
     {
         $document = new Document($path);
 
