@@ -10,11 +10,11 @@ use App\Model\Document;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\Response\EmptyResponse;
-use Zend\Diactoros\Response\JsonResponse;
-use Zend\Expressive\Authentication\UserInterface;
-use Zend\Expressive\Session\SessionMiddleware;
-use Zend\Log\Logger;
+use Laminas\Diactoros\Response\EmptyResponse;
+use Laminas\Diactoros\Response\JsonResponse;
+use Mezzio\Authentication\UserInterface;
+use Mezzio\Session\SessionMiddleware;
+use Laminas\Log\Logger;
 
 class FileHandler implements RequestHandlerInterface
 {

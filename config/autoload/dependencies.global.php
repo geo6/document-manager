@@ -11,7 +11,7 @@ return [
         // key is the alias name, the value is the service to which it points.
         'aliases' => [
             // Fully\Qualified\ClassOrInterfaceName::class => Fully\Qualified\ClassName::class,
-            Zend\Expressive\Authentication\UserRepositoryInterface::class => Zend\Expressive\Authentication\UserRepository\PdoDatabase::class,
+            Mezzio\Authentication\UserRepositoryInterface::class => Mezzio\Authentication\UserRepository\PdoDatabase::class,
         ],
         // Use 'invokables' for constructor-less services, or services that do
         // not require arguments to the constructor. Map a service name to the
@@ -22,8 +22,8 @@ return [
         // Use 'factories' for services provided by callbacks/factory classes.
         'factories' => [
             // Fully\Qualified\ClassName::class => Fully\Qualified\FactoryName::class,
-            Zend\HttpHandlerRunner\Emitter\EmitterInterface::class        => App\EmitterFactory::class,
-            Zend\Expressive\Authentication\AuthenticationInterface::class => Zend\Expressive\Authentication\Session\PhpSessionFactory::class,
+            Laminas\HttpHandlerRunner\Emitter\EmitterInterface::class        => App\EmitterFactory::class,
+            Mezzio\Authentication\AuthenticationInterface::class => Mezzio\Authentication\Session\PhpSessionFactory::class,
         ],
     ],
 ];

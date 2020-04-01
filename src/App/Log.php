@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App;
 
 use ErrorException;
-use Zend\Log\Logger;
-use Zend\Log\Processor\PsrPlaceholder;
-use Zend\Log\Writer\Stream;
+use Laminas\Log\Logger;
+use Laminas\Log\Processor\PsrPlaceholder;
+use Laminas\Log\Writer\Stream;
 
 class Log
 {
@@ -53,7 +53,7 @@ class Log
             $fp = fopen($this->path, 'r');
             if ($fp !== false) {
                 while (($r = fgets($fp, 10240)) !== false) {
-                    // Zend\Log : %timestamp% %priorityName% (%priority%): %message% %extra%
+                    // Laminas\Log : %timestamp% %priorityName% (%priority%): %message% %extra%
                     if (preg_match(
                         '/^(.+) (DEBUG|INFO|NOTICE|WARN|ERR|CRIT|ALERT|EMERG) \(([0-9])\): (.+) (\{.+\})$/',
                         $r,

@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Psr\Container\ContainerInterface;
-use Zend\Expressive\Application;
-use Zend\Expressive\MiddlewareFactory;
+use Mezzio\Application;
+use Mezzio\MiddlewareFactory;
 
 /*
  * Setup routes with a single request method:
@@ -28,7 +28,7 @@ use Zend\Expressive\MiddlewareFactory;
  * $app->route(
  *     '/contact',
  *     App\Handler\ContactHandler::class,
- *     Zend\Expressive\Router\Route::HTTP_METHOD_ANY,
+ *     Mezzio\Router\Route::HTTP_METHOD_ANY,
  *     'contact'
  * );
  */
@@ -36,7 +36,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $loadAuthenticationMiddleware = function ($middleware) use ($container) {
         if (isset($container->get('config')['authentication']['pdo'])) {
             return [
-                Zend\Expressive\Authentication\AuthenticationMiddleware::class,
+                Mezzio\Authentication\AuthenticationMiddleware::class,
                 $middleware,
             ];
         }
@@ -57,7 +57,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
 
     $app->route('/login', [
         App\Handler\LoginHandler::class,
-        Zend\Expressive\Authentication\AuthenticationMiddleware::class,
+        Mezzio\Authentication\AuthenticationMiddleware::class,
     ], ['GET', 'POST'], 'login');
     $app->get('/logout', App\Handler\LoginHandler::class, 'logout');
 };

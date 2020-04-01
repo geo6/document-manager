@@ -8,9 +8,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Expressive\Authentication\UserInterface;
-use Zend\Expressive\Session\SessionMiddleware;
-use Zend\Permissions\Acl\Acl;
+use Mezzio\Authentication\UserInterface;
+use Mezzio\Session\SessionMiddleware;
+use Laminas\Permissions\Acl\Acl;
 
 class AclMiddleware implements MiddlewareInterface
 {

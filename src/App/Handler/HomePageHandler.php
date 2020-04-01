@@ -11,11 +11,11 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Symfony\Component\Finder\Finder;
-use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Expressive\Authentication\UserInterface;
-use Zend\Expressive\Router\RouterInterface;
-use Zend\Expressive\Session\SessionMiddleware;
-use Zend\Expressive\Template\TemplateRendererInterface;
+use Laminas\Diactoros\Response\HtmlResponse;
+use Mezzio\Authentication\UserInterface;
+use Mezzio\Router\RouterInterface;
+use Mezzio\Session\SessionMiddleware;
+use Mezzio\Template\TemplateRendererInterface;
 
 class HomePageHandler implements RequestHandlerInterface
 {

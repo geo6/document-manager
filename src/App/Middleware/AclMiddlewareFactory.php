@@ -8,9 +8,9 @@ use PDO;
 use PDOException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
-use Zend\Expressive\Authentication\Exception as AuthenticationException;
-use Zend\Permissions\Acl\Acl;
-use Zend\Permissions\Acl\Exception\ExceptionInterface as AclExceptionInterface;
+use Mezzio\Authentication\Exception as AuthenticationException;
+use Laminas\Permissions\Acl\Acl;
+use Laminas\Permissions\Acl\Exception\ExceptionInterface as AclExceptionInterface;
 
 class AclMiddlewareFactory
 {
