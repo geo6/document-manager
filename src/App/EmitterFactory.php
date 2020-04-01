@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App;
 
-use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ResponseInterface;
 use Laminas\HttpHandlerRunner\Emitter\EmitterInterface;
 use Laminas\HttpHandlerRunner\Emitter\EmitterStack;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Laminas\HttpHandlerRunner\Emitter\SapiStreamEmitter;
+use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @see https://docs.zendframework.com/zend-httphandlerrunner/emitters/

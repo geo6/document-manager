@@ -7,14 +7,14 @@ namespace App\Handler\API;
 use App\Log;
 use App\Middleware\AclMiddleware;
 use App\Model\Document;
+use Laminas\Diactoros\Response\EmptyResponse;
+use Laminas\Diactoros\Response\JsonResponse;
+use Laminas\Log\Logger;
+use Mezzio\Authentication\UserInterface;
+use Mezzio\Session\SessionMiddleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Laminas\Diactoros\Response\EmptyResponse;
-use Laminas\Diactoros\Response\JsonResponse;
-use Mezzio\Authentication\UserInterface;
-use Mezzio\Session\SessionMiddleware;
-use Laminas\Log\Logger;
 
 class FileHandler implements RequestHandlerInterface
 {

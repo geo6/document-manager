@@ -9,9 +9,6 @@ use App\Model\Document;
 use App\Model\Image;
 use Blast\BaseUrl\BaseUrlMiddleware;
 use Intervention\Image\ImageManagerStatic;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\HtmlResponse;
@@ -21,6 +18,9 @@ use Mezzio\Router\RouteResult;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Session\SessionMiddleware;
 use Mezzio\Template\TemplateRendererInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 class DownloadHandler implements RequestHandlerInterface
 {

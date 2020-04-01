@@ -7,15 +7,15 @@ namespace App\Handler;
 use App\Middleware\AclMiddleware;
 use App\Model;
 use Blast\BaseUrl\BaseUrlMiddleware;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
-use Symfony\Component\Finder\Finder;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Mezzio\Authentication\UserInterface;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Session\SessionMiddleware;
 use Mezzio\Template\TemplateRendererInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+use Symfony\Component\Finder\Finder;
 
 class ScanHandler implements RequestHandlerInterface
 {

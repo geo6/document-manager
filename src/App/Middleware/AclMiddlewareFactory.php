@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Middleware;
 
+use Laminas\Permissions\Acl\Acl;
+use Laminas\Permissions\Acl\Exception\ExceptionInterface as AclExceptionInterface;
+use Mezzio\Authentication\Exception as AuthenticationException;
 use PDO;
 use PDOException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
-use Mezzio\Authentication\Exception as AuthenticationException;
-use Laminas\Permissions\Acl\Acl;
-use Laminas\Permissions\Acl\Exception\ExceptionInterface as AclExceptionInterface;
 
 class AclMiddlewareFactory
 {

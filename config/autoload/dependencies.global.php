@@ -23,7 +23,7 @@ return [
         'factories' => [
             // Fully\Qualified\ClassName::class => Fully\Qualified\FactoryName::class,
             Laminas\HttpHandlerRunner\Emitter\EmitterInterface::class        => App\EmitterFactory::class,
-            Mezzio\Authentication\AuthenticationInterface::class => Mezzio\Authentication\Session\PhpSessionFactory::class,
+            Mezzio\Authentication\AuthenticationInterface::class             => Mezzio\Authentication\Session\PhpSessionFactory::class,
         ],
     ],
 ];
