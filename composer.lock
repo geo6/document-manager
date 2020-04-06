@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "76501ccd15249ada8a6745dc09d0c3ce",
+    "content-hash": "a308b4dd291a8a5b6b14e837f13236b6",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -343,32 +343,33 @@
         },
         {
             "name": "laminas/laminas-config-aggregator",
-            "version": "1.2.0",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-config-aggregator.git",
-                "reference": "8d86bbb5338f5c66ed0bb77b5cbfe5a82d762fd7"
+                "reference": "20b9d5d801372ab4c7f5b3f7fbda8e447fdc2438"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-config-aggregator/zipball/8d86bbb5338f5c66ed0bb77b5cbfe5a82d762fd7",
-                "reference": "8d86bbb5338f5c66ed0bb77b5cbfe5a82d762fd7",
+                "url": "https://api.github.com/repos/laminas/laminas-config-aggregator/zipball/20b9d5d801372ab4c7f5b3f7fbda8e447fdc2438",
+                "reference": "20b9d5d801372ab4c7f5b3f7fbda8e447fdc2438",
                 "shasum": ""
             },
             "require": {
                 "laminas/laminas-stdlib": "^2.7.7 || ^3.1.0",
                 "laminas/laminas-zendframework-bridge": "^1.0",
-                "php": "^5.6 || ^7.0"
+                "php": "^5.6 || ^7.0",
+                "webimpress/safe-writer": "^1.0.2 || ^2.0.1"
             },
             "replace": {
-                "zendframework/zend-config-aggregator": "self.version"
+                "zendframework/zend-config-aggregator": "^1.2.0"
             },
             "require-dev": {
                 "laminas/laminas-coding-standard": "~1.0.0",
                 "laminas/laminas-config": "^2.6 || ^3.0",
                 "laminas/laminas-servicemanager": "^2.7.7 || ^3.1.1",
                 "malukenho/docheader": "^0.1.5",
-                "phpunit/phpunit": "^5.7.21 || ^6.3"
+                "phpunit/phpunit": "^5.7.27 || ^6.5.14 || ^7.5.20"
             },
             "suggest": {
                 "laminas/laminas-config": "Allows loading configuration from XML, INI, YAML, and JSON files",
@@ -397,7 +398,7 @@
                 "config-aggregator",
                 "laminas"
             ],
-            "time": "2019-12-31T16:30:18+00:00"
+            "time": "2020-03-29T12:04:04+00:00"
         },
         {
             "name": "laminas/laminas-dependency-plugin",
@@ -2446,6 +2447,54 @@
                 "seconds"
             ],
             "time": "2018-01-29T20:44:37+00:00"
+        },
+        {
+            "name": "webimpress/safe-writer",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webimpress/safe-writer.git",
+                "reference": "d6e879960febb307c112538997316371f1e95b12"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webimpress/safe-writer/zipball/d6e879960febb307c112538997316371f1e95b12",
+                "reference": "d6e879960febb307c112538997316371f1e95b12",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5.2 || ^9.0.1",
+                "webimpress/coding-standard": "^1.1.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev",
+                    "dev-develop": "2.1.x-dev",
+                    "dev-release-1.0": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Webimpress\\SafeWriter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "description": "Tool to write files safely, to avoid race conditions",
+            "keywords": [
+                "concurrent write",
+                "file writer",
+                "race condition",
+                "safe writer",
+                "webimpress"
+            ],
+            "time": "2020-03-21T15:49:08+00:00"
         }
     ],
     "packages-dev": [
