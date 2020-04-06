@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3520744110289297b582860d3428cae0",
+    "content-hash": "76501ccd15249ada8a6745dc09d0c3ce",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -1499,41 +1499,38 @@
         },
         {
             "name": "mezzio/mezzio-session-ext",
-            "version": "1.7.0",
+            "version": "1.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-session-ext.git",
-                "reference": "b28cd7dbb95c94b3c5056fa2c8e80cab2cc30166"
+                "reference": "73840d09a1eb3633cc674bac84971fdbdf3f67d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-session-ext/zipball/b28cd7dbb95c94b3c5056fa2c8e80cab2cc30166",
-                "reference": "b28cd7dbb95c94b3c5056fa2c8e80cab2cc30166",
+                "url": "https://api.github.com/repos/mezzio/mezzio-session-ext/zipball/73840d09a1eb3633cc674bac84971fdbdf3f67d6",
+                "reference": "73840d09a1eb3633cc674bac84971fdbdf3f67d6",
                 "shasum": ""
             },
             "require": {
-                "dflydev/fig-cookies": "^1.0 || ^2.0",
+                "dflydev/fig-cookies": "^2.0.1",
                 "ext-session": "*",
                 "laminas/laminas-zendframework-bridge": "^1.0",
                 "mezzio/mezzio-session": "^1.3",
-                "php": "^7.1"
-            },
-            "conflict": {
-                "phpspec/prophecy": "<1.7.2"
+                "php": "^7.3"
             },
             "replace": {
-                "zendframework/zend-expressive-session-ext": "self.version"
+                "zendframework/zend-expressive-session-ext": "^1.7.0"
             },
             "require-dev": {
                 "laminas/laminas-coding-standard": "~1.0.0",
                 "laminas/laminas-diactoros": "^1.6",
-                "phpunit/phpunit": "^7.0.2"
+                "phpunit/phpunit": "^9.0.1"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.7.x-dev",
-                    "dev-develop": "1.8.x-dev"
+                    "dev-master": "1.8.x-dev",
+                    "dev-develop": "1.9.x-dev"
                 },
                 "laminas": {
                     "config-provider": "Mezzio\\Session\\Ext\\ConfigProvider"
@@ -1558,7 +1555,7 @@
                 "psr-7",
                 "session"
             ],
-            "time": "2019-12-31T15:46:24+00:00"
+            "time": "2020-03-28T22:23:08+00:00"
         },
         {
             "name": "mezzio/mezzio-template",
