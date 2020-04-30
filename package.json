@@ -16,7 +16,6 @@
     "webpack-cli": "^3.3.11"
   },
   "scripts": {
-    "postinstall": "npm run build",
     "build": "npm run build:css && npm run build:js",
     "build:css": "node-sass --output-style compressed --output public/css resources/sass/style.scss",
     "build:js": "webpack --config webpack.config.js --mode production --progress",
