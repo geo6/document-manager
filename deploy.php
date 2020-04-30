@@ -27,7 +27,6 @@ add('shared_dirs', [
 
 // Writable dirs by web server
 add('writable_dirs', [
-    'config',
     'data/cache',
     'data/log',
     'data/public',
@@ -53,15 +52,6 @@ inventory('hosts.yml');
 // Tasks
 task('debug:enable', 'composer run development-enable');
 task('debug:disable', 'composer run development-disable');
-
-task('php:version', function () {
-    $test = run('php -r "echo version_compare(PHP_VERSION, \'7.3\', \'<\');"');
-
-    if ($test == 1) {
-        run('cd {{ release_path }} && composer update');
-    }
-});
-after('deploy:vendors', 'php:version');
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
