@@ -8,7 +8,7 @@ require 'recipe/zend_framework.php';
 set('application', 'document-manager');
 
 // Project repository
-set('repository', 'git@github.com:geo6/document-manager.git');
+set('repository', 'https://github.com/geo6/document-manager.git');
 set('branch', 'master');
 
 // [Optional] Allocate tty for git clone. Default value is false.
