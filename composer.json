@@ -30,7 +30,7 @@
         "laminas/laminas-permissions-acl": "2.7.1",
         "laminas/laminas-servicemanager": "3.4.0",
         "laminas/laminas-stdlib": "3.2.1",
-        "mezzio/mezzio": "3.2.1",
+        "mezzio/mezzio": "3.2.2",
         "mezzio/mezzio-authentication": "0.5.0",
         "mezzio/mezzio-authentication-session": "0.5.0",
         "mezzio/mezzio-fastroute": "3.0.3",
