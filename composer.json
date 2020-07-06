@@ -22,7 +22,7 @@
         "ext-exif": "*",
         "ext-fileinfo": "*",
         "intervention/image": "2.5.1",
-        "laminas/laminas-component-installer": "2.1.2",
+        "laminas/laminas-component-installer": "2.2.0",
         "laminas/laminas-config-aggregator": "1.2.2",
         "laminas/laminas-dependency-plugin": "^1.0",
         "laminas/laminas-diactoros": "^2.0 !=2.0.2 !=2.1.0",
