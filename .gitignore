@@ -23,3 +23,4 @@ temp/
 .vscode/
 config/application/
 hosts.yml
+.phpunit.result.cache
