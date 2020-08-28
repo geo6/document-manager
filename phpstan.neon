@@ -6,6 +6,10 @@ parameters:
         # Standard php files and .dist config files
         - php
         - dist
+    excludes_analyse:
+        - src/Script/*
     reportUnmatchedIgnoredErrors: true
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
-        - '#Class Mezzio\\Swoole\\ConfigProvider not found#'
+        - '#Variable method call on .+#'
