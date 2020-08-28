@@ -20,6 +20,7 @@ data/tmp/
 temp/
 
 # Misc.
+.cache/
 .vscode/
 config/application/
 hosts.yml

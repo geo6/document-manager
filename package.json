@@ -1,28 +1,25 @@
 {
   "dependencies": {
-    "leaflet": "1.6.0",
-    "resumablejs": "1.1.0"
+    "leaflet": "^1.6.0",
+    "resumablejs": "^1.1.0"
   },
   "devDependencies": {
-    "babel-minify-webpack-plugin": "^0.3.1",
     "eslint": "^7.7.0",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "node-sass": "^4.14.1",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^2.1.1",
+    "sass": "^1.26.10"
   },
   "scripts": {
-    "build": "npm run build:css && npm run build:js",
-    "build:css": "node-sass --output-style compressed --output public/css resources/sass/style.scss",
-    "build:js": "webpack --config webpack.config.js --mode production --progress",
+    "build": "parcel build resources/javascript/main.js --out-dir=public/ --out-file dm.js --no-source-maps",
+    "watch": "parcel watch resources/javascript/main.js --out-dir=public/ --out-file dm.js --no-hmr",
     "test": "eslint resources/javascript/",
-    "fix": "eslint resources/javascript/ --fix",
-    "watch": "npm run watch:css & npm run watch:js",
-    "watch:css": "node-sass --watch --output-style compressed --output public/css resources/sass/style.scss",
-    "watch:js": "webpack --watch --config webpack.config.js --mode development --progress"
+    "fix": "eslint resources/javascript/ --fix"
   }
 }
