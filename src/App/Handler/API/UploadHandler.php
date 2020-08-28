@@ -45,10 +45,10 @@ class UploadHandler implements RequestHandlerInterface
         $access = true;
         if ($pathExploded[0] === 'public' && $acl->hasResource('directory.public')) {
             $access = $acl->isAllowed($user['username'], 'directory.public', AclMiddleware::PERM_WRITE);
-        } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.' . $pathExploded[1])) {
-            $access = $acl->isAllowed($user['username'], 'directory.roles.' . $pathExploded[1], AclMiddleware::PERM_WRITE);
-        } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.' . $pathExploded[1])) {
-            $access = $acl->isAllowed($user['username'], 'directory.users.' . $pathExploded[1], AclMiddleware::PERM_WRITE);
+        } elseif ($pathExploded[0] === 'roles' && isset($pathExploded[1]) && $acl->hasResource('directory.roles.'.$pathExploded[1])) {
+            $access = $acl->isAllowed($user['username'], 'directory.roles.'.$pathExploded[1], AclMiddleware::PERM_WRITE);
+        } elseif ($pathExploded[0] === 'users' && isset($pathExploded[1]) && $acl->hasResource('directory.users.'.$pathExploded[1])) {
+            $access = $acl->isAllowed($user['username'], 'directory.users.'.$pathExploded[1], AclMiddleware::PERM_WRITE);
         }
 
         if ($access !== true) {
@@ -59,12 +59,12 @@ class UploadHandler implements RequestHandlerInterface
         $resumableFilename = $params['resumableFilename'] ?? '';
         $resumableChunkNumber = $params['resumableChunkNumber'] ?? 0;
 
-        $tempDirectory = sys_get_temp_dir() . '/' . $resumableIdentifier;
+        $tempDirectory = sys_get_temp_dir().'/'.$resumableIdentifier;
         if (!file_exists($tempDirectory) || !is_dir($tempDirectory)) {
             $mkdir = mkdir($tempDirectory);
         }
 
-        $chunk = $tempDirectory . '/' . $resumableFilename . '.part.' . $resumableChunkNumber;
+        $chunk = $tempDirectory.'/'.$resumableFilename.'.part.'.$resumableChunkNumber;
 
         switch ($method) {
             case 'GET':
@@ -90,7 +90,7 @@ class UploadHandler implements RequestHandlerInterface
                         $resumableTotalChunks = $params['resumableTotalChunks'] ?? 0;
 
                         $uploadedSize = 0;
-                        $listChunks = glob($tempDirectory . '/*.part.*');
+                        $listChunks = glob($tempDirectory.'/*.part.*');
                         if ($listChunks !== false) {
                             foreach ($listChunks as $uploadedChunk) {
                                 $uploadedSize += filesize($uploadedChunk);
@@ -98,11 +98,11 @@ class UploadHandler implements RequestHandlerInterface
                         }
 
                         if ($uploadedSize >= $resumableTotalSize) {
-                            $handle = fopen($tempDirectory . '/' . $resumableFilename, 'w');
+                            $handle = fopen($tempDirectory.'/'.$resumableFilename, 'w');
 
                             if ($handle !== false) {
                                 for ($c = 1; $c <= $resumableTotalChunks; $c++) {
-                                    $uploadedChunk = $tempDirectory . '/' . $resumableFilename . '.part.' . $c;
+                                    $uploadedChunk = $tempDirectory.'/'.$resumableFilename.'.part.'.$c;
 
                                     if (file_exists($uploadedChunk) && is_readable($uploadedChunk)) {
                                         $content = file_get_contents($uploadedChunk);
@@ -122,18 +122,18 @@ class UploadHandler implements RequestHandlerInterface
                                 fclose($handle);
 
                                 $i = 1;
-                                $new = 'data/' . $directory . '/' . $resumableFilename;
+                                $new = 'data/'.$directory.'/'.$resumableFilename;
                                 $path = pathinfo($new);
                                 while (file_exists($new)) {
                                     if (isset($path['extension'])) {
-                                        $new = $path['dirname'] . '/' . $path['filename'] . '.' . ($i++) . '.' . $path['extension'];
+                                        $new = $path['dirname'].'/'.$path['filename'].'.'.($i++).'.'.$path['extension'];
                                     } else {
-                                        $new = $path['dirname'] . '/' . $path['filename'] . '.' . ($i++);
+                                        $new = $path['dirname'].'/'.$path['filename'].'.'.($i++);
                                     }
                                 }
 
                                 $rename = rename(
-                                    $tempDirectory . '/' . $resumableFilename,
+                                    $tempDirectory.'/'.$resumableFilename,
                                     $new
                                 );
 
