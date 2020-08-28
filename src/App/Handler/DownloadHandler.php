@@ -96,7 +96,7 @@ class DownloadHandler implements RequestHandlerInterface
                     ->withBody($stream)
                     ->withStatus(200)
                     ->withHeader('Content-Length', (string) $stream->getSize())
-                    ->withHeader('Content-Type', $mime);
+                    ->withHeader('Content-Type', $mime !== false ? $mime : 'application/octet-stream');
             } else {
                 $stream = new Stream($file);
 
@@ -104,7 +104,7 @@ class DownloadHandler implements RequestHandlerInterface
                     ->withBody($stream)
                     ->withStatus(200)
                     ->withHeader('Content-Length', (string) $stream->getSize())
-                    ->withHeader('Content-Type', $mime)
+                    ->withHeader('Content-Type', $mime !== false ? $mime : 'application/octet-stream')
                     ->withHeader(
                         'Content-Disposition',
                         'attachment; filename="'.$document->getBasename().'"'
@@ -128,11 +128,11 @@ class DownloadHandler implements RequestHandlerInterface
             $image->orientate();
 
             if ($image->height() > $image->width()) {
-                $image->heighten(640, function ($constraint) {
+                $image->heighten(640, function ($constraint): void {
                     $constraint->upsize();
                 });
             } else {
-                $image->widen(640, function ($constraint) {
+                $image->widen(640, function ($constraint): void {
                     $constraint->upsize();
                 });
             }

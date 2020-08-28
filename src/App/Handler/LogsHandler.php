@@ -61,24 +61,26 @@ class LogsHandler implements RequestHandlerInterface
         $year = $request->getAttribute('year') ?? date('Y');
         $month = $request->getAttribute('month') ?? date('m');
 
-        $glob = glob('data/log/*/*.log');
-        rsort($glob);
-
         $list = [];
-        foreach ($glob as $g) {
-            $name = pathinfo($g, PATHINFO_FILENAME);
-            $y = substr($name, 0, 4);
-            $m = substr($name, 4, 2);
 
-            if (!isset($list[$y])) {
-                $list[$y] = [];
+        $glob = glob('data/log/*/*.log');
+        if ($glob !== false) {
+            rsort($glob);
+            foreach ($glob as $g) {
+                $name = pathinfo($g, PATHINFO_FILENAME);
+                $y = substr($name, 0, 4);
+                $m = substr($name, 4, 2);
+
+                if (!isset($list[$y])) {
+                    $list[$y] = [];
+                }
+
+                $list[$y][] = [
+                    'text'  => date('F Y', mktime(12, 0, 0, intval($m), 1, intval($y))),
+                    'year'  => $y,
+                    'month' => $m,
+                ];
             }
-
-            $list[$y][] = [
-                'text'  => date('F Y', mktime(12, 0, 0, intval($m), 1, intval($y))),
-                'year'  => $y,
-                'month' => $m,
-            ];
         }
 
         $data = [

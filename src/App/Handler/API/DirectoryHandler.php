@@ -29,7 +29,7 @@ class DirectoryHandler implements RequestHandlerInterface
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
 
         $method = $request->getMethod();
-        $params = $request->getParsedBody();
+        $params = (array) $request->getParsedBody();
 
         if (!$session->has(UserInterface::class)) {
             return (new EmptyResponse())->withStatus(401);

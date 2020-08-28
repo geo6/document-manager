@@ -57,19 +57,22 @@ class AclMiddlewareFactory
          */
         if (is_dir('data/roles') && is_readable('data/roles')) {
             $roles = glob('data/roles/*', GLOB_ONLYDIR);
-            foreach ($roles as $r) {
-                $role = basename($r);
 
-                if (!$acl->hasRole($role)) {
-                    $acl->addRole($role);
+            if ($roles !== false) {
+                foreach ($roles as $r) {
+                    $role = basename($r);
+
+                    if (!$acl->hasRole($role)) {
+                        $acl->addRole($role);
+                    }
+
+                    $acl->addResource('directory.roles.'.$role);
+                    $acl->allow(
+                        $role,
+                        'directory.roles.'.$role,
+                        [AclMiddleware::PERM_READ]
+                    );
                 }
-
-                $acl->addResource('directory.roles.'.$role);
-                $acl->allow(
-                    $role,
-                    'directory.roles.'.$role,
-                    [AclMiddleware::PERM_READ]
-                );
             }
         }
         /*
@@ -79,19 +82,22 @@ class AclMiddlewareFactory
          */
         if (is_dir('data/users') && is_readable('data/users')) {
             $users = glob('data/users/*', GLOB_ONLYDIR);
-            foreach ($users as $u) {
-                $user = basename($u);
 
-                if (!$acl->hasRole($user)) {
-                    $acl->addRole($user);
+            if ($users !== false) {
+                foreach ($users as $u) {
+                    $user = basename($u);
+
+                    if (!$acl->hasRole($user)) {
+                        $acl->addRole($user);
+                    }
+
+                    $acl->addResource('directory.users.'.$user);
+                    $acl->allow(
+                        $user,
+                        'directory.users.'.$user,
+                        [AclMiddleware::PERM_READ, AclMiddleware::PERM_WRITE, AclMiddleware::PERM_DELETE]
+                    );
                 }
-
-                $acl->addResource('directory.users.'.$user);
-                $acl->allow(
-                    $user,
-                    'directory.users.'.$user,
-                    [AclMiddleware::PERM_READ, AclMiddleware::PERM_WRITE, AclMiddleware::PERM_DELETE]
-                );
             }
         }
 
@@ -148,7 +154,7 @@ class AclMiddlewareFactory
         );
         $stmtUser = $pdo->prepare($sqlUser);
 
-        if (false === $stmtUser) {
+        if ($stmtUser == false) {
             throw new AuthenticationException\RuntimeException(
                 'An error occurred when preparing to fetch user details from '.
                 'the repository; please verify your configuration'
@@ -156,45 +162,53 @@ class AclMiddlewareFactory
         }
         $stmtUser->execute();
 
-        foreach ($stmtUser->fetchAll(PDO::FETCH_NUM) as $user) {
-            if (!isset($config['sql_get_roles'])) {
-                $acl->addRole($user);
-            } else {
-                if (false === strpos($config['sql_get_roles'], ':identity')) {
-                    throw new AuthenticationException\InvalidConfigException(
-                        'The sql_get_roles configuration setting must include an :identity parameter'
-                    );
-                }
+        $_users = $stmtUser->fetchAll(PDO::FETCH_NUM);
+        if ($_users !== false) {
+            foreach ($_users as $user) {
+                if (!isset($config['sql_get_roles'])) {
+                    $acl->addRole($user);
+                } else {
+                    if (false === strpos($config['sql_get_roles'], ':identity')) {
+                        throw new AuthenticationException\InvalidConfigException(
+                            'The sql_get_roles configuration setting must include an :identity parameter'
+                        );
+                    }
 
-                try {
-                    $stmtRoles = $pdo->prepare($config['sql_get_roles']);
-                } catch (PDOException $e) {
-                    throw new AuthenticationException\RuntimeException(sprintf(
-                        'Error preparing retrieval of user roles: %s',
-                        $e->getMessage()
-                    ));
-                }
-                if (false === $stmtRoles) {
-                    throw new AuthenticationException\RuntimeException(sprintf(
-                        'Error preparing retrieval of user roles: unknown error'
-                    ));
-                }
-                $stmtRoles->bindParam(':identity', $user[0]);
+                    try {
+                        $stmtRoles = $pdo->prepare($config['sql_get_roles']);
 
-                if (!$stmtRoles->execute()) {
-                    $acl->addRole($user[0], []);
-                }
+                        if ($stmtRoles == false) {
+                            throw new AuthenticationException\RuntimeException(sprintf(
+                                'Error preparing retrieval of user roles: unknown error'
+                            ));
+                        }
+                        $stmtRoles->bindParam(':identity', $user[0]);
 
-                $roles = [];
-                foreach ($stmtRoles->fetchAll(PDO::FETCH_NUM) as $role) {
-                    $roles[] = $role[0];
+                        if (!$stmtRoles->execute()) {
+                            $acl->addRole($user[0], []);
+                        }
 
-                    if (!$acl->hasRole($role[0])) {
-                        $acl->addRole($role[0]);
+                        $roles = [];
+
+                        $_roles = $stmtRoles->fetchAll(PDO::FETCH_NUM);
+                        if ($_roles !== false) {
+                            foreach ($_roles as $role) {
+                                $roles[] = $role[0];
+
+                                if (!$acl->hasRole($role[0])) {
+                                    $acl->addRole($role[0]);
+                                }
+                            }
+                        }
+
+                        $acl->addRole($user[0], $roles);
+                    } catch (PDOException $e) {
+                        throw new AuthenticationException\RuntimeException(sprintf(
+                            'Error preparing retrieval of user roles: %s',
+                            $e->getMessage()
+                        ));
                     }
                 }
-
-                $acl->addRole($user[0], $roles);
             }
         }
     }

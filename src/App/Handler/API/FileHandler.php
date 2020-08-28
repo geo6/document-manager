@@ -28,10 +28,10 @@ class FileHandler implements RequestHandlerInterface
 
         $method = $request->getMethod();
 
-        if (in_array($method, ['GET', 'HEAD'])) {
+        if (in_array($method, ['GET', 'HEAD'], true)) {
             $params = $request->getQueryParams();
         } else {
-            $params = $request->getParsedBody();
+            $params = (array) $request->getParsedBody();
         }
 
         if (!$session->has(UserInterface::class)) {
@@ -68,7 +68,6 @@ class FileHandler implements RequestHandlerInterface
                         'name'        => $document->getBasename(),
                         'description' => $document->getInfo(),
                     ]);
-                    break;
 
                 case 'DELETE':
                     if ($pathExploded[0] === 'public' && $acl->hasResource('directory.public')) {
@@ -84,7 +83,6 @@ class FileHandler implements RequestHandlerInterface
                     }
 
                     return $this->delete('data/'.$path);
-                    break;
 
                 case 'PUT':
                     if ($pathExploded[0] === 'public' && $acl->hasResource('directory.public')) {

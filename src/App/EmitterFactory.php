@@ -20,6 +20,7 @@ class EmitterFactory
     {
         $sapiStreamEmitter = new SapiStreamEmitter();
         $conditionalEmitter = new class($sapiStreamEmitter) implements EmitterInterface {
+            /** @var EmitterInterface */
             private $emitter;
 
             public function __construct(EmitterInterface $emitter)
