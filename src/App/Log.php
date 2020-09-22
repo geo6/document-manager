@@ -16,7 +16,7 @@ class Log
 
     public function __construct(string $message, array $extra = [], int $priority = Logger::INFO, ?ServerRequestInterface $request = null)
     {
-        $this->path = self::DIRECTORY . '/' . date('Ym') . '.log';
+        $this->path = self::DIRECTORY.'/'.date('Ym').'.log';
 
         Geo6Log::write($this->path, $message, $extra, $priority, $request);
     }

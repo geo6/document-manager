@@ -5,16 +5,14 @@ declare(strict_types=1);
 namespace App\Handler;
 
 use App\Middleware\AclMiddleware;
-use Blast\BaseUrl\BaseUrlMiddleware;
 use Geo6\Laminas\Log\Log;
+use Laminas\Diactoros\Response\HtmlResponse;
+use Mezzio\Authentication\UserInterface;
+use Mezzio\Session\SessionMiddleware;
+use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Laminas\Diactoros\Response\HtmlResponse;
-use Mezzio\Authentication\UserInterface;
-use Mezzio\Template\TemplateRendererInterface;
-use Laminas\Permissions\Acl\AclInterface;
-use Mezzio\Session\SessionMiddleware;
 
 class LogsHandler implements RequestHandlerInterface
 {
@@ -77,10 +75,10 @@ class LogsHandler implements RequestHandlerInterface
         return new HtmlResponse($this->renderer->render(
             'app::logs',
             [
-                'title' => date('F Y', mktime(12, 0, 0, intval($month), 1, intval($year))),
-                'log' => $log,
+                'title'    => date('F Y', mktime(12, 0, 0, intval($month), 1, intval($year))),
+                'log'      => $log,
                 'previous' => $previous,
-                'next' => $next,
+                'next'     => $next,
             ]
         ));
     }
