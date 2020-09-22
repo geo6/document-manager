@@ -4,49 +4,31 @@ declare(strict_types=1);
 
 namespace App\Handler;
 
-use App\Log;
 use App\Middleware\AclMiddleware;
 use Blast\BaseUrl\BaseUrlMiddleware;
-use Laminas\Diactoros\Response\HtmlResponse;
-use Mezzio\Authentication\UserInterface;
-use Mezzio\Router\RouterInterface;
-use Mezzio\Session\SessionMiddleware;
-use Mezzio\Template\TemplateRendererInterface;
+use Geo6\Laminas\Log\Log;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Laminas\Diactoros\Response\HtmlResponse;
+use Mezzio\Authentication\UserInterface;
+use Mezzio\Template\TemplateRendererInterface;
+use Laminas\Permissions\Acl\AclInterface;
+use Mezzio\Session\SessionMiddleware;
 
 class LogsHandler implements RequestHandlerInterface
 {
-    /**
-     * @var string
-     */
-    private $containerName;
+    /** @var TemplateRendererInterface */
+    private $renderer;
 
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    /**
-     * @var TemplateRendererInterface
-     */
-    private $template;
-
-    public function __construct(
-        RouterInterface $router,
-        TemplateRendererInterface $template,
-        string $containerName
-    ) {
-        $this->router = $router;
-        $this->template = $template;
-        $this->containerName = $containerName;
+    public function __construct(TemplateRendererInterface $renderer)
+    {
+        $this->renderer = $renderer;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $acl = $request->getAttribute(AclMiddleware::ACL_ATTRIBUTE);
-        $basePath = $request->getAttribute(BaseUrlMiddleware::BASE_PATH);
         $session = $request->getAttribute(SessionMiddleware::SESSION_ATTRIBUTE);
 
         $user = $session->get(UserInterface::class);
@@ -58,38 +40,79 @@ class LogsHandler implements RequestHandlerInterface
             ])))->withStatus(403);
         }
 
-        $year = $request->getAttribute('year') ?? date('Y');
-        $month = $request->getAttribute('month') ?? date('m');
+        $year = $request->getAttribute('year');
+        $month = $request->getAttribute('month');
 
-        $list = [];
+        if (is_null($year) && is_null($month)) {
+            $logs = glob('data/log/*.log');
+            $last = end($logs);
 
-        $glob = glob('data/log/*/*.log');
-        if ($glob !== false) {
-            rsort($glob);
-            foreach ($glob as $g) {
-                $name = pathinfo($g, PATHINFO_FILENAME);
-                $y = substr($name, 0, 4);
-                $m = substr($name, 4, 2);
+            preg_match('/^([0-9]{4})([0-9]{2})\.log$/', basename($last), $matches);
+            [, $year, $month] = $matches;
+        }
 
-                if (!isset($list[$y])) {
-                    $list[$y] = [];
-                }
+        $path = sprintf('data/log/%s%s.log', $year, $month);
+        $log = file_exists($path) && is_readable($path) ? Log::read($path) : null;
 
-                $list[$y][] = [
-                    'text'  => date('F Y', mktime(12, 0, 0, intval($m), 1, intval($y))),
-                    'year'  => $y,
-                    'month' => $m,
-                ];
+        $previous = self::getPrevious(intval($year), intval($month));
+        while (!file_exists(self::getPath($previous['year'], $previous['month']))) {
+            $previous = self::getPrevious($previous['year'], intval($previous['month']));
+
+            if ($previous['year'] < 2019) {
+                $previous = null;
+                break;
             }
         }
 
-        $data = [
-            'year'  => $year,
-            'month' => $month,
-            'logs'  => (new Log(intval($year), intval($month)))->read(),
-            'list'  => $list,
-        ];
+        $next = self::getNext(intval($year), intval($month));
+        while (!file_exists(self::getPath($next['year'], $next['month']))) {
+            $next = self::getNext($next['year'], intval($next['month']));
 
-        return new HtmlResponse($this->template->render('app::logs', $data));
+            if ($next['year'] > intval(date('Y'))) {
+                $next = null;
+                break;
+            }
+        }
+
+        return new HtmlResponse($this->renderer->render(
+            'app::logs',
+            [
+                'title' => date('F Y', mktime(12, 0, 0, intval($month), 1, intval($year))),
+                'log' => $log,
+                'previous' => $previous,
+                'next' => $next,
+            ]
+        ));
+    }
+
+    private static function getPrevious(int $year, int $month): array
+    {
+        if ($month === 1) {
+            $month = 12;
+            $year = $year - 1;
+        } else {
+            $month = $month - 1;
+            $year = $year;
+        }
+
+        return ['year' => $year, 'month' => str_pad((string) $month, 2, '0', STR_PAD_LEFT)];
+    }
+
+    private static function getNext(int $year, int $month): array
+    {
+        if ($month === 12) {
+            $month = 1;
+            $year = $year + 1;
+        } else {
+            $month = $month + 1;
+            $year = $year;
+        }
+
+        return ['year' => $year, 'month' => str_pad((string) $month, 2, '0', STR_PAD_LEFT)];
+    }
+
+    private static function getPath(int $year, string $month): string
+    {
+        return sprintf('data/log/%s%s.log', $year, $month);
     }
 }

@@ -82,7 +82,7 @@ class FileHandler implements RequestHandlerInterface
                         return (new EmptyResponse())->withStatus(403);
                     }
 
-                    return $this->delete('data/'.$path);
+                    return $this->delete('data/'.$path, $request);
 
                 case 'PUT':
                     if ($pathExploded[0] === 'public' && $acl->hasResource('directory.public')) {
@@ -98,9 +98,9 @@ class FileHandler implements RequestHandlerInterface
                     }
 
                     if (isset($params['name'])) {
-                        return $this->rename('data/'.$path, $params['name']);
+                        return $this->rename('data/'.$path, $params['name'], $request);
                     } elseif (isset($params['description'])) {
-                        return $this->description('data/'.$path, $params['description']);
+                        return $this->description('data/'.$path, $params['description'], $request);
                     }
                     break;
             }
@@ -109,7 +109,7 @@ class FileHandler implements RequestHandlerInterface
         return (new EmptyResponse())->withStatus(400);
     }
 
-    private function delete(string $path): JsonResponse
+    private function delete(string $path, ServerRequestInterface $request): JsonResponse
     {
         $document = new Document($path);
 
@@ -126,15 +126,15 @@ class FileHandler implements RequestHandlerInterface
         ];
 
         if ($data['deleted'] === true) {
-            (new Log())->write('File "{file}" deleted.', $log, Logger::WARN);
+            new Log('File "{file}" deleted.', $log, Logger::WARN, $request);
         } else {
-            (new Log())->write('File "{file}" failed to be deleted.', $log, Logger::ERR);
+            new Log('File "{file}" failed to be deleted.', $log, Logger::ERR, $request);
         }
 
         return new JsonResponse($data);
     }
 
-    private function rename(string $path, string $name): JsonResponse
+    private function rename(string $path, string $name, ServerRequestInterface $request): JsonResponse
     {
         $document = new Document($path);
 
@@ -151,25 +151,25 @@ class FileHandler implements RequestHandlerInterface
         ];
 
         if ($data['renamed'] === true) {
-            (new Log())->write(sprintf('File "{file}" renamed into "%s".', $name), $log, Logger::WARN);
+            new Log(sprintf('File "{file}" renamed into "%s".', $name), $log, Logger::WARN, $request);
 
             if (file_exists($data['path'].'.info')) {
                 $description = rename($data['path'].'.info', $document->getPath().'/'.$name.'.info');
 
                 if ($description === true) {
-                    (new Log())->write(sprintf('File "{file}" description renamed into "%s".', $name.'.info'), $log, Logger::WARN);
+                    new Log(sprintf('File "{file}" description renamed into "%s".', $name.'.info'), $log, Logger::WARN, $request);
                 } else {
-                    (new Log())->write(sprintf('File "{file}" description failed to be renamed into "%s".', $name.'.info'), $log, Logger::ERR);
+                    new Log(sprintf('File "{file}" description failed to be renamed into "%s".', $name.'.info'), $log, Logger::ERR, $request);
                 }
             }
         } else {
-            (new Log())->write(sprintf('File "{file}" failed to be renamed into "%s".', $name), $log, Logger::ERR);
+            new Log(sprintf('File "{file}" failed to be renamed into "%s".', $name), $log, Logger::ERR, $request);
         }
 
         return new JsonResponse($data);
     }
 
-    private function description(string $path, string $description): JsonResponse
+    private function description(string $path, string $description, ServerRequestInterface $request): JsonResponse
     {
         $document = new Document($path);
 
@@ -188,17 +188,17 @@ class FileHandler implements RequestHandlerInterface
             $data['description'] = @unlink($path.'.info');
 
             if ($data['description'] === true) {
-                (new Log())->write('File "{file}" description removed.', $log, Logger::WARN);
+                new Log('File "{file}" description removed.', $log, Logger::WARN, $request);
             } else {
-                (new Log())->write('File "{file}" description failed to be removed.', $log, Logger::ERR);
+                new Log('File "{file}" description failed to be removed.', $log, Logger::ERR, $request);
             }
         } else {
             $data['description'] = (file_put_contents($path.'.info', rtrim($description, PHP_EOL).PHP_EOL) !== false);
 
             if ($data['description'] === true) {
-                (new Log())->write('File "{file}" description edited.', $log, Logger::NOTICE);
+                new Log('File "{file}" description edited.', $log, Logger::NOTICE, $request);
             } else {
-                (new Log())->write('File "{file}" description failed to be edited.', $log, Logger::ERR);
+                new Log('File "{file}" description failed to be edited.', $log, Logger::ERR, $request);
             }
         }
 

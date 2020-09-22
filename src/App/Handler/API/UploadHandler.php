@@ -155,7 +155,7 @@ class UploadHandler implements RequestHandlerInterface
                                     $log['username'] = $user['username'];
                                 }
 
-                                (new Log())->write('File "{file}" uploaded.', $log, Logger::NOTICE);
+                                new Log('File "{file}" uploaded.', $log, Logger::NOTICE, $request);
                             } else {
                                 throw new Exception(
                                     sprintf('Unable to write file "%s" in temporary folder.', $resumableFilename)

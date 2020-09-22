@@ -1,50 +1,101 @@
 {% extends '@layout/default.html.twig' %}
 
-{% block title %}
-Logs
-{% endblock %}
-
-{% block javascript %}
-<script>
-    $('#logs-select').on('change', event => {
-        location.href = $(event.target).find('option:selected').data('url');
-    });
-</script>
-{% endblock %}
+{% block title %}Log{% endblock %}
 
 {% block content %}
 
-<select class="form-control form-control-lg" id="logs-select">
-    {% for y, months in list %}
-    <optgroup label="{{ y }}">
-        {% for m in months %}
-        <option value="{{ m.year ~ m.month }}" autocomplete="off" data-url="{{ path('logs', {year: m.year, month: m.month}) }}"{{ (year == m.year and month == m.month) ? " selected" }}>{{ m.text }}</option>
-        {% endfor %}
-    </optgroup>
-    {% endfor %}
-</select>
+<main class="container">
 
-<table class="table table-bordered table-striped table-sm mt-3">
-    <thead>
-        <tr>
-            <th>Datetime</th>
-            <th>Level</th>
-            <th>IP</th>
-            <th>Username</th>
-            <th>Log</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for log in logs | reverse %}
-        <tr class="log-{{ log.priority_name | lower }}">
-            <td class="text-nowrap">{{ log.timestamp | date }}</td>
-            <td class="text-nowrap">{{ log.priority_name }}</td>
-            <td class="text-center">{{ log.extra.ip | default('-') }}</td>
-            <td class="text-center">{{ log.extra.username | default('-') }}</td>
-            <td>{{ log.message }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+    <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">{{ title }}</h2>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination mb-0">
+                {% if previous is null %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">
+                        <span aria-hidden="true"><i class="fas fa-chevron-left"></i></span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ path('logs', previous)}}" aria-label="Previous">
+                        <span aria-hidden="true"><i class="fas fa-chevron-left"></i></span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if next is null %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">
+                        <span aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ path('logs', next)}}" aria-label="Next">
+                        <span aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+
+    </div>
+    <hr>
+
+    <table class="table table-striped table-sm align-middle">
+        <tbody>
+            {% for record in log | reverse %}
+            <tr {{ record.priority <= 4 ? 'class="table-warning"' : record.priority == 5 ? 'class="table-primary"' }}>
+                <td class="align-middle text-nowrap">{{ record.timestamp | date('d.m.Y H:i:s') }}</td>
+                <td class="text-center align-middle">{{ record.priority_name }}</td>
+                <td class="align-middle">
+                    {{ record.extra.production is defined and record.extra.production != true ? '<i class="fas fa-vial" style="cursor: help;" title="OnDemand"></i>' }}
+                    {{ record.extra.entity is defined ? record.extra.entity | upper ~ ' : ' }}
+                    {{ record.message }}
+                </td>
+                <td class="align-middle text-nowrap">
+                    {% if record.extra.username is defined %}
+                    <i class="fas fa-user"></i>
+                    {{ record.extra.username }}
+                    {% endif %}
+                </td>
+                <td class="align-middle text-nowrap text-info">
+                    {% if record.extra._ip is defined %}
+                    <i class="fas fa-network-wired"></i>
+                    {{ record.extra._ip }}
+                    {% endif %}
+                </td>
+                <td class="align-middle text-nowrap text-info">
+                    <div class="d-flex align-items-center">
+                        {% if record.extra._device is defined %}
+                        <div>
+                            {% if record.extra._device == 'desktop' %}
+                            <i class="fas fa-fw fa-desktop" style="cursor: help;"
+                                title="{{ record.extra._device }}"></i>
+                            {% elseif record.extra._device == 'tablet' %}
+                            <i class="fas fa-tablet-alt" style="cursor: help;" title="{{ record.extra._device }}"></i>
+                            {% elseif record.extra._device == 'phone' %}
+                            <i class="fas fa-fw fa-mobile-alt" style="cursor: help;"
+                                title="{{ record.extra._device }}"></i>
+                            {% else %}
+                            <i class="fas fa-phone-laptop" style="cursor: help;" title="{{ record.extra._device }}"></i>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        {% if record.extra._platform is defined and record.extra._browser is defined %}
+                        <div class="ml-1 small">
+                            {{ record.extra._platform }}<br>
+                            {{ record.extra._browser }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</main>
 
 {% endblock %}

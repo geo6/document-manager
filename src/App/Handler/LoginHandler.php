@@ -67,12 +67,12 @@ class LoginHandler implements MiddlewareInterface
             if ($response->getStatusCode() !== 302) {
                 $user = $session->get(UserInterface::class);
 
-                (new Log())->write('User "{username}" logged in.', ['username' => $user['username']], Logger::INFO);
+                new Log('User "{username}" logged in.', ['username' => $user['username']], Logger::INFO, $request);
 
                 return new RedirectResponse($basePath.$this->router->generateUri('home'));
             }
 
-            (new Log())->write('User "{username}" failed to log in.', ['username' => $_POST['username']], Logger::WARN);
+            new Log('User "{username}" failed to log in.', ['username' => $_POST['username']], Logger::WARN, $request);
 
             $error = 'Login failure, please try again.';
         }

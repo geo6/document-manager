@@ -73,7 +73,7 @@ class DirectoryHandler implements RequestHandlerInterface
                     }
 
                     if (isset($params['new'])) {
-                        return $this->create($params['new']);
+                        return $this->create($params['new'], $request);
                     }
             }
         }
@@ -81,7 +81,7 @@ class DirectoryHandler implements RequestHandlerInterface
         return (new EmptyResponse())->withStatus(400);
     }
 
-    private function create(string $name): JsonResponse
+    private function create(string $name, ServerRequestInterface $request): JsonResponse
     {
         $pathExploded = explode('/', $this->directory);
 
@@ -96,9 +96,9 @@ class DirectoryHandler implements RequestHandlerInterface
         ];
 
         if ($data['created'] === true) {
-            (new Log())->write('Directory "{directory}" created.', $log, Logger::NOTICE);
+            new Log('Directory "{directory}" created.', $log, Logger::NOTICE, $request);
         } else {
-            (new Log())->write('Directory "{directory}" failed to be created.', $log, Logger::ERR);
+            new Log('Directory "{directory}" failed to be created.', $log, Logger::ERR, $request);
         }
 
         return new JsonResponse($data);
