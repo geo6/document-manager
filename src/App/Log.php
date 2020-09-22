@@ -12,6 +12,7 @@ class Log
 {
     const DIRECTORY = 'data/log';
 
+    /** @var string */
     private $path;
 
     public function __construct(string $message, array $extra = [], int $priority = Logger::INFO, ?ServerRequestInterface $request = null)

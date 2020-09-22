@@ -34,7 +34,7 @@ class LogsHandler implements RequestHandlerInterface
         $user = $session->get(UserInterface::class);
 
         if ($acl->isAllowed($user['username'], 'logs') !== true) {
-            return (new HtmlResponse($this->template->render('error::error', [
+            return (new HtmlResponse($this->renderer->render('error::error', [
                 'status' => 403,
                 'reason' => 'Forbidden',
             ])))->withStatus(403);
@@ -45,10 +45,14 @@ class LogsHandler implements RequestHandlerInterface
 
         if (is_null($year) && is_null($month)) {
             $logs = glob('data/log/*.log');
-            $last = end($logs);
 
-            preg_match('/^([0-9]{4})([0-9]{2})\.log$/', basename($last), $matches);
-            [, $year, $month] = $matches;
+            if ($logs !== false) {
+                $last = end($logs);
+
+                if (preg_match('/^([0-9]{4})([0-9]{2})\.log$/', basename((string) $last), $matches) === 1) {
+                    [, $year, $month] = $matches;
+                }
+            }
         }
 
         $path = sprintf('data/log/%s%s.log', $year, $month);
