@@ -20,6 +20,7 @@ $aggregator = new ConfigAggregator([
     \Laminas\Diactoros\ConfigProvider::class,
     \Laminas\HttpHandlerRunner\ConfigProvider::class,
     \Laminas\Log\ConfigProvider::class,
+    \Laminas\Session\ConfigProvider::class,
     \Mezzio\ConfigProvider::class,
     \Mezzio\Authentication\ConfigProvider::class,
     \Mezzio\Authentication\Session\ConfigProvider::class,
