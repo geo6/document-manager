@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d6cfc67c15d2dbb44601909f947f56a8",
+    "content-hash": "1deefb68e9dac7ceb8ed71e04ddfcee1",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -1076,16 +1076,16 @@
         },
         {
             "name": "laminas/laminas-permissions-acl",
-            "version": "2.7.1",
+            "version": "2.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-permissions-acl.git",
-                "reference": "624567fe376a70e0bfb5aa8217d5afa13b9d6e61"
+                "reference": "d8cd35ed94eef5d3d2533af4a72cf1c2932084bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-permissions-acl/zipball/624567fe376a70e0bfb5aa8217d5afa13b9d6e61",
-                "reference": "624567fe376a70e0bfb5aa8217d5afa13b9d6e61",
+                "url": "https://api.github.com/repos/laminas/laminas-permissions-acl/zipball/d8cd35ed94eef5d3d2533af4a72cf1c2932084bb",
+                "reference": "d8cd35ed94eef5d3d2533af4a72cf1c2932084bb",
                 "shasum": ""
             },
             "require": {
@@ -1093,7 +1093,7 @@
                 "php": "^5.6 || ^7.0"
             },
             "replace": {
-                "zendframework/zend-permissions-acl": "self.version"
+                "zendframework/zend-permissions-acl": "^2.7.1"
             },
             "require-dev": {
                 "laminas/laminas-coding-standard": "~1.0.0",
@@ -1104,12 +1104,6 @@
                 "laminas/laminas-servicemanager": "To support Laminas\\Permissions\\Acl\\Assertion\\AssertionManager plugin manager usage"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.7.x-dev",
-                    "dev-develop": "2.8.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Laminas\\Permissions\\Acl\\": "src/"
@@ -1125,7 +1119,13 @@
                 "acl",
                 "laminas"
             ],
-            "time": "2019-12-31T17:37:23+00:00"
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2020-09-22T14:08:17+00:00"
         },
         {
             "name": "laminas/laminas-servicemanager",
