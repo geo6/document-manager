@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1deefb68e9dac7ceb8ed71e04ddfcee1",
+    "content-hash": "4b8ce69678fe0552f22ec75a7fe82bad",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -2746,7 +2746,7 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v5.1.6",
+            "version": "v5.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
