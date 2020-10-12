@@ -14,7 +14,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "parcel-bundler": "^1.12.4",
     "prettier": "^2.1.2",
-    "sass": "^1.26.11"
+    "sass": "^1.27.0"
   },
   "scripts": {
     "build": "parcel build resources/javascript/main.js --out-dir=public/ --out-file dm.js --no-source-maps",
