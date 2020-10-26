@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a75f1855f4a1a0464b2b5d8291bc612",
+    "content-hash": "51ce9c737dbd5c882e1da3b16cd88a30",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -557,16 +557,16 @@
         },
         {
             "name": "laminas/laminas-component-installer",
-            "version": "2.3.0",
+            "version": "2.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-component-installer.git",
-                "reference": "92735977fb7ad9050712e8ff804edff50d01406e"
+                "reference": "00c4847e8bc19a3cebe15e0d57b979dc7ddb8c12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-component-installer/zipball/92735977fb7ad9050712e8ff804edff50d01406e",
-                "reference": "92735977fb7ad9050712e8ff804edff50d01406e",
+                "url": "https://api.github.com/repos/laminas/laminas-component-installer/zipball/00c4847e8bc19a3cebe15e0d57b979dc7ddb8c12",
+                "reference": "00c4847e8bc19a3cebe15e0d57b979dc7ddb8c12",
                 "shasum": ""
             },
             "require": {
@@ -611,7 +611,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2020-09-02T15:15:31+00:00"
+            "time": "2020-10-24T18:12:41+00:00"
         },
         {
             "name": "laminas/laminas-config-aggregator",
