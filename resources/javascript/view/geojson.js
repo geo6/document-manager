@@ -60,7 +60,7 @@ export default function () {
 
           $(ul).addClass("list-unstyled mb-0");
 
-          json.legend.map((item, index) => {
+          json.legend.forEach((item, index) => {
             const li = document.createElement("li");
             const { text, color } = item;
 
