@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "52ee34abc7b26f5ba037b975f129e639",
+    "content-hash": "f8ae2cad4baa38414d69cd51548caab9",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -1564,16 +1564,16 @@
         },
         {
             "name": "mezzio/mezzio-authentication",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-authentication.git",
-                "reference": "24344b06a9598654ce3fde25c0210c4b494dd3c5"
+                "reference": "c0fb597537ba4f3ef44ad02ff6a6732947c0622e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-authentication/zipball/24344b06a9598654ce3fde25c0210c4b494dd3c5",
-                "reference": "24344b06a9598654ce3fde25c0210c4b494dd3c5",
+                "url": "https://api.github.com/repos/mezzio/mezzio-authentication/zipball/c0fb597537ba4f3ef44ad02ff6a6732947c0622e",
+                "reference": "c0fb597537ba4f3ef44ad02ff6a6732947c0622e",
                 "shasum": ""
             },
             "require": {
@@ -1636,7 +1636,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2020-10-20T18:56:01+00:00"
+            "time": "2020-11-03T20:58:11+00:00"
         },
         {
             "name": "mezzio/mezzio-authentication-session",
@@ -4513,12 +4513,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "065a018d3b5c2c84a53db3347cca4e1b7fa362a6"
+                "reference": "e440567339d5fe93d9525e377c5e686b0b08bcca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/065a018d3b5c2c84a53db3347cca4e1b7fa362a6",
-                "reference": "065a018d3b5c2c84a53db3347cca4e1b7fa362a6",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/e440567339d5fe93d9525e377c5e686b0b08bcca",
+                "reference": "e440567339d5fe93d9525e377c5e686b0b08bcca",
                 "shasum": ""
             },
             "conflict": {
@@ -4816,7 +4816,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-01T20:01:47+00:00"
+            "time": "2020-11-07T16:07:08+00:00"
         },
         {
             "name": "sebastian/cli-parser",
