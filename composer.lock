@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5cbde4b19f1f60f67021d6c7f396b249",
+    "content-hash": "ef8ad25e2fc184f72174f8346cce04b0",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -1950,42 +1950,39 @@
         },
         {
             "name": "mezzio/mezzio-helpers",
-            "version": "5.3.0",
+            "version": "5.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-helpers.git",
-                "reference": "276a539a9212bd2ff48ec7c411b049f11fcff62d"
+                "reference": "cead6d7edd15de0496e6ad3e3093286234af2522"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-helpers/zipball/276a539a9212bd2ff48ec7c411b049f11fcff62d",
-                "reference": "276a539a9212bd2ff48ec7c411b049f11fcff62d",
+                "url": "https://api.github.com/repos/mezzio/mezzio-helpers/zipball/cead6d7edd15de0496e6ad3e3093286234af2522",
+                "reference": "cead6d7edd15de0496e6ad3e3093286234af2522",
                 "shasum": ""
             },
             "require": {
                 "laminas/laminas-zendframework-bridge": "^1.0",
                 "mezzio/mezzio-router": "^3.0",
-                "php": "^7.1",
+                "php": "^7.3 || ~8.0.0",
                 "psr/container": "^1.0",
                 "psr/http-message": "^1.0.1",
                 "psr/http-server-middleware": "^1.0"
             },
             "replace": {
-                "zendframework/zend-expressive-helpers": "self.version"
+                "zendframework/zend-expressive-helpers": "^5.3.0"
             },
             "require-dev": {
                 "laminas/laminas-coding-standard": "~1.0.0",
                 "laminas/laminas-diactoros": "^1.7.1",
-                "malukenho/docheader": "^0.1.6",
-                "mockery/mockery": "^1.0",
-                "phpunit/phpunit": "^7.0.2"
+                "malukenho/docheader": "^0.1.8",
+                "mockery/mockery": "^1.4.2",
+                "phpspec/prophecy-phpunit": "^2.0",
+                "phpunit/phpunit": "^9.4.2"
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "5.3.x-dev",
-                    "dev-develop": "5.4.x-dev"
-                },
                 "laminas": {
                     "config-provider": "Mezzio\\Helper\\ConfigProvider"
                 }
@@ -2011,13 +2008,19 @@
             ],
             "support": {
                 "chat": "https://laminas.dev/chat",
-                "docs": "https://docs.mezzio.dev/mezzio-helpers/",
+                "docs": "https://docs.mezzio.dev/mezzio/features/helpers/intro/",
                 "forum": "https://discourse.laminas.dev",
                 "issues": "https://github.com/mezzio/mezzio-helpers/issues",
                 "rss": "https://github.com/mezzio/mezzio-helpers/releases.atom",
                 "source": "https://github.com/mezzio/mezzio-helpers"
             },
-            "time": "2019-12-31T15:44:52+00:00"
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2020-11-18T13:59:04+00:00"
         },
         {
             "name": "mezzio/mezzio-router",
