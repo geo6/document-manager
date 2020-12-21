@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ef8ad25e2fc184f72174f8346cce04b0",
+    "content-hash": "dbdfe653bf7b84eec345dd5e757a193c",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -666,23 +666,23 @@
         },
         {
             "name": "laminas/laminas-config-aggregator",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-config-aggregator.git",
-                "reference": "141382658ab4ebd0f6c2e529c4736f88bef5dcca"
+                "reference": "1f26cc56ecf26009f1219f13ac5ecbf75394099f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-config-aggregator/zipball/141382658ab4ebd0f6c2e529c4736f88bef5dcca",
-                "reference": "141382658ab4ebd0f6c2e529c4736f88bef5dcca",
+                "url": "https://api.github.com/repos/laminas/laminas-config-aggregator/zipball/1f26cc56ecf26009f1219f13ac5ecbf75394099f",
+                "reference": "1f26cc56ecf26009f1219f13ac5ecbf75394099f",
                 "shasum": ""
             },
             "require": {
                 "brick/varexporter": "^0.3.2",
                 "laminas/laminas-stdlib": "^2.7.7 || ^3.1.0",
                 "laminas/laminas-zendframework-bridge": "^1.0",
-                "php": "^7.2",
+                "php": "^7.3 || ~8.0.0",
                 "webimpress/safe-writer": "^1.0.2 || ^2.0.1"
             },
             "replace": {
@@ -693,7 +693,7 @@
                 "laminas/laminas-config": "^2.6 || ^3.0",
                 "laminas/laminas-servicemanager": "^2.7.7 || ^3.1.1",
                 "malukenho/docheader": "^0.1.5",
-                "phpunit/phpunit": "^8.5.8"
+                "phpunit/phpunit": "^9.3"
             },
             "suggest": {
                 "laminas/laminas-config": "Allows loading configuration from XML, INI, YAML, and JSON files",
@@ -701,12 +701,6 @@
                 "laminas/laminas-config-aggregator-parameters": "Allows usage of templated parameters within your configuration"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.3.x-dev",
-                    "dev-develop": "1.4.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Laminas\\ConfigAggregator\\": "src/"
@@ -736,7 +730,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2020-07-08T17:26:27+00:00"
+            "time": "2020-11-18T00:30:16+00:00"
         },
         {
             "name": "laminas/laminas-dependency-plugin",
