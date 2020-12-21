@@ -107,7 +107,7 @@ class Document extends SplFileInfo
             "%.{$decimals}f ",
             $size / pow(1024, $factor)
         )
-            . (isset($ext[$factor]) ? $ext[$factor] : '');
+            .(isset($ext[$factor]) ? $ext[$factor] : '');
     }
 
     /**
