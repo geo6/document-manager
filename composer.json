@@ -41,7 +41,7 @@
         "mezzio/mezzio-twigrenderer": "2.6.1",
         "mtymek/blast-base-url": "1.0",
         "ralouphie/mimey": "2.1.0",
-        "symfony/finder": "5.1.8",
+        "symfony/finder": "5.2.1",
         "vistag/human-readable": "dev-master"
     },
     "require-dev": {
