@@ -23,7 +23,7 @@
         "ext-fileinfo": "*",
         "geo6/laminas-log-filesystem": "^2.0",
         "intervention/image": "2.5.1",
-        "laminas/laminas-component-installer": "2.3.2",
+        "laminas/laminas-component-installer": "2.4.0",
         "laminas/laminas-config-aggregator": "1.4.0",
         "laminas/laminas-dependency-plugin": "2.1.0",
         "laminas/laminas-diactoros": "2.5.0",
