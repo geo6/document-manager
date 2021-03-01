@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5783cd54ed994a72c7e53499353af9ee",
+    "content-hash": "94eb741d63aa7847c5d90edb98e5e51d",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -737,16 +737,16 @@
         },
         {
             "name": "laminas/laminas-dependency-plugin",
-            "version": "2.1.0",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-dependency-plugin.git",
-                "reference": "1cedcd1590225fcaa3d4d580ab3adf318779ac28"
+                "reference": "c5b4bf87729d6f38c73ca8ed22a5d62ec641d075"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-dependency-plugin/zipball/1cedcd1590225fcaa3d4d580ab3adf318779ac28",
-                "reference": "1cedcd1590225fcaa3d4d580ab3adf318779ac28",
+                "url": "https://api.github.com/repos/laminas/laminas-dependency-plugin/zipball/c5b4bf87729d6f38c73ca8ed22a5d62ec641d075",
+                "reference": "c5b4bf87729d6f38c73ca8ed22a5d62ec641d075",
                 "shasum": ""
             },
             "require": {
@@ -774,7 +774,7 @@
             "description": "Replace zendframework and zfcampus packages with their Laminas Project equivalents.",
             "support": {
                 "issues": "https://github.com/laminas/laminas-dependency-plugin/issues",
-                "source": "https://github.com/laminas/laminas-dependency-plugin/tree/2.1.0"
+                "source": "https://github.com/laminas/laminas-dependency-plugin/tree/2.1.2"
             },
             "funding": [
                 {
@@ -782,7 +782,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2020-11-02T18:16:57+00:00"
+            "time": "2021-02-15T16:44:31+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
