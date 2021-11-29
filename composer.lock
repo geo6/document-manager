@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "90d7bb7933cc6b10d2e39460739c81a1",
+    "content-hash": "e917d9b3cc4b47455fe9fa1b87927a73",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -2184,34 +2184,33 @@
         },
         {
             "name": "mezzio/mezzio-session-ext",
-            "version": "1.10.0",
+            "version": "1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-session-ext.git",
-                "reference": "ab4dae9c63c0d8b69455f8eb554f773e8ad9b691"
+                "reference": "37c051e6c7482b74dbbdf686a69044905c55384a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-session-ext/zipball/ab4dae9c63c0d8b69455f8eb554f773e8ad9b691",
-                "reference": "ab4dae9c63c0d8b69455f8eb554f773e8ad9b691",
+                "url": "https://api.github.com/repos/mezzio/mezzio-session-ext/zipball/37c051e6c7482b74dbbdf686a69044905c55384a",
+                "reference": "37c051e6c7482b74dbbdf686a69044905c55384a",
                 "shasum": ""
             },
             "require": {
-                "dflydev/fig-cookies": "^2.0.1",
                 "ext-session": "*",
-                "laminas/laminas-zendframework-bridge": "^1.0",
                 "mezzio/mezzio-session": "^1.4",
-                "php": "^7.3 || ~8.0.0"
+                "php": "^7.3 || ~8.0.0 || ~8.1.0"
             },
-            "replace": {
-                "zendframework/zend-expressive-session-ext": "^1.7.0"
+            "conflict": {
+                "zendframework/zend-expressive-session-ext": "*"
             },
             "require-dev": {
-                "laminas/laminas-coding-standard": "~2.1.0",
-                "laminas/laminas-diactoros": "^1.6",
+                "dflydev/fig-cookies": "^2.0.1 || ^3.0",
+                "laminas/laminas-coding-standard": "~2.2.0",
+                "laminas/laminas-diactoros": "^2.5.0",
                 "phpunit/phpunit": "^9.3",
-                "psalm/plugin-phpunit": "^0.12.2",
-                "vimeo/psalm": "^3.16"
+                "psalm/plugin-phpunit": "^0.16.1",
+                "vimeo/psalm": "^4.10"
             },
             "type": "library",
             "extra": {
@@ -2252,7 +2251,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2020-10-08T21:41:02+00:00"
+            "time": "2021-09-13T23:24:56+00:00"
         },
         {
             "name": "mezzio/mezzio-template",
