@@ -36,7 +36,7 @@
         "mezzio/mezzio-authentication-session": "1.0.2",
         "mezzio/mezzio-fastroute": "3.3.0",
         "mezzio/mezzio-helpers": "5.4.0",
-        "mezzio/mezzio-session": "1.4.1",
+        "mezzio/mezzio-session": "1.6.0",
         "mezzio/mezzio-session-ext": "1.12.0",
         "mezzio/mezzio-twigrenderer": "2.6.1",
         "mtymek/blast-base-url": "1.0",
