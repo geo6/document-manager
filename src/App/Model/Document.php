@@ -96,14 +96,18 @@ class Document extends SplFileInfo
      */
     public function getReadableSize(int $decimals = 2): string
     {
-        $size = (string) $this->getSize();
+        $size = $this->getSize();
 
         //return (new ReadableNumber($size))->long();
 
         $ext = ['o', 'Ko', 'Mo', 'Go', 'To', 'Po', 'Eo', 'Zo', 'Yo'];
-        $factor = floor((strlen($size) - 1) / 3);
+        $factor = floor((strlen((string) $size) - 1) / 3);
 
-        return sprintf("%.{$decimals}f ", $size / pow(1024, $factor)).(isset($ext[$factor]) ? $ext[$factor] : '');
+        return sprintf(
+            "%.{$decimals}f ",
+            $size / pow(1024, $factor)
+        )
+            .(isset($ext[$factor]) ? $ext[$factor] : '');
     }
 
     /**

@@ -12,4 +12,9 @@ parameters:
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false
     ignoreErrors:
-        - '#Variable method call on .+#'
+        - message: '#Variable method call on Laminas\\Permissions\\Acl\\Acl.#'
+          path: src/App/Middleware/AclMiddlewareFactory.php
+        - message: '#Parameter \#2 \$timestamp of function date expects (int|(int\|null)), int\|false given.#'
+          path: src/App/Handler/LogsHandler.php
+        - message: '#Method App\\Model\\Document::getReadableMTime\(\) should return string but returns string\|false.#'
+          path: src/App/Model/Document.php
