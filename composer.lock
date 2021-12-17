@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "45974ad6f7c96a916433ffa5c54e4d7e",
+    "content-hash": "77107c30de525fdc2a5e95729a773012",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -1955,36 +1955,40 @@
         },
         {
             "name": "mezzio/mezzio-helpers",
-            "version": "5.4.0",
+            "version": "5.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mezzio/mezzio-helpers.git",
-                "reference": "cead6d7edd15de0496e6ad3e3093286234af2522"
+                "reference": "8ba1bcf38689db21e2ccac699d99b66ded700162"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mezzio/mezzio-helpers/zipball/cead6d7edd15de0496e6ad3e3093286234af2522",
-                "reference": "cead6d7edd15de0496e6ad3e3093286234af2522",
+                "url": "https://api.github.com/repos/mezzio/mezzio-helpers/zipball/8ba1bcf38689db21e2ccac699d99b66ded700162",
+                "reference": "8ba1bcf38689db21e2ccac699d99b66ded700162",
                 "shasum": ""
             },
             "require": {
-                "laminas/laminas-zendframework-bridge": "^1.0",
                 "mezzio/mezzio-router": "^3.0",
-                "php": "^7.3 || ~8.0.0",
+                "php": "^7.3 || ~8.0.0 || ~8.1.0",
                 "psr/container": "^1.0",
                 "psr/http-message": "^1.0.1",
                 "psr/http-server-middleware": "^1.0"
             },
-            "replace": {
-                "zendframework/zend-expressive-helpers": "^5.3.0"
+            "conflict": {
+                "zendframework/zend-expressive-helpers": "*"
             },
             "require-dev": {
-                "laminas/laminas-coding-standard": "~1.0.0",
-                "laminas/laminas-diactoros": "^1.7.1",
-                "malukenho/docheader": "^0.1.8",
+                "ext-json": "*",
+                "laminas/laminas-coding-standard": "~2.2.0",
+                "laminas/laminas-diactoros": "^2.5.0",
                 "mockery/mockery": "^1.4.2",
                 "phpspec/prophecy-phpunit": "^2.0",
-                "phpunit/phpunit": "^9.4.2"
+                "phpunit/phpunit": "^9.4.2",
+                "psalm/plugin-phpunit": "^0.15.1",
+                "vimeo/psalm": "^4.7"
+            },
+            "suggest": {
+                "ext-json": "If you wish to use the JsonStrategy with BodyParamsMiddleware"
             },
             "type": "library",
             "extra": {
@@ -2025,7 +2029,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2020-11-18T13:59:04+00:00"
+            "time": "2021-10-13T17:13:37+00:00"
         },
         {
             "name": "mezzio/mezzio-router",
@@ -4465,16 +4469,16 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "1.14.0",
+            "version": "v1.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "d86dfc2e2a3cd366cee475e52c6bb3bbc371aa0e"
+                "reference": "bbcd7380b0ebf3961ee21409db7b38bc31d69a13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/d86dfc2e2a3cd366cee475e52c6bb3bbc371aa0e",
-                "reference": "d86dfc2e2a3cd366cee475e52c6bb3bbc371aa0e",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/bbcd7380b0ebf3961ee21409db7b38bc31d69a13",
+                "reference": "bbcd7380b0ebf3961ee21409db7b38bc31d69a13",
                 "shasum": ""
             },
             "require": {
@@ -4526,9 +4530,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phpspec/prophecy/issues",
-                "source": "https://github.com/phpspec/prophecy/tree/1.14.0"
+                "source": "https://github.com/phpspec/prophecy/tree/v1.15.0"
             },
-            "time": "2021-09-10T09:02:12+00:00"
+            "time": "2021-12-08T12:19:24+00:00"
         },
         {
             "name": "phpstan/phpstan",
