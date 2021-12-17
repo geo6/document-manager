@@ -38,7 +38,7 @@
         "mezzio/mezzio-helpers": "5.7.0",
         "mezzio/mezzio-session": "1.6.0",
         "mezzio/mezzio-session-ext": "1.12.0",
-        "mezzio/mezzio-twigrenderer": "2.6.1",
+        "mezzio/mezzio-twigrenderer": "2.9.0",
         "mtymek/blast-base-url": "1.0",
         "ralouphie/mimey": "2.1.0",
         "symfony/finder": "5.4.0",
