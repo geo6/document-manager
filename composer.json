@@ -28,7 +28,7 @@
         "laminas/laminas-dependency-plugin": "2.1.2",
         "laminas/laminas-diactoros": "2.5.0",
         "laminas/laminas-log": "2.13.1",
-        "laminas/laminas-permissions-acl": "2.7.2",
+        "laminas/laminas-permissions-acl": "2.9.0",
         "laminas/laminas-servicemanager": "3.6.4",
         "laminas/laminas-stdlib": "3.3.1",
         "mezzio/mezzio": "3.6.0",
