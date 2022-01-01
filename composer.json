@@ -33,7 +33,7 @@
         "laminas/laminas-stdlib": "3.3.1",
         "mezzio/mezzio": "3.6.0",
         "mezzio/mezzio-authentication": "1.2.1",
-        "mezzio/mezzio-authentication-session": "1.0.2",
+        "mezzio/mezzio-authentication-session": "1.2.0",
         "mezzio/mezzio-fastroute": "3.3.0",
         "mezzio/mezzio-helpers": "5.7.0",
         "mezzio/mezzio-session": "1.6.0",
