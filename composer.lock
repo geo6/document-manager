@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1396ee058859b53615ca4a81a122ca00",
+    "content-hash": "3b377f1b05e79f7c403c548e12c79835",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -1183,29 +1183,31 @@
         },
         {
             "name": "laminas/laminas-permissions-acl",
-            "version": "2.7.2",
+            "version": "2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-permissions-acl.git",
-                "reference": "d8cd35ed94eef5d3d2533af4a72cf1c2932084bb"
+                "reference": "e927ae0a3001655fea97eb240eeea9d10638e82f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-permissions-acl/zipball/d8cd35ed94eef5d3d2533af4a72cf1c2932084bb",
-                "reference": "d8cd35ed94eef5d3d2533af4a72cf1c2932084bb",
+                "url": "https://api.github.com/repos/laminas/laminas-permissions-acl/zipball/e927ae0a3001655fea97eb240eeea9d10638e82f",
+                "reference": "e927ae0a3001655fea97eb240eeea9d10638e82f",
                 "shasum": ""
             },
             "require": {
-                "laminas/laminas-zendframework-bridge": "^1.0",
-                "php": "^5.6 || ^7.0"
+                "php": "^7.4 || ~8.0.0 || ~8.1.0"
             },
-            "replace": {
-                "zendframework/zend-permissions-acl": "^2.7.1"
+            "conflict": {
+                "laminas/laminas-servicemanager": "<3.0",
+                "zendframework/zend-permissions-acl": "*"
             },
             "require-dev": {
-                "laminas/laminas-coding-standard": "~1.0.0",
-                "laminas/laminas-servicemanager": "^2.7.5 || ^3.0.3",
-                "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.5"
+                "laminas/laminas-coding-standard": "~2.3.0",
+                "laminas/laminas-servicemanager": "^3.15.1",
+                "phpunit/phpunit": "^9.5.0",
+                "psalm/plugin-phpunit": "^0.17.0",
+                "vimeo/psalm": "^4.24.0"
             },
             "suggest": {
                 "laminas/laminas-servicemanager": "To support Laminas\\Permissions\\Acl\\Assertion\\AssertionManager plugin manager usage"
@@ -1240,7 +1242,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2020-09-22T14:08:17+00:00"
+            "time": "2022-07-21T09:23:39+00:00"
         },
         {
             "name": "laminas/laminas-servicemanager",
@@ -6978,5 +6980,5 @@
         "ext-fileinfo": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
