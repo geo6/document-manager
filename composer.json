@@ -30,7 +30,7 @@
         "laminas/laminas-log": "2.13.1",
         "laminas/laminas-permissions-acl": "2.7.2",
         "laminas/laminas-servicemanager": "3.6.4",
-        "laminas/laminas-stdlib": "3.3.1",
+        "laminas/laminas-stdlib": "3.11.0",
         "mezzio/mezzio": "3.6.0",
         "mezzio/mezzio-authentication": "1.2.1",
         "mezzio/mezzio-authentication-session": "1.0.2",
